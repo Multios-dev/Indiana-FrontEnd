@@ -1,0 +1,363 @@
+// ── Variables (same as register.component.scss) ──────────────────
+$bg: #f0f0f0;
+$blue: #4a9fd4;
+$text: #1a1a2e;
+$muted: #6b7280;
+$border: #d1d5db;
+$radius: 14px;
+$font: 'DM Sans', 'Segoe UI', sans-serif;
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+// ── Page layout ──────────────────────────────────────────────────
+.register-page {
+  min-height: 98vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 2rem 1rem;
+  font-family: $font;
+  color: $text;
+}
+
+.register-container {
+  width: 100%;
+  max-width: 520px;
+  padding-bottom: 3rem;
+}
+
+// ── Logo ─────────────────────────────────────────────────────────
+.logo-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+
+  .logo {
+    height: 80px;
+    object-fit: contain;
+  }
+}
+
+// ── Header ───────────────────────────────────────────────────────
+.title {
+  font-size: 1.85rem;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: -.3px;
+  margin-bottom: .4rem;
+}
+
+.subtitle {
+  text-align: center;
+  color: $muted;
+  font-size: .95rem;
+  margin-bottom: 2rem;
+}
+
+// ── Form sections ────────────────────────────────────────────────
+.form-section {
+  background: #fff;
+  border: 1.5px solid $border;
+  border-radius: $radius;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  font-size: .875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: $text;
+  margin-bottom: 1.1rem;
+}
+
+.section-icon {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &--blue {
+    background: #e8f3fb;
+    color: $blue;
+  }
+
+  &--gray {
+    background: #f3f4f6;
+    color: #6b7280;
+  }
+}
+
+// ── Form rows ────────────────────────────────────────────────────
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .75rem;
+
+  &--3 {
+    grid-template-columns: auto 1fr;
+  }
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+  margin-bottom: .75rem;
+
+  &:last-child { margin-bottom: 0; }
+
+  &--zip { max-width: 130px; }
+  &--city { flex: 1; }
+}
+
+// ── Labels ───────────────────────────────────────────────────────
+.field-label {
+  font-size: .84rem;
+  font-weight: 600;
+  color: $text;
+}
+
+.required {
+  color: #e05252;
+  margin-left: 2px;
+}
+
+// ── Inputs ───────────────────────────────────────────────────────
+.field-input {
+  height: 42px;
+  padding: 0 .875rem;
+  border: 1.5px solid $border;
+  border-radius: 9px;
+  font-family: $font;
+  font-size: .9rem;
+  color: $text;
+  background: #fff;
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+  width: 100%;
+
+  &::placeholder { color: #b0b8c4; }
+
+  &:focus {
+    border-color: $blue;
+    box-shadow: 0 0 0 3px rgba($blue, .12);
+  }
+
+  &--error {
+    border-color: #e05252 !important;
+    box-shadow: 0 0 0 3px rgba(#e05252, .1) !important;
+  }
+
+  &[type="date"] { color: $text; }
+}
+
+// ── Select ───────────────────────────────────────────────────────
+.select-wrap {
+  position: relative;
+
+  .field-select {
+    appearance: none;
+    padding-right: 2.5rem;
+    cursor: pointer;
+  }
+
+  .select-arrow {
+    position: absolute;
+    right: .85rem;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: $muted;
+  }
+}
+
+// ── Hints & Errors ───────────────────────────────────────────────
+.field-hint {
+  font-size: .78rem;
+  color: $muted;
+  line-height: 1.35;
+}
+
+.field-error {
+  font-size: .78rem;
+  color: #e05252;
+  font-weight: 500;
+}
+
+// ── Actions ──────────────────────────────────────────────────────
+.form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.btn-back {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  background: none;
+  border: 1.5px solid $border;
+  border-radius: 9px;
+  padding: 0 1.1rem;
+  height: 42px;
+  font-family: $font;
+  font-size: .88rem;
+  font-weight: 600;
+  color: $muted;
+  cursor: pointer;
+  transition: border-color .2s, color .2s;
+
+  &:hover {
+    border-color: $text;
+    color: $text;
+  }
+}
+
+.btn-submit {
+  flex: 1;
+  height: 44px;
+  background: $blue;
+  color: #fff;
+  border: none;
+  border-radius: 9px;
+  font-family: $font;
+  font-size: .95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .2s, box-shadow .2s, transform .15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover:not(:disabled) {
+    background: darken($blue, 8%);
+    box-shadow: 0 4px 12px rgba($blue, .35);
+    transform: translateY(-1px);
+  }
+
+  &:active:not(:disabled) { transform: translateY(0); }
+
+  &:disabled {
+    opacity: .55;
+    cursor: not-allowed;
+  }
+}
+
+// ── Spinner ──────────────────────────────────────────────────────
+.spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2.5px solid rgba(#fff, .35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+// ── Login link ───────────────────────────────────────────────────
+.login-line {
+  text-align: center;
+  font-size: .9rem;
+  color: $muted;
+}
+
+.login-link {
+  color: $blue;
+  font-weight: 600;
+  text-decoration: none;
+  &:hover { text-decoration: underline; }
+}
+
+// ── Success card ─────────────────────────────────────────────────
+.success-card {
+  background: #fff;
+  border: 1.5px solid #c6e8bb;
+  border-radius: $radius;
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+  animation: fadeUp .35s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.success-icon-wrap {
+  width: 64px;
+  height: 64px;
+  background: #edfbe8;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #3a9e57;
+  margin-bottom: .25rem;
+}
+
+.success-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: $text;
+  letter-spacing: -.2px;
+}
+
+.success-body {
+  font-size: .95rem;
+  color: $muted;
+  line-height: 1.6;
+}
+
+.success-email {
+  color: $text;
+  font-weight: 600;
+}
+
+.success-hint {
+  font-size: .82rem;
+  color: $muted;
+  line-height: 1.5;
+  background: #f9fafb;
+  border: 1px solid $border;
+  border-radius: 8px;
+  padding: .75rem 1rem;
+}
+
+.btn-submit--full {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 44px;
+  border-radius: 9px;
+  text-decoration: none;
+  margin-top: .5rem;
+}
+
+// ── Responsive ───────────────────────────────────────────────────
+@media (max-width: 500px) {
+  .title { font-size: 1.5rem; }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .form-field--zip { max-width: 100%; }
+}

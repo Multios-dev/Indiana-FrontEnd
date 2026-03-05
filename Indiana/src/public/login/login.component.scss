@@ -1,0 +1,279 @@
+// ── Variables ──────────────────────────────────────────────────
+$bg: #f0f0f0;
+$blue: #4a9fd4;
+$blue-hover: #3a8ec3;
+$blue-disabled: #a0c8e8;
+$red: #d94f4f;
+$text: #1a1a2e;
+$muted: #6b7280;
+$border: #d1d5db;
+$border-focus: #4a9fd4;
+$error-border: #e57373;
+$error-text: #c0392b;
+$radius: 10px;
+$font: 'DM Sans', 'Segoe UI', sans-serif;
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+// ── Page : plein écran, pas de carte ───────────────────────────
+.login-page {
+  min-height: 98vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  font-family: $font;
+  color: $text;
+}
+
+// ── Conteneur centré, sans background ni ombre ─────────────────
+.login-card {
+  width: 100%;
+  max-width: 460px;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+// ── Logo ────────────────────────────────────────────────────────
+.logo-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+
+  .logo {
+    height: 88px;
+    object-fit: contain;
+  }
+}
+
+// ── Header text ─────────────────────────────────────────────────
+.title {
+  font-size: 1.85rem;
+  font-weight: 700;
+  text-align: center;
+  color: $text;
+  letter-spacing: -.3px;
+  margin-bottom: .4rem;
+}
+
+.subtitle {
+  text-align: center;
+  color: $muted;
+  font-size: .95rem;
+  margin-bottom: 2rem;
+}
+
+// ── Error banner ─────────────────────────────────────────────────
+.error-banner {
+  background: #fff0f0;
+  border: 1px solid #fca5a5;
+  color: $error-text;
+  border-radius: $radius;
+  padding: .7rem 1rem;
+  font-size: .875rem;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+
+// ── Fields ──────────────────────────────────────────────────────
+.field-group {
+  margin-bottom: 1.25rem;
+
+  &.has-error .field-input {
+    border-color: $error-border;
+  }
+}
+
+.field-label {
+  display: block;
+  font-size: .9rem;
+  font-weight: 500;
+  margin-bottom: .5rem;
+  color: $text;
+}
+
+.field-input {
+  width: 100%;
+  height: 48px;
+  padding: 0 1rem;
+  border: 1.5px solid $border;
+  border-radius: $radius;
+  font-size: .95rem;
+  font-family: $font;
+  color: $text;
+  background: #fff;
+  transition: border-color .15s, box-shadow .15s;
+  outline: none;
+
+  &::placeholder { color: #b0b8c4; }
+
+  &:focus {
+    border-color: $border-focus;
+    box-shadow: 0 0 0 3px rgba($blue, .15);
+  }
+}
+
+.input-wrapper {
+  position: relative;
+
+  .field-input { padding-right: 3rem; }
+}
+
+.eye-btn {
+  position: absolute;
+  right: .85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #9ca3af;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  transition: color .15s;
+
+  &:hover { color: $muted; }
+}
+
+.field-hint {
+  font-size: .8rem;
+  color: $error-text;
+  margin-top: .4rem;
+}
+
+.forgot-wrap {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: .6rem;
+}
+
+.forgot-link {
+  font-size: .875rem;
+  color: $red;
+  text-decoration: none;
+  &:hover { text-decoration: underline; }
+}
+
+// ── Submit ──────────────────────────────────────────────────────
+.submit-btn {
+  width: 100%;
+  height: 50px;
+  background: $blue;
+  color: #fff;
+  border: none;
+  border-radius: $radius;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: $font;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .55rem;
+  transition: background .2s, transform .1s;
+  margin-top: .25rem;
+
+  &:hover:not(:disabled) { background: $blue-hover; }
+  &:active:not(:disabled) { transform: scale(.99); }
+  &:disabled {
+    background: $blue-disabled;
+    cursor: not-allowed;
+  }
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2.5px solid rgba(255,255,255,.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+// ── Divider ─────────────────────────────────────────────────────
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.75rem 0 1.25rem;
+
+  &::before, &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: $border;
+  }
+
+  span {
+    font-size: .72rem;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: $muted;
+    white-space: nowrap;
+  }
+}
+
+// ── OAuth ────────────────────────────────────────────────────────
+.oauth-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .875rem;
+  margin-bottom: 1.5rem;
+}
+
+.oauth-btn {
+  height: 48px;
+  border: 1.5px solid $border;
+  border-radius: $radius;
+  background: #fff;
+  font-family: $font;
+  font-size: .9rem;
+  color: $muted;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  transition: background .15s, border-color .15s;
+
+  .oauth-icon { height: 20px; width: 20px; object-fit: contain; }
+
+  &:hover {
+    background: #f0f0f0;
+    border-color: #b0b8c4;
+  }
+}
+
+// ── Sign up ──────────────────────────────────────────────────────
+.signup-line {
+  text-align: center;
+  font-size: .9rem;
+  color: $muted;
+}
+
+.signup-link {
+  color: $blue;
+  font-weight: 600;
+  text-decoration: none;
+  &:hover { text-decoration: underline; }
+}
+
+// ── Responsive ──────────────────────────────────────────────────
+@media (max-width: 500px) {
+  .login-card {
+    padding: 0 .25rem;
+  }
+
+  .title { font-size: 1.5rem; }
+
+  .oauth-grid {
+    grid-template-columns: 1fr;
+  }
+}
