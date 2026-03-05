@@ -1,11 +1,24 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component';
-import { loggedGuard } from '../guards/logged.guard';
 
 export const LOGIN_ROUTES: Routes = [
   {
-    path: '',
-    component: LoginComponent,
-    canActivate: [loggedGuard],
+    path: 'connexion',
+    loadComponent: () =>
+      import('./login/login.component').then(m => m.LoginComponent),
+  },
+  {
+    path: 'inscription',
+    loadComponent: () =>
+      import('./register/register.component').then(m => m.RegisterComponent),
+  },
+  {
+    path: 'inscription/manuel',
+    loadComponent: () =>
+      import('./register/register-manual.component').then(m => m.RegisterManualComponent),
+  },
+  {
+    path: 'mot-de-passe-oublie',
+    loadComponent: () =>
+      import('./forgot-password/forgot-password.component').then(m => m.ForgotPasswordComponent),
   },
 ];

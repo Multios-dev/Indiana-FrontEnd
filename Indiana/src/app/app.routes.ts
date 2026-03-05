@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { authGuard } from '../guards/auth.guard';
 import { userGuard } from '../guards/user-guard.guard';
+import { LOGIN_ROUTES } from '../public/login.routes';
 
 export const routes: Routes = [
   {
@@ -8,26 +9,8 @@ export const routes: Routes = [
     pathMatch: 'full',
     redirectTo: 'connexion',
   },
-  {
-    path: 'connexion',
-    loadComponent: () =>
-      import('../public/login/login.component').then(m => m.LoginComponent),
-  },
-  {
-    path: 'inscription',
-    loadComponent: () =>
-      import('../public/register/register.component').then(m => m.RegisterComponent),
-  },
-  {
-    path: "inscription/manuel",
-    loadComponent: () =>
-      import('../public/register/register-manual.component').then(m => m.RegisterManualComponent),
-  },
-  {
-    path: "mot-de-passe-oublie",
-    loadComponent: () =>
-      import("../public/forgot-password/forgot-password.component").then(m => m.ForgotPasswordComponent),
-  },
+  //the routes for registration, login and forgot password are all in "login.routes.ts"
+  ...LOGIN_ROUTES,
   {
     path: '**',
     redirectTo: 'connexion',
