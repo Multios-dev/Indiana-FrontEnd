@@ -10,8 +10,9 @@ import { httpInterceptorInterceptor } from '../Interceptors/http.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideHttpClient(withInterceptors([httpInterceptorInterceptor])),
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
-    provideHttpClient(withInterceptors([httpInterceptorInterceptor])),
+   
   ],
 };

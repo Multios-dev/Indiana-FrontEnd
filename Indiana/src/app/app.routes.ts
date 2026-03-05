@@ -24,6 +24,11 @@ export const routes: Routes = [
       import('../public/register/register-manual.component').then(m => m.RegisterManualComponent),
   },
   {
+    path: "mot-de-passe-oublie",
+    loadComponent: () =>
+      import("../public/forgot-password/forgot-password.component").then(m => m.ForgotPasswordComponent),
+  },
+  {
     path: '**',
     redirectTo: 'connexion',
   },

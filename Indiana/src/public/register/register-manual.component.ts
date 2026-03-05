@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import {
   ReactiveFormsModule,
   FormBuilder,
   FormGroup,
+  FormArray,
   Validators,
 } from '@angular/forms';
 
@@ -20,40 +21,50 @@ export class RegisterManualComponent {
   isLoading = false;
   accountCreated = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) {
     this.form = this.fb.group({
-      // Identity
       lastName:    ['', Validators.required],
-      firstName:   ['', Validators.required],
-
-      // demographic information
+      firstNames:  this.fb.array([
+        this.fb.control('', Validators.required)
+      ]),
       birthDate:   ['', Validators.required],
       gender:      ['', Validators.required],
-
-      // Nationality
       nationality: ['', Validators.required],
-
-      // Legal domicile 
-      street:  ['', Validators.required],
-      zip:     ['', Validators.required],
-      city:    ['', Validators.required],
-
-      // Contact
-      email: ['', [Validators.required, Validators.email]],
-      phone: [''],
+      street:      ['', Validators.required],
+      zip:         ['', Validators.required],
+      city:        ['', Validators.required],
+      email:       ['', [Validators.required, Validators.email]],
+      phone:       [''],
     });
   }
 
-  /** Returns true when the field has been touched and is invalid */
+  get firstNames(): FormArray {
+    return this.form.get('firstNames') as FormArray;
+  }
+
+  addFirstName(): void {
+    this.firstNames.push(this.fb.control('', Validators.required));
+  }
+
+  removeFirstName(index: number): void {
+    this.firstNames.removeAt(index);
+  }
+
+  isFirstNameInvalid(index: number): boolean {
+    const ctrl = this.firstNames.at(index);
+    return !!(ctrl && ctrl.invalid && ctrl.touched);
+  }
+
   isInvalid(controlName: string): boolean {
     const ctrl = this.form.get(controlName);
     return !!(ctrl && ctrl.invalid && ctrl.touched);
   }
 
   onSubmit(): void {
+    this.form.markAllAsTouched();
+    this.firstNames.controls.forEach(c => c.markAsTouched());
+
     if (this.form.invalid) {
-      // Mark all fields as touched to trigger validation display
-      this.form.markAllAsTouched();
       return;
     }
 
@@ -67,10 +78,10 @@ export class RegisterManualComponent {
     //   4. Send the first-login email to form.value.email
     console.log('Payload:', this.form.value);
 
-    // Simulate async call
     setTimeout(() => {
-      this.isLoading = false;
       this.accountCreated = true;
+      this.isLoading = false;
+      this.cdr.detectChanges();
     }, 1500);
   }
 }

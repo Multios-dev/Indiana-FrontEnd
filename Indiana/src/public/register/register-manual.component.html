@@ -52,12 +52,34 @@
           </div>
 
           <div class="form-field">
-            <label class="field-label" for="firstName">Prénom(s) <span class="required">*</span></label>
-            <input id="firstName" type="text" class="field-input"
-                   formControlName="firstName"
-                   placeholder="Marie"
-                   [class.field-input--error]="isInvalid('firstName')">
-            <span class="field-error" *ngIf="isInvalid('firstName')">Le prénom est requis.</span>
+            <label class="field-label">Prénom(s) <span class="required">*</span></label>
+
+            <div formArrayName="firstNames">
+              <div *ngFor="let ctrl of firstNames.controls; let i = index" class="firstname-row">
+                <input [id]="'firstName' + i"
+                       type="text"
+                       class="field-input"
+                       [formControlName]="i.toString()"
+                       [placeholder]="i === 0 ? 'Marie' : 'Prénom ' + (i + 1)"
+                       [class.field-input--error]="isFirstNameInvalid(i)">
+                <button type="button" class="btn-remove-firstname"
+                        *ngIf="firstNames.length > 1"
+                        (click)="removeFirstName(i)"
+                        title="Supprimer ce prénom">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+                  </svg>
+                </button>
+              </div>
+              <span class="field-error" *ngIf="firstNames.invalid && firstNames.touched">Au moins un prénom est requis.</span>
+            </div>
+
+            <button type="button" class="btn-add-firstname" (click)="addFirstName()">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+              </svg>
+              Ajouter un prénom
+            </button>
           </div>
         </div>
       </div>
@@ -207,8 +229,7 @@
           Retour
         </button>
         <button type="submit" class="btn-submit" [disabled]="form.invalid || isLoading">
-          <span *ngIf="!isLoading">Créer mon compte</span>
-          <span *ngIf="isLoading" class="spinner"></span>
+          <span>Créer mon compte</span>
         </button>
       </div>
 
@@ -220,5 +241,13 @@
       <a routerLink="/connexion" class="login-link">Se connecter</a>
     </p>
 
+  </div>
+</div>
+
+<!-- Spinner overlay CSS pur -->
+<div class="spinner-overlay" *ngIf="isLoading">
+  <div class="spinner-box">
+    <div class="spinner-ring"></div>
+    <p class="spinner-label">Création du compte en cours…</p>
   </div>
 </div>
