@@ -1,0 +1,13 @@
+<header class="app-header">
+  <div class="logo-wrap">
+    <img src="assets/logo_scouts.jpg" alt="Les Scouts Pluralistes" class="logo">
+  </div>
+  <div class="lang-switcher">
+    <button
+      *ngFor="let lang of langList"
+      [class.active]="lang === currentLang()"
+      (click)="switchLang(lang)">
+      {{ langFlags[lang] }} {{ lang.toUpperCase() }}
+    </button>
+  </div>
+</header>

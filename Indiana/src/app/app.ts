@@ -7,7 +7,7 @@ import {
     TranslateDirective
 } from "@ngx-translate/core";
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { HeaderComponent } from "../header/header";
+import { HeaderComponent } from "./header/header";
 
 @Component({
   selector: 'app-root',

@@ -1,5 +1,6 @@
+<app-header />
 <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" type="ball-clip-rotate" [fullScreen]="true">
     <p style="color: white">{{ "LOGIN.LOADING" | translate }}</p>
 </ngx-spinner>
-<app-header />
-<router-outlet />
+<div class="wrapper"><router-outlet /></div>
+
