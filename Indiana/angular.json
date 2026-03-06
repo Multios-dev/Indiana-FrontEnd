@@ -28,6 +28,10 @@
             ],
             "styles": [
               "src/styles.scss",
+              "node_modules/primeflex/primeflex.css",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/ngx-spinner/animations/ball-fussion.css",
+              "node_modules/ngx-spinner/animations/ball-atom.css",
               "node_modules/ngx-spinner/animations/ball-clip-rotate.css"
             ]
           },

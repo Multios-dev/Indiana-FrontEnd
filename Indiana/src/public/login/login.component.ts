@@ -1,28 +1,34 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterModule],
+  imports: [
+    CommonModule,
+    NgxSpinnerModule,
+    ReactiveFormsModule,
+    RouterModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-  showPassword = signal(false);
-  loading = signal(false);
-  error: string | null = null;
-  loginForm: FormGroup;
+  private _loading = inject(NgxSpinnerService);
+  
+  public error: string | null = null;
+  public loginForm: FormGroup;
+  public showPassword = signal(false);
 
   constructor(
-    private fb: FormBuilder,
-    private auth: AuthService,
-    private router: Router,
+    private _fb: FormBuilder,
+    private _auth: AuthService,
+    private _router: Router,
   ) {
-    this.loginForm = this.fb.group({
+    this.loginForm = this._fb.group({
       username: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
     });
@@ -41,18 +47,21 @@ export class LoginComponent {
     }
 
     const { username, password } = this.loginForm.value;
-    this.loading.set(true);
+    this._loading.show();
+    setTimeout(() => {
+      this._loading.hide();
+    },500);
 
-    this.auth.login(username!, password!).subscribe({
-      next: () => {
-        this.loading.set(false);
-        this.router.navigate(['/auth']);
-      },
-      error: () => {
-        this.loading.set(false);
-        this.error = 'Identifiants invalides';
-      },
-    });
+    // this.auth.login(username!, password!).subscribe({
+    //   next: () => {
+    //     this._loading.hide();
+    //     this.router.navigate(['/auth']);
+    //   },
+    //   error: () => {
+    //     this._loading.hide();
+    //     this.error = 'Identifiants invalides';
+    //   },
+    // });
   }
 
   get username() {

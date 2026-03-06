@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import {
@@ -7,6 +7,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-forgot-password',
@@ -16,9 +17,10 @@ import {
   styleUrls: ['./forgot-password.component.scss'],
 })
 export class ForgotPasswordComponent {
-  form: FormGroup;
-  isLoading = false;
-  emailSent = false;
+  private _loading = inject(NgxSpinnerService);
+
+  public form: FormGroup;
+  public emailSent = false;
 
   constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) {
     this.form = this.fb.group({
@@ -36,7 +38,7 @@ export class ForgotPasswordComponent {
 
     if (this.form.invalid) return;
 
-    this.isLoading = true;
+    this._loading.show();
 
     // TODO: replace with real API call
     // The backend should send a password-reset email to form.value.email
@@ -44,7 +46,7 @@ export class ForgotPasswordComponent {
 
     setTimeout(() => {
       this.emailSent = true;
-      this.isLoading = false;
+      this._loading.hide();
       this.cdr.detectChanges();
     }, 1500);
   }

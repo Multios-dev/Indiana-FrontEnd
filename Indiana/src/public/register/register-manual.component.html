@@ -228,7 +228,7 @@
           </svg>
           Retour
         </button>
-        <button type="submit" class="btn-submit" [disabled]="form.invalid || isLoading">
+        <button type="submit" class="btn-submit" [disabled]="form.invalid">
           <span>Créer mon compte</span>
         </button>
       </div>
@@ -241,13 +241,5 @@
       <a routerLink="/connexion" class="login-link">Se connecter</a>
     </p>
 
-  </div>
-</div>
-
-<!-- Spinner overlay CSS pur -->
-<div class="spinner-overlay" *ngIf="isLoading">
-  <div class="spinner-box">
-    <div class="spinner-ring"></div>
-    <p class="spinner-label">Création du compte en cours…</p>
   </div>
 </div>

@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import {
@@ -8,6 +8,7 @@ import {
   FormArray,
   Validators,
 } from '@angular/forms';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-register-manual',
@@ -18,8 +19,8 @@ import {
 })
 export class RegisterManualComponent {
   form: FormGroup;
-  isLoading = false;
-  accountCreated = false;
+  private _loading = inject(NgxSpinnerService);
+  public accountCreated = false;
 
   constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) {
     this.form = this.fb.group({
@@ -68,7 +69,7 @@ export class RegisterManualComponent {
       return;
     }
 
-    this.isLoading = true;
+    this._loading.show();
 
     // TODO: replace with real API call
     // The backend should:
@@ -80,7 +81,7 @@ export class RegisterManualComponent {
 
     setTimeout(() => {
       this.accountCreated = true;
-      this.isLoading = false;
+      this._loading.hide();
       this.cdr.detectChanges();
     }, 1500);
   }
