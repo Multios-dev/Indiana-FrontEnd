@@ -6,8 +6,8 @@
     
 
     <!-- Title -->
-    <h1 class="title">Se connecter</h1>
-    <p class="subtitle">Accédez à votre espace Indiana</p>
+    <h1 class="title">{{"LOGIN.TITLE" | translate}}</h1>
+    <p class="subtitle">{{"LOGIN.SUBTITLE" | translate}}</p>
 
     <!-- Error -->
     <div *ngIf="error" class="error-banner">
@@ -19,22 +19,22 @@
 
       <!-- Email -->
       <div class="field-group" [class.has-error]="username?.invalid && username?.touched">
-        <label class="field-label">Adresse email</label>
+        <label class="field-label">{{"LOGIN.EMAIL_LABEL" | translate}}</label>
         <input
           type="email"
           formControlName="username"
-          placeholder="prenom.nom@exemple.be"
+          [placeholder]=" 'LOGIN.EMAIL_PLACEHOLDER' | translate"
           class="field-input"
           autocomplete="email"
         >
         <p class="field-hint" *ngIf="username?.invalid && username?.touched">
-          Veuillez entrer une adresse email valide
+          {{ "LOGIN.EMAIL_ERROR" | translate }}
         </p>
       </div>
 
       <!-- Password -->
       <div class="field-group" [class.has-error]="password?.invalid && password?.touched">
-        <label class="field-label">Mot de passe</label>
+        <label class="field-label">{{ "LOGIN.PASSWORD_LABEL" | translate }}</label>
         <div class="input-wrapper">
           <input
             [type]="showPassword() ? 'text' : 'password'"
@@ -54,23 +54,23 @@
           </button>
         </div>
         <p class="field-hint" *ngIf="password?.invalid && password?.touched">
-          Le mot de passe est requis
+          {{ "LOGIN.PASSWORD_ERROR" | translate }}
         </p>
         <div class="forgot-wrap">
-          <a routerLink="/mot-de-passe-oublie" class="forgot-link">Mot de passe oublié ?</a>
+          <a routerLink="/mot-de-passe-oublie" class="forgot-link">{{ "LOGIN.FORGOT_PASSWORD" | translate }}</a>
         </div>
       </div>
 
       <!-- Submit -->
       <button class="submit-btn" (click)="submit()">
-        Se connecter
+        {{ "LOGIN.SUBMIT" | translate }}
       </button>
 
     </form>
 
     <!-- Divider -->
     <div class="divider">
-      <span>ou se connecter avec</span>
+      <span>{{ "LOGIN.DIVIDER" | translate }}</span>
     </div>
 
     <!-- OAuth -->
@@ -86,8 +86,8 @@
 
     <!-- Sign up -->
     <p class="signup-line">
-      Pas encore de compte ?
-      <a routerLink="/inscription" class="signup-link">Créer un compte</a>
+      {{ "LOGIN.NO_ACCOUNT" | translate }}
+      <a routerLink="/inscription" class="signup-link">{{ "LOGIN.CREATE_ACCOUNT" | translate }}</a>
     </p>
 
   </div>

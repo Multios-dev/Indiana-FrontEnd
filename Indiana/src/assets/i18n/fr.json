@@ -1,6 +1,18 @@
 {
   "LOGIN": {
     "LOADING": "Chargement...",
-    "CONNEXION": "Se connecter"
+    "TITLE": "Se connecter",
+    "SUBTITLE": "Accédez à votre espace Indiana",
+    "EMAIL_LABEL": "Adresse email",
+    "EMAIL_PLACEHOLDER": "prenom.nom@exemple.be",
+    "EMAIL_ERROR": "Veuillez entrer une adresse email valide",
+    "PASSWORD_LABEL": "Mot de passe",
+    "PASSWORD_ERROR": "Le mot de passe est requis",
+    "FORGOT_PASSWORD": "Mot de passe oublié ?",
+    "SUBMIT": "Se connecter",
+    "DIVIDER": "ou se connecter avec",
+    "NO_ACCOUNT": "Pas encore de compte ?",
+    "CREATE_ACCOUNT": "Créer un compte",
+    "ERROR_BANNER": "Une erreur est survenue"
   }
 }

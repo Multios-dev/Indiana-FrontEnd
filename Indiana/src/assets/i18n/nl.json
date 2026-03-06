@@ -1,5 +1,18 @@
 {
   "LOGIN": {
-    "LOADING": "Laden..."
+    "LOADING": "Laden...",
+    "TITLE": "Inloggen",
+    "SUBTITLE": "Toegang tot uw Indiana-ruimte",
+    "EMAIL_LABEL": "E-mailadres",
+    "EMAIL_PLACEHOLDER": "voornaam.naam@voorbeeld.be",
+    "EMAIL_ERROR": "Voer een geldig e-mailadres in",
+    "PASSWORD_LABEL": "Wachtwoord",
+    "PASSWORD_ERROR": "Wachtwoord is verplicht",
+    "FORGOT_PASSWORD": "Wachtwoord vergeten?",
+    "SUBMIT": "Inloggen",
+    "DIVIDER": "of inloggen met",
+    "NO_ACCOUNT": "Nog geen account?",
+    "CREATE_ACCOUNT": "Account aanmaken",
+    "ERROR_BANNER": "Er is een fout opgetreden"
   }
 }

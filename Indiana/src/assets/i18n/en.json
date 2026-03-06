@@ -1,5 +1,18 @@
 {
   "LOGIN": {
-    "LOADING": "Loading..."
+    "LOADING": "Loading...",
+    "TITLE": "Sign in",
+    "SUBTITLE": "Access your Indiana space",
+    "EMAIL_LABEL": "Email address",
+    "EMAIL_PLACEHOLDER": "firstname.lastname@example.com",
+    "EMAIL_ERROR": "Please enter a valid email address",
+    "PASSWORD_LABEL": "Password",
+    "PASSWORD_ERROR": "Password is required",
+    "FORGOT_PASSWORD": "Forgot password?",
+    "SUBMIT": "Sign in",
+    "DIVIDER": "or sign in with",
+    "NO_ACCOUNT": "Don't have an account?",
+    "CREATE_ACCOUNT": "Create an account",
+    "ERROR_BANNER": "An error occurred"
   }
 }

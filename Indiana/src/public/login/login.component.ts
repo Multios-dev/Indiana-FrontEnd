@@ -4,6 +4,7 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,9 @@ import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
     CommonModule,
     NgxSpinnerModule,
     ReactiveFormsModule,
-    RouterModule],
+    RouterModule,
+    TranslateModule,
+    TranslatePipe],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
