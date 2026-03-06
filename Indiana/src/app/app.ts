@@ -7,20 +7,14 @@ import {
     TranslateDirective
 } from "@ngx-translate/core";
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { HeaderComponent } from "../header/header";
 
 @Component({
   selector: 'app-root',
-  imports: [NgxSpinnerModule, RouterOutlet,TranslateModule,TranslatePipe],
+  imports: [NgxSpinnerModule, RouterOutlet, TranslateModule, TranslatePipe, HeaderComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
 export class App {
   protected readonly title = signal('Indiana');
-  private _translate = inject(TranslateService);
-
-    constructor() {
-        this._translate.addLangs(['en', 'fr']);
-        this._translate.setFallbackLang('fr');
-        this._translate.use('fr');
-    }
 }

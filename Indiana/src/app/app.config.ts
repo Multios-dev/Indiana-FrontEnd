@@ -15,12 +15,8 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(BrowserAnimationsModule),
     provideHttpClient(),
     provideTranslateService({
-      loader: provideTranslateHttpLoader({
-        prefix: '/assets/i18n/',
-        suffix: '.json'
-      }),
-      fallbackLang: 'fr',
-      lang: 'fr'
+      loader: provideTranslateHttpLoader({prefix:'assets/i18n/', suffix:'.json'}),
+      fallbackLang: 'fr'
     })
   ],
 };
