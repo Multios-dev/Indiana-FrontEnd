@@ -1,6 +1,8 @@
 import { Component, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
+
 import {
   ReactiveFormsModule,
   FormBuilder,
@@ -13,7 +15,12 @@ import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-register-manual',
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule],
+  imports: [
+      CommonModule,
+      RouterModule,
+      ReactiveFormsModule,
+      TranslateModule,
+      TranslatePipe],
   templateUrl: './register-manual.component.html',
   styleUrls: ['./register-manual.component.scss'],
 })
