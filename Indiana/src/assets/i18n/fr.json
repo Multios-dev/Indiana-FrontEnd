@@ -71,5 +71,19 @@
       "ERROR_EMAIL_REQUIRED": "L'adresse e-mail est requise.",
       "ERROR_EMAIL_INVALID": "Adresse e-mail invalide."
     }
+  },
+ "FORGET_PASSWORD": {
+  "SUCCESS_TITLE": "E-mail envoyé !",
+  "SUCCESS_BODY": "Un lien de réinitialisation a été envoyé à",
+  "SUCCESS_HINT": "Cliquez sur le lien dans cet e-mail pour choisir un nouveau mot de passe. Pensez à vérifier vos courriers indésirables si vous ne le recevez pas.",
+  "SUCCESS_BTN": "Retour à la connexion",
+  "TITLE": "Mot de passe oublié ?",
+  "SUBTITLE": "Saisissez votre adresse e-mail et nous vous enverrons un lien pour réinitialiser votre mot de passe.",
+  "EMAIL": "Adresse e-mail",
+  "EMAIL_PLACEHOLDER": "marie.dupont@exemple.be",
+  "ERROR_EMAIL_REQUIRED": "L'adresse e-mail est requise.",
+  "ERROR_EMAIL_INVALID": "Adresse e-mail invalide.",
+  "SUBMIT": "Envoyer le lien de réinitialisation",
+  "BACK": "Retour à la connexion"
   }
 }

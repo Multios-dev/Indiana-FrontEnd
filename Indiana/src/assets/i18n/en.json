@@ -71,5 +71,19 @@
       "ERROR_EMAIL_REQUIRED": "Email address is required.",
       "ERROR_EMAIL_INVALID": "Invalid email address."
     }
+  },
+  "FORGET_PASSWORD": {
+  "SUCCESS_TITLE": "Email sent!",
+  "SUCCESS_BODY": "A reset link has been sent to",
+  "SUCCESS_HINT": "Click the link in this email to choose a new password. Check your spam folder if you don't receive it.",
+  "SUCCESS_BTN": "Back to login",
+  "TITLE": "Forgot your password?",
+  "SUBTITLE": "Enter your email address and we'll send you a link to reset your password.",
+  "EMAIL": "Email address",
+  "EMAIL_PLACEHOLDER": "marie.dupont@example.com",
+  "ERROR_EMAIL_REQUIRED": "Email address is required.",
+  "ERROR_EMAIL_INVALID": "Invalid email address.",
+  "SUBMIT": "Send reset link",
+  "BACK": "Back to login"
   }
 }
