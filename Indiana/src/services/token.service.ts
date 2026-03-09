@@ -3,7 +3,7 @@ import * as jwt_decode from 'jwt-decode';
 import { BehaviorSubject } from 'rxjs';
 import { StorageService } from './storage.service';
 import { UserInfos } from '../models/user-info';
-import { ExternalInfos } from '../models/external-infos';
+//import { ExternalInfos } from '../models/external-infos';
 
 @Injectable({
   providedIn: 'root',
@@ -54,20 +54,20 @@ export class TokenService {
     };
   }
 
-  public getAccessKeys(token: string): ExternalInfos | null {
-    let jwt: any;
+//   public getAccessKeys(token: string): ExternalInfos | null {
+//     let jwt: any;
 
-    if (token === '') {
-      return null;
-    }
+//     if (token === '') {
+//       return null;
+//     }
 
-    jwt = jwt_decode.jwtDecode(token);
-    return {
-      apiAccessToken: jwt.ApiKey,
-      bookId: jwt.BookId,
-      googleAccessToken: jwt.GoogleToken,
-    };
-  }
+//     jwt = jwt_decode.jwtDecode(token);
+//     return {
+//       apiAccessToken: jwt.ApiKey,
+//       bookId: jwt.BookId,
+//       googleAccessToken: jwt.GoogleToken,
+//     };
+//   }
 
   // Récupère les rôles.
   get role() {

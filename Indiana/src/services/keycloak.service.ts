@@ -3,7 +3,7 @@ import { inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../environment/environment';
 import { KeyCloakAdmin } from '../models/keycloak/keycloak-admin';
-import { LoginForm } from '../shared/account/models/login-form';
+//import { LoginForm } from '../shared/account/models/login-form';
 import { KeycloakConnectionReturn, KeycloakConnectionReturnOtp } from '../models/keycloak/keycloak-connection-return';
 import { KeyCloakLogin } from '../models/keycloak/keycloak-login';
 import { KeyCloakUserGroup } from '../models/keycloak/keycloak-user-group';
@@ -46,10 +46,10 @@ export class KeyCloakService {
     return this.http.post<KeycloakConnectionReturnOtp>(this._url + '/login', credentials);
   }
 
-  public preLogin(credentials: LoginForm): Observable<KeycloakConnectionReturn> {
-    this._storageService.removeItem('token');
-    return this.http.post<KeycloakConnectionReturn>(this._url + '/pre_login', credentials);
-  }
+//   public preLogin(credentials: LoginForm): Observable<KeycloakConnectionReturn> {
+//     this._storageService.removeItem('token');
+//     return this.http.post<KeycloakConnectionReturn>(this._url + '/pre_login', credentials);
+//   }
 
   public requestResetPassword(email: string): Observable<boolean> {
     const params = new HttpParams().set('email', email);
