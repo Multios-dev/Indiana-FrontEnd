@@ -33,6 +33,7 @@
     "@ngx-translate/http-loader": "^17.0.0",
     "@primeuix/themes": "^2.0.3",
     "i18next": "^25.8.14",
+    "jwt-decode": "^4.0.0",
     "ngx-spinner": "^21.0.0",
     "primeflex": "^4.0.0",
     "primeicons": "^7.0.0",
