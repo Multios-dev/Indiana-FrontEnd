@@ -1,0 +1,91 @@
+@if(!needOtp && !isNeedResetPassword){
+  <div class="welcome">{{ 'LOGIN.CONNECT' | translate }}</div>
+  <form [formGroup]="loginForm" class="flex flex-column align-items-center justify-content-center" (keydown.enter)="$event.preventDefault(); login()">
+    <div class="wrapper">
+      <div class="mt-5">
+        <p-iconField iconPosition="right">
+          <p-inputIcon styleClass="pi pi-envelope" />
+          <input autofocus="false"
+          autocomplete="email"
+          formControlName="username"
+          pInputText
+          [placeholder]="'LOGIN.EMAIL' | translate"
+          type="email" />
+        </p-iconField>
+        <small *ngIf="hasErrorAndTouched(loginForm!, 'username', 'required')" class="p-error">
+          {{ "FORM_VALIDATOR.EMAIL_REQUIRED" | translate }}
+        </small>
+        <small *ngIf="hasErrorAndTouched(loginForm!, 'username', 'pattern')" class="p-error">
+          {{ "FORM_VALIDATOR.EMAIL_INVALID" | translate }}
+        </small>
+      </div>
+      
+      <div class="mt-3">
+        <p-password autocomplete="current-password" autofocus="false"
+          formControlName="password"
+          [placeholder]="'LOGIN.PASSWORD' | translate"
+          [feedback]="false"
+          [toggleMask]="true">
+        </p-password>
+        <small *ngIf="hasErrorAndTouched(loginForm!, 'password', 'required')" class="p-error">
+          {{ "FORM_VALIDATOR.PASSWORD_REQUIRED" | translate }}
+        </small>
+        <small *ngIf="hasErrorAndTouched(loginForm!, 'password', 'pattern')" class="p-error">
+          {{ "FORM_VALIDATOR.PASSWORD_INVALID" | translate }}
+        </small>
+      </div>
+      <div class="mt-1">
+        <label class="font-italic text-sm cursor-pointer text-gray-400" (click)="askResetPassword()">{{'LOGIN.FORGOTPASSWORD' | translate}}</label>
+      </div>
+      <div class="btns flex flex-row justify-content-center">
+        <p-button class="w-full" icon="pi pi-sign-in" [label]="'LOGIN.LOGIN' | translate" [disabled]="loginForm.invalid" (onClick)="login()"></p-button>
+      </div>
+    </div>
+  </form>
+}
+@else if(isNeedResetPassword) {
+  <div class="welcome">{{ 'LOGIN.FORGOTPASSWORD' | translate }}</div>
+  <div class="mt-3">
+    <label class="text-sm text-gray-400">{{ 'LOGIN.FORGOTPASSWORDEXPLAIN' | translate }}</label>
+  </div>
+  <div class="mt-3">
+    <input 
+      autofocus="true"
+      autocomplete="email"
+      [(ngModel)]="resetEmail"
+      pInputText
+      [placeholder]="'LOGIN.EMAIL' | translate"
+      type="email" 
+      (keydown.enter)="$event.preventDefault(); sendRequestEmail()"/>
+  </div>
+  <div class="mt-3">
+    <p-button
+      icon="pi pi-send"
+      [label]="'LOGIN.SEND' | translate"
+      (click)="sendRequestEmail()"></p-button>
+  </div>
+}
+@else {
+  <div class="welcome">{{ 'LOGIN.OTP' | translate }}</div>
+  <div class="card flex flex-column justify-content-center align-items-center mt-3">
+    <i class="pi pi-mobile"></i>
+    <div class="mt-3">
+      {{'LOGIN.OTPEXPLAIN' | translate}}
+    </div>
+    <p-inputOtp [(ngModel)]="otp" [length]="6" class="mt-3" (keydown.enter)="$event.preventDefault(); validateOtp()">
+      <ng-template pTemplate="input" let-token let-events="events">
+          <input 
+              #otp
+              pInputText
+              (input)="events.input($event)" 
+              (keydown)="events.keydown($event)" 
+              type="text" 
+              [attr.value]="token" 
+              [maxLength]="1" />
+      </ng-template>
+    </p-inputOtp>
+    <div class="btns flex flex-row justify-content-center">
+      <p-button class="w-full" icon="pi pi-sign-in" [label]="'LOGIN.VALIDATE' | translate" [disabled]="!otp || otp.length !== 6" (onClick)="validateOtp()"></p-button>
+    </div>
+  </div>
+}

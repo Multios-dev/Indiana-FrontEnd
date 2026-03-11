@@ -1,0 +1,8 @@
+<div style="margin: auto;">
+    <!-- <div class="welcome">{{ (!islogin ? 'LOGIN.CONNECT' : 'ACCOUNT.CREATEACCOUNT') | translate }}</div> -->
+    <router-outlet></router-outlet>
+    <div class="flex justify-content-center mt-2" *ngIf="!isOtp">
+        <p-button [outlined]="true" size="small" class="w-full swap-btn" (click)="login()" *ngIf="islogin || isNeedResetPassword">{{ "ACCOUNT.BACK" | translate }}</p-button>
+        <!-- <p-button [text]="true" size="small" class="w-full swap-btn" (click)="signup()" *ngIf="!islogin && !isNeedResetPassword">{{ "ACCOUNT.SIGNUP" | translate }}</p-button> -->
+    </div>
+</div>

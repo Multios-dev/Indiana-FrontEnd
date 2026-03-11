@@ -1,0 +1,42 @@
+@import "../../../../variables.scss";
+
+.btns {
+    margin-top: 15px;
+    width: 100%;
+}
+
+.welcome {
+  font-weight: lighter;
+  text-align: center;
+}
+
+.wrapper {
+    width: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: $colorPrimary;
+}
+
+a:hover {
+    color: $colorLighter;
+}
+
+i {
+    font-size: 75px;
+}
+
+:host ::ng-deep .p-inputtext,
+:host ::ng-deep .p-password {
+    width: 100%;
+}
+
+::ng-deep .p-button {
+    width: 100%;
+    justify-content: center
+}
+
+/* SMARTPHONES */
+@media (max-width: 767px) {
+}

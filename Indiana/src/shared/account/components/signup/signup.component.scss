@@ -1,0 +1,52 @@
+@import "../../../../variables.scss";
+
+.btns {
+    margin-top: 15px;
+    width: 100%;
+}
+
+.welcome {
+    font-weight: lighter;
+    text-align: center;
+}
+
+.wrapper {
+    width: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: $colorPrimary;
+}
+
+a:hover {
+    color: $colorLighter;
+}
+
+:host ::ng-deep .p-inputtext,
+:host ::ng-deep .p-password {
+    width: 100%;
+}
+
+::ng-deep .p-button {
+    width: 100%;
+    justify-content: center
+}
+
+::ng-deep .p-stepper .p-stepper-panels {
+    max-height: 400px;
+    overflow: auto;
+    width: calc(100% + 15px);
+}
+
+/* SMARTPHONES */
+@media (max-width: 767px) {
+    .btns {
+        margin-top: 15px;
+        width: 95%;
+    }
+    
+    form {
+        width: 95%;
+    }
+}
