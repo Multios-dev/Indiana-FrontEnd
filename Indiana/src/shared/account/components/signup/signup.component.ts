@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { PasswordValidator } from '../../../validators/password.validator';
+import { PasswordValidator } from '../../validators/password.validator';
 import { AuthService } from '../../../../services/auth.service';
 import { take } from 'rxjs';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
@@ -49,7 +49,7 @@ export class SignupComponent implements OnInit {
   private _emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
   private _pswRegex = /^(?=.*[!@#=$%^&*(),.?":{}|<>])(?=.*\d)(?=.*[A-Z]).{6,}$/;
 
-  public active: number = 0;
+  public active: number | undefined = 0;
   public hasErrorAndTouched = hasErrorAndTouched;
   public companyForm: FormGroup = new FormGroup({});
   public userForm: FormGroup = new FormGroup({});

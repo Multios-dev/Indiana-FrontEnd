@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal, WritableSignal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
@@ -14,6 +14,8 @@ interface JwtResponse {
 export class AuthService {
   private readonly tokenKey = 'jwt_token';
 
+  public loggedIn: WritableSignal<boolean> = signal(false);
+  
   constructor(private http: HttpClient) {}
 
   /**
@@ -56,6 +58,13 @@ export class AuthService {
   getRoles(): string[] {
     const payload = this.getDecodedToken();
     return (payload && payload.roles) || [];
+  }
+
+  public setLoggedIn() {
+    this.loggedIn.set(true);
+    setTimeout(() => {
+      this.loggedIn.set(false);
+    }, 0);
   }
 
   private setToken(token: string) {

@@ -12,11 +12,13 @@ import { KeyCloakUser } from '../models/keycloak/keycloak-user';
 import { KeyCloakResetPassword } from '../models/keycloak/keycloak-reset-password';
 import { KeyCloakRole } from '../models/keycloak/keycloak-role';
 import { StorageService } from './storage.service';
+import { LoginForm } from '../shared/account/models/login-form';
 
 @Injectable({
   providedIn: 'root'
 })
 export class KeyCloakService {
+
   private readonly _url = environment.baseKeyCloakUrl + 'users';
 
   private _storageService = inject(StorageService);
@@ -46,10 +48,10 @@ export class KeyCloakService {
     return this.http.post<KeycloakConnectionReturnOtp>(this._url + '/login', credentials);
   }
 
-//   public preLogin(credentials: LoginForm): Observable<KeycloakConnectionReturn> {
-//     this._storageService.removeItem('token');
-//     return this.http.post<KeycloakConnectionReturn>(this._url + '/pre_login', credentials);
-//   }
+  public preLogin(credentials: LoginForm): Observable<KeycloakConnectionReturn> {
+    this._storageService.removeItem('token');
+    return this.http.post<KeycloakConnectionReturn>(this._url + '/pre_login', credentials);
+  }
 
   public requestResetPassword(email: string): Observable<boolean> {
     const params = new HttpParams().set('email', email);

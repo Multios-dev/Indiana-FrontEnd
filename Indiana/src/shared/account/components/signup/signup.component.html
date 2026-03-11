@@ -1,96 +1,88 @@
 <div class="welcome">{{ 'ACCOUNT.CREATEACCOUNT' | translate }}</div>
 <div class="flex flex-column align-items-center justify-content-center">
     <div class="wrapper">
-        <p-stepper [linear]="true" [(activeStep)]="active">
-            <p-stepperPanel>
-                <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
-                    <button class="bg-transparent border-none inline-flex flex-column gap-2" (click)="onClick.emit()">
-                        <span
-                            class="border-round border-2 w-3rem h-3rem inline-flex align-items-center justify-content-center"
-                            [ngClass]="{
-                                'bg-primary border-primary': index == active,
-                                'surface-border': index != active
-                            }"
-                        >
-                            <i class="pi pi-user"></i>
-                        </span>
-                    </button>
-                </ng-template>
-                <ng-template pTemplate="content" let-nextCallback="nextCallback">
-                    <form [formGroup]="userForm">
-                        <div class="flex flex-column gap-2 mx-auto" style="min-height: 16rem">
-                            <div class="field p-fluid">
-                                <input pInputText formControlName="first_name" type="text" [placeholder]="'SIGNUP.FIRSTNAME' | translate" />
+        <p-stepper [value]="active" (valueChange)="active = $event" [linear]="true">
+            <p-step-list>
+                <p-step [value]="1">
+                    <i class="pi pi-user"></i>
+                </p-step>
+                <p-step [value]="2">
+                    <i class="pi pi-building"></i>
+                </p-step>
+            </p-step-list>
+
+            <p-step-panels>
+                <!-- STEP 1 : Informations utilisateur -->
+                <p-step-panel [value]="1">
+                    <ng-template #content let-activateCallback="activateCallback">
+                        <form [formGroup]="userForm">
+                            <div class="flex flex-column gap-2 mx-auto" style="min-height: 16rem">
+                                <div class="field p-fluid">
+                                    <input pInputText formControlName="first_name" type="text" [placeholder]="'SIGNUP.FIRSTNAME' | translate" />
+                                </div>
+                                <div class="field p-fluid">
+                                    <input pInputText formControlName="last_name" type="text" [placeholder]="'SIGNUP.LASTNAME' | translate" />
+                                </div>
+                                <div class="field p-fluid">
+                                    <input pInputText formControlName="username" type="text" [placeholder]="'SIGNUP.USERNAME' | translate" />
+                                </div>
+                                <div class="field p-fluid">
+                                    <input pInputText formControlName="email" type="email" [placeholder]="'SIGNUP.EMAIL' | translate" />
+                                </div>
+                                <div class="field p-fluid">
+                                    <input pInputText formControlName="telephone" type="text" [placeholder]="'SIGNUP.TELEPHONE' | translate" />
+                                </div>
+                                <div class="field p-fluid">
+                                    <p-password formControlName="password" [feedback]="false" [toggleMask]="true" [placeholder]="'SIGNUP.PASSWORD' | translate" />
+                                </div>
+                                <div class="field p-fluid">
+                                    <p-password formControlName="passwordConfirm" [feedback]="false" [toggleMask]="true" [placeholder]="'SIGNUP.CONFIRMPASSWORD' | translate" />
+                                </div>
                             </div>
-                            <div class="field p-fluid">
-                                <input pInputText formControlName="last_name" type="text" [placeholder]="'SIGNUP.LASTNAME' | translate" />
-                            </div>
-                            <div class="field p-fluid">
-                                <input pInputText formControlName="username" type="text" [placeholder]="'SIGNUP.USERNAME' | translate" />
-                            </div>
-                            <div class="field p-fluid">
-                                <input pInputText formControlName="email" type="email" [placeholder]="'SIGNUP.EMAIL' | translate" />
-                            </div>
-                            <div class="field p-fluid">
-                                <input pInputText formControlName="telephone" type="text" [placeholder]="'SIGNUP.TELEPHONE' | translate" />
-                            </div>
-                            <div class="field p-fluid">
-                                <p-password formControlName="password" autofocus="false" [feedback]="false" [toggleMask]="true" [placeholder]="'SIGNUP.PASSWORD' | translate" />
-                            </div>
-                            <div class="field p-fluid">
-                                <p-password formControlName="passwordConfirm" autofocus="false" [feedback]="false" [toggleMask]="true" [placeholder]="'SIGNUP.CONFIRMPASSWORD' | translate" />
-                            </div>
+                        </form>
+                        <div class="btns flex flex-row justify-content-center">
+                            <p-button class="w-full" [label]="'SIGNUP.NEXT' | translate"
+                                [disabled]="userForm.invalid"
+                                (click)="activateCallback(2)">
+                            </p-button>
                         </div>
-                    </form>
-                    <div class="btns flex flex-row justify-content-center">
-                        <p-button class="w-full" [label]="'SIGNUP.NEXT' | translate" [disabled]="userForm.invalid"
-                            (click)="nextCallback.emit()"></p-button>
-                    </div>
-                </ng-template>
-            </p-stepperPanel>
-            <p-stepperPanel>
-                <ng-template pTemplate="header" let-onClick="onClick" let-index="index">
-                    <button class="bg-transparent border-none inline-flex flex-column gap-2" (click)="onClick.emit()">
-                        <span
-                            class="border-round border-2 w-3rem h-3rem inline-flex align-items-center justify-content-center"
-                            [ngClass]="{
-                                'bg-primary border-primary': index == active,
-                                'surface-border': index != active
-                            }"
-                        >
-                            <i class="pi pi-building"></i>
-                        </span>
-                    </button>
-                </ng-template>
-                <ng-template pTemplate="content" let-prevCallback="prevCallback">
-                    <form [formGroup]="companyForm">
-                        <div class="flex flex-column gap-2 mx-auto" style="min-height: 16rem; max-width: 20rem">
-                            <div class="field p-fluid">
-                                <input pInputText formControlName="company_number"  type="text" [placeholder]="'SIGNUP.COMPANYNUMBER' | translate" />
+                    </ng-template>
+                </p-step-panel>
+
+                <!-- STEP 2 : Informations société -->
+                <p-step-panel [value]="2">
+                    <ng-template #content let-activateCallback="activateCallback">
+                        <form [formGroup]="companyForm">
+                            <div class="flex flex-column gap-2 mx-auto" style="min-height: 16rem; max-width: 20rem">
+                                <div class="field p-fluid">
+                                    <input pInputText formControlName="company_number" type="text" [placeholder]="'SIGNUP.COMPANYNUMBER' | translate" />
+                                </div>
+                                <div class="field p-fluid">
+                                    <input pInputText formControlName="company_name" type="text" [placeholder]="'SIGNUP.COMPANYNAME' | translate" />
+                                </div>
+                                <div class="field p-fluid">
+                                    <input pInputText formControlName="company_email" type="text" [placeholder]="'SIGNUP.COMPANYEMAIL' | translate" />
+                                </div>
+                                <div class="field p-fluid">
+                                    <input pInputText formControlName="company_address" type="text" [placeholder]="'SIGNUP.COMPANYADDRESS' | translate" />
+                                </div>
+                                <div class="field p-fluid">
+                                    <input pInputText formControlName="company_country" type="text" [placeholder]="'SIGNUP.COMPANYCOUNTRY' | translate" />
+                                </div>
+                                <div class="field p-fluid">
+                                    <input pInputText formControlName="company_postal_code" type="text" [placeholder]="'SIGNUP.COMPANYPOSTALCODE' | translate" />
+                                </div>
                             </div>
-                            <div class="field p-fluid">
-                                <input pInputText formControlName="company_name"  type="text" [placeholder]="'SIGNUP.COMPANYNAME' | translate" />
-                            </div>
-                            <div class="field p-fluid">
-                                <input pInputText formControlName="company_email"  type="text" [placeholder]="'SIGNUP.COMPANYEMAIL' | translate" />
-                            </div>
-                            <div class="field p-fluid">
-                                <input pInputText formControlName="company_address"  type="text" [placeholder]="'SIGNUP.COMPANYADDRESS' | translate" />
-                            </div>
-                            <div class="field p-fluid">
-                                <input pInputText formControlName="company_country"  type="text" [placeholder]="'SIGNUP.COMPANYCOUNTRY' | translate" />
-                            </div>
-                            <div class="field p-fluid">
-                                <input pInputText formControlName="company_postal_code"  type="text" [placeholder]="'SIGNUP.COMPANYPOSTALCODE' | translate" />
-                            </div>
+                        </form>
+                        <div class="btns flex flex-row justify-content-center">
+                            <p-button class="w-full" [label]="'SIGNUP.SEND' | translate"
+                                [disabled]="companyForm.invalid"
+                                (click)="signup()">
+                            </p-button>
                         </div>
-                    </form>
-                    <div class="btns flex flex-row justify-content-center">
-                        <p-button class="w-full" [label]="'SIGNUP.SEND' | translate" [disabled]="companyForm.invalid"
-                            (click)="signup()"></p-button>
-                    </div>
-                </ng-template>
-            </p-stepperPanel>
+                    </ng-template>
+                </p-step-panel>
+            </p-step-panels>
         </p-stepper>
     </div>
 </div>

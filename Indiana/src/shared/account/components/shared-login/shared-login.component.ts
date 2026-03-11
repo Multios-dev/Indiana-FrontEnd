@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, inject, OnInit } from '@angular/core';
+import { Component, effect, inject, OnInit, signal, WritableSignal } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ButtonModule } from 'primeng/button';
@@ -15,7 +15,6 @@ import { ToastService } from '../../../../services/toast.service';
 import { TokenService } from '../../../../services/token.service';
 import { hasErrorAndTouched } from '../../../../utils/methods-utils';
 import { CardModule } from 'primeng/card';
-import { MessagesModule } from 'primeng/messages';
 import { KeyCloakService } from '../../../../services/keycloak.service';
 import { KeycloakConnectionReturn, KeycloakConnectionReturnOtp } from '../../../../models/keycloak/keycloak-connection-return';
 import { InputOtpModule } from 'primeng/inputotp';
@@ -34,7 +33,6 @@ import { take } from 'rxjs';
     InputIconModule,
     InputOtpModule,
     InputTextModule,
-    MessagesModule,
     NgxSpinnerModule,
     PasswordModule,
     ReactiveFormsModule,
@@ -56,6 +54,7 @@ export class SharedLoginComponent implements OnInit {
   
   public hasErrorAndTouched = hasErrorAndTouched;
   public isNeedResetPassword: boolean = this._keycloakService.isResetPassword();
+  public loggedIn: WritableSignal<boolean> = signal(false);
   public loginForm: FormGroup = new FormGroup({});
   public needOtp: boolean = false;
   public otp: string = '';
@@ -130,6 +129,12 @@ export class SharedLoginComponent implements OnInit {
       });
   }
 
+    public setLoggedIn() {
+    this.loggedIn.set(true);
+    setTimeout(() => {
+      this.loggedIn.set(false);
+    }, 0);
+  }
   public validateOtp() {
     this._spinnerService.show();
     const loginFormOtp: KeyCloakLogin = this.loginForm.getRawValue();
