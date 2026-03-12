@@ -1,4 +1,4 @@
-import { Component, signal, inject } from '@angular/core';
+import { Component, signal, inject, EventEmitter, Output, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { ShortLanguages } from '../../enum/languages.enum';
@@ -27,4 +27,6 @@ export class HeaderComponent {
     this._translate.use(lang);
     this.currentLang.set(lang);
   }
+  @Input() sidebarOpen = false;
+  @Output() menuToggle = new EventEmitter<void>();
 }

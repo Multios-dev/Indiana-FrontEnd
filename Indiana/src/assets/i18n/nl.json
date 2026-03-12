@@ -24,7 +24,6 @@
     "MANUAL_DESC": "Vul uw persoonlijke gegevens handmatig in en kies een wachtwoord.",
     "ALREADY_ACCOUNT": "Al een account?",
     "LOGIN_LINK": "Inloggen",
-
     "MANUAL": {
       "SUBTITLE": "Vul uw persoonlijke gegevens in",
       "SUCCESS_TITLE": "Account succesvol aangemaakt!",
@@ -72,18 +71,41 @@
       "ERROR_EMAIL_INVALID": "Ongeldig e-mailadres."
     }
   },
-"FORGET_PASSWORD": {
-  "SUCCESS_TITLE": "E-mail verzonden!",
-  "SUCCESS_BODY": "Er is een resetlink verzonden naar",
-  "SUCCESS_HINT": "Klik op de link in deze e-mail om een nieuw wachtwoord te kiezen. Controleer uw spammap als u de e-mail niet ontvangt.",
-  "SUCCESS_BTN": "Terug naar inloggen",
-  "TITLE": "Wachtwoord vergeten?",
-  "SUBTITLE": "Voer uw e-mailadres in en wij sturen u een link om uw wachtwoord opnieuw in te stellen.",
-  "EMAIL": "E-mailadres",
-  "EMAIL_PLACEHOLDER": "marie.dupont@voorbeeld.be",
-  "ERROR_EMAIL_REQUIRED": "E-mailadres is verplicht.",
-  "ERROR_EMAIL_INVALID": "Ongeldig e-mailadres.",
-  "SUBMIT": "Resetlink versturen",
-  "BACK": "Terug naar inloggen"
+  "FORGET_PASSWORD": {
+    "SUCCESS_TITLE": "E-mail verzonden!",
+    "SUCCESS_BODY": "Er is een resetlink verzonden naar",
+    "SUCCESS_HINT": "Klik op de link in deze e-mail om een nieuw wachtwoord te kiezen. Controleer uw spammap als u de e-mail niet ontvangt.",
+    "SUCCESS_BTN": "Terug naar inloggen",
+    "TITLE": "Wachtwoord vergeten?",
+    "SUBTITLE": "Voer uw e-mailadres in en wij sturen u een link om uw wachtwoord opnieuw in te stellen.",
+    "EMAIL": "E-mailadres",
+    "EMAIL_PLACEHOLDER": "marie.dupont@voorbeeld.be",
+    "ERROR_EMAIL_REQUIRED": "E-mailadres is verplicht.",
+    "ERROR_EMAIL_INVALID": "Ongeldig e-mailadres.",
+    "SUBMIT": "Resetlink versturen",
+    "BACK": "Terug naar inloggen"
+  },
+  "DASHBOARD": {
+    "UNIT": {
+      "JOIN": "Sluit je aan bij een eenheid",
+      "JOINSUB": "Stuur een voorinschrijvingsverzoek naar een scoutorganisatie.",
+      "PREINSCRIBE": "Vooraf inschrijven"
+    },
+    "NOTIFICATION": {
+      "TITLE": "Meldingen"
+    },
+    "MINORS": {
+      "TITLE": "Minderjarigen onder mijn verantwoordelijkheid",
+      "VIEW": "Zie het bestand",
+      "VIEWS": "Zie het bestand"
+    },
+    "MYVIEW": "Mijn dossier",
+    "MYCOTISATIONS": "Betaal mijn contributie"
+  },
+  "SIDEBAR": {
+    "DASHBOARD": "Dashboard",
+    "PROFILE": "Mijn profiel",
+    "EVENT": "Evenementen",
+    "FACTURATION": "Facturering"
   }
 }

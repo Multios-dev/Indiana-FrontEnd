@@ -24,7 +24,6 @@
     "MANUAL_DESC": "Manually enter your personal information and choose a password.",
     "ALREADY_ACCOUNT": "Already have an account?",
     "LOGIN_LINK": "Sign in",
-
     "MANUAL": {
       "SUBTITLE": "Fill in your personal information",
       "SUCCESS_TITLE": "Account created successfully!",
@@ -73,17 +72,40 @@
     }
   },
   "FORGET_PASSWORD": {
-  "SUCCESS_TITLE": "Email sent!",
-  "SUCCESS_BODY": "A reset link has been sent to",
-  "SUCCESS_HINT": "Click the link in this email to choose a new password. Check your spam folder if you don't receive it.",
-  "SUCCESS_BTN": "Back to login",
-  "TITLE": "Forgot your password?",
-  "SUBTITLE": "Enter your email address and we'll send you a link to reset your password.",
-  "EMAIL": "Email address",
-  "EMAIL_PLACEHOLDER": "marie.dupont@example.com",
-  "ERROR_EMAIL_REQUIRED": "Email address is required.",
-  "ERROR_EMAIL_INVALID": "Invalid email address.",
-  "SUBMIT": "Send reset link",
-  "BACK": "Back to login"
+    "SUCCESS_TITLE": "Email sent!",
+    "SUCCESS_BODY": "A reset link has been sent to",
+    "SUCCESS_HINT": "Click the link in this email to choose a new password. Check your spam folder if you don't receive it.",
+    "SUCCESS_BTN": "Back to login",
+    "TITLE": "Forgot your password?",
+    "SUBTITLE": "Enter your email address and we'll send you a link to reset your password.",
+    "EMAIL": "Email address",
+    "EMAIL_PLACEHOLDER": "marie.dupont@example.com",
+    "ERROR_EMAIL_REQUIRED": "Email address is required.",
+    "ERROR_EMAIL_INVALID": "Invalid email address.",
+    "SUBMIT": "Send reset link",
+    "BACK": "Back to login"
+  },
+  "DASHBOARD": {
+    "UNIT": {
+      "JOIN": "Join a unit",
+      "JOINSUB": "Send a pre-registration request to a Scout organization.",
+      "PREINSCRIBE": "Pre-register"
+    },
+    "NOTIFICATION": {
+      "TITLE": "Notifications"
+    },
+    "MINORS": {
+      "TITLE": "Minors under my responsibility",
+      "VIEW": "See the file",
+      "VIEWS": "See the file"
+    },
+    "MYVIEW": "My file",
+    "MYCOTISATIONS": "Pay my dues"
+  },
+  "SIDEBAR": {
+    "DASHBOARD": "Dashboard",
+    "PROFILE": "My profile",
+    "EVENT": "Events",
+    "FACTURATION": "Billing"
   }
 }

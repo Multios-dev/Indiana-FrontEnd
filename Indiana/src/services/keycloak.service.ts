@@ -59,37 +59,6 @@ export class KeyCloakService {
   }
   //#endregion
 
-  //#region ROLES
-  public addRole(role: string): Observable<boolean> {
-    const params = new HttpParams().set('role_name', role);
-    return this.http.post<boolean>(this._url + '/create_role', {}, { params });
-  }
-
-  public assignRoleToUser(roleId: string, userId: string): Observable<boolean> {
-    const params = new HttpParams()
-      .set('user_id', userId)
-      .set('role_id', roleId);
-    return this.http.post<boolean>(this._url + '/assign_user_role', {}, { params });
-  }
-  
-  public getRoles(): Observable<KeyCloakRole[]> {
-    return this.http.get<KeyCloakRole[]>(this._url + '/get_roles_by_group');
-  }  
-
-  public removeRoleToUser(roleId: string, userId: string): Observable<boolean> {
-    const params = new HttpParams()
-      .set('user_id', userId)
-      .set('role_id', roleId);
-    return this.http.delete<boolean>(this._url + '/remove_user_role', { params });
-  }
-
-  public switchGroup(userId: string): Observable<boolean> {
-    const params = new HttpParams()
-      .set('user_id', userId);
-    return this.http.put<boolean>(this._url + '/switch_group', {}, { params });
-  }
-  //#endregion
-
   //#region USER
   public createUser(keycloakUser: KeyCloakUser, groupId: string): Observable<boolean> {
   const params = new HttpParams().set('group_id', groupId);

@@ -1,5 +1,12 @@
 .wrapper{
-    height: calc(100vh - 110px);
+    transition: margin-left 0.3s ease;
     margin-top: 4px;
     overflow: auto;
+    transition: margin-left 0.3s ease;
+
+  &.sidebar-open {
+    margin-left: 240px;
+  }
 }
+
+  
