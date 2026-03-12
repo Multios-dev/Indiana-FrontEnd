@@ -1,4 +1,53 @@
-<div class="event">
+<div class="events-page">
+  <h1>{{ "EVENTS.TITLE" | translate }}</h1>
 
+  <div class="events-grid">
+    @for (event of events; track $index) {
+        <div class="event-card">
+
+      <div class="event-card-header">
+        <span class="event-name">{{ event.name }}</span>
+        <span class="event-badge" [ngClass]="event.typeClass">{{ event.type }}</span>
+      </div>
+
+      <div class="event-meta">
+        <div class="meta-row">
+          <!-- Clock icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+            stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <span *ngIf="event.dateEnd">{{ event.dateStart }} → {{ event.dateEnd }}</span>
+          <span *ngIf="!event.dateEnd">{{ event.dateStart }}</span>
+        </div>
+
+        <div class="meta-row">
+          <!-- Pin icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+            stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+          </svg>
+          <span>{{ event.location }}</span>
+        </div>
+
+        <div class="meta-row">
+          <!-- Users icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+            stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+          <span>{{ event.registered }}/{{ event.capacity }} {{ "EVENTS.REGISTERED" | translate }}</span>
+        </div>
+      </div>
+
+      <div class="event-status">
+        <span class="status-badge" [ngClass]="event.statusClass">{{ event.statusLabel }}</span>
+      </div>
+
+    </div>
+    }
+    
+  </div>
 </div>
-

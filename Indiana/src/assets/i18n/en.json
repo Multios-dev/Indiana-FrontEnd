@@ -107,5 +107,9 @@
     "PROFILE": "My profile",
     "EVENT": "Events",
     "FACTURATION": "Billing"
+  },
+  "EVENTS": {
+    "TITLE": "Events",
+    "REGISTERED": "participants"
   }
 }

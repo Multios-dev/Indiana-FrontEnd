@@ -107,5 +107,9 @@
     "PROFILE": "Mijn profiel",
     "EVENT": "Evenementen",
     "FACTURATION": "Facturering"
+  },
+  "EVENTS": {
+    "TITLE": "Evenementen",
+    "REGISTERED": "deelnemers"
   }
 }
