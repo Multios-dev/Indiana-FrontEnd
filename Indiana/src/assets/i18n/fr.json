@@ -111,5 +111,18 @@
   "EVENTS": {
     "TITLE": "Événements",
     "REGISTERED": "participants"
+  },
+  "BILLING": {
+    "TITLE": "Facturation",
+    "TABLE": {
+      "NUMBER": "N° Facture",
+      "DATE": "Date",
+      "AMOUNT": "Montant",
+      "FINISH": "Échéance",
+      "DUEDATE": "Échéance",
+      "STATUS": "Statut",
+      "ACTION": "Actions",
+      "EMPTY": "Aucune facture."
+    }
   }
 }

@@ -1,4 +1,3 @@
-/* dashboard.component.scss */
 $font: 'Overpass', sans-serif;
 
 .dashboard {
@@ -279,5 +278,21 @@ $font: 'Overpass', sans-serif;
 
   &.green {
     background: #f3f9ef;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard {
+    padding: 16px 12px;
+  }
+
+  .join-unit-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .quick-actions {
+    flex-direction: column;
   }
 }

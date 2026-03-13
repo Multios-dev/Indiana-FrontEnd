@@ -1,8 +1,8 @@
-/* events.component.scss */
+$font: 'Overpass', sans-serif;
 
 .events-page {
   padding: 32px 24px;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: $font;
 
   h1 {
     font-size: 22px;

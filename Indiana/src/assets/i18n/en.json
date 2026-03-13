@@ -111,5 +111,18 @@
   "EVENTS": {
     "TITLE": "Events",
     "REGISTERED": "participants"
+  },
+  "BILLING": {
+    "TITLE": "Billing",
+    "TABLE": {
+      "NUMBER": "Invoice No.",
+      "DATE": "Date",
+      "AMOUNT": "Amount",
+      "FINISH": "Due date",
+      "DUEDATE": "Due date",
+      "STATUS": "Status",
+      "ACTION": "Actions",
+      "EMPTY": "No invoice."
+    }
   }
 }

@@ -1,0 +1,159 @@
+$font: 'Overpass', sans-serif;
+
+.billing {
+  max-width: 1200px;
+  padding: 32px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-family: $font;
+  color: #111827;
+}
+
+.page-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* ── Tabs ── */
+.tabs {
+  display: flex;
+  gap: 4px;
+}
+
+.tab-btn {
+  background: transparent;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 7px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.15s;
+
+  &:hover {
+    background: #f3f4f6;
+    color: #111827;
+  }
+
+  &.active {
+    background: #fff;
+    color: #111827;
+    border-color: #d1d5db;
+    font-weight: 600;
+  }
+}
+
+/* ── Table card ── */
+.table-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 24px;
+  overflow-x: auto;
+}
+
+.table-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead tr {
+  border-bottom: 1px solid #f3f4f6;
+}
+
+th {
+  text-align: left;
+  font-size: 13px;
+  font-weight: 500;
+  color: #6b7280;
+  padding: 0 12px 14px;
+
+  &:first-child { padding-left: 0; }
+  &:last-child  { text-align: right; padding-right: 0; }
+}
+
+tbody tr {
+  border-bottom: 1px solid #f3f4f6;
+
+  &:last-child { border-bottom: none; }
+}
+
+td {
+  padding: 18px 12px;
+  font-size: 14px;
+  color: #374151;
+  vertical-align: middle;
+
+  &:first-child { padding-left: 0; }
+  &:last-child  { padding-right: 0; }
+}
+
+.invoice-number {
+  font-weight: 500;
+  color: #111827;
+}
+
+/* ── Badges ── */
+.badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+
+  &--paid     { background: #22c55e; }
+  &--lettered { background: #86c440; }
+  &--late     { background: #ef4444; }
+  &--open     { background: #f59e0b; }
+}
+
+/* ── Actions ── */
+.actions {
+  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  align-items: center;
+}
+
+.action-btn {
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  transition: color 0.15s, background 0.15s;
+
+  &:hover {
+    color: #111827;
+    background: #f3f4f6;
+  }
+}
+
+.empty {
+  text-align: center;
+  color: #9ca3af;
+  padding: 32px 0;
+}
+@media (max-width: 768px) {
+  .billing {
+    padding: 16px 12px;
+  }
+
+  .table-card {
+    padding: 16px 12px;
+  }
+}

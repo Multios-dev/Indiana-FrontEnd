@@ -111,5 +111,18 @@
   "EVENTS": {
     "TITLE": "Evenementen",
     "REGISTERED": "deelnemers"
+  },
+  "BILLING": {
+    "TITLE": "Facturering",
+    "TABLE": {
+      "NUMBER": "Factuurnr.",
+      "DATE": "Datum",
+      "AMOUNT": "Hoeveelheid",
+      "FINISH": "Deadline",
+      "DUEDATE": "Deadline",
+      "STATUS": "Status",
+      "ACTION": "Acties",
+      "EMPTY": "Geen factuur."
+    }
   }
 }
