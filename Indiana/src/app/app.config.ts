@@ -6,6 +6,7 @@ import {provideTranslateHttpLoader} from "@ngx-translate/http-loader";
 import { routes } from './app.routes';
 import { HttpClient, HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { httpInterceptorInterceptor } from '../Interceptors/http.interceptor';
+import { MessageService } from 'primeng/api';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,7 +18,8 @@ export const appConfig: ApplicationConfig = {
     provideTranslateService({
       loader: provideTranslateHttpLoader({prefix:'assets/i18n/', suffix:'.json'}),
       fallbackLang: 'fr'
-    })
+    }),
+    MessageService
   ],
 };
 

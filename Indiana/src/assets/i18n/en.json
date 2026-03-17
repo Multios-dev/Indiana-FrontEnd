@@ -13,7 +13,16 @@
     "DIVIDER": "or sign in with",
     "NO_ACCOUNT": "Don't have an account?",
     "CREATE_ACCOUNT": "Create an account",
-    "ERROR_BANNER": "An error occurred"
+    "ERROR_BANNER": "An error occurred",
+    "ERRORMESSAGE": {
+      "ACCOUNTNOTEXIST": "No account is linked to this login",
+      "INVALIDPASSWORD": "Incorrect login or password",
+      "INVALID": "Invalid email address or password",
+      "EMAILNOTVALIDATED": "Confirm your email address to access your account",
+      "SERVERERROR": "An error occurred while connecting. \nPlease try again",
+      "SENDRESETPASSWORDSUCCESS": "An email was sent with a password reset link",
+      "SENDRESETPASSWORDERROR": "An error occurred while sending the password reset email. \nPlease try again"
+    }
   },
   "REGISTER": {
     "TITLE": "Create an account",
@@ -68,7 +77,11 @@
       "ERROR_ZIP": "Postal code is required.",
       "ERROR_CITY": "City is required.",
       "ERROR_EMAIL_REQUIRED": "Email address is required.",
-      "ERROR_EMAIL_INVALID": "Invalid email address."
+      "ERROR_EMAIL_INVALID": "Invalid email address.",
+      "PASSWORD": "Password",
+      "PASSWORDPLACEHOLDER": "Enter your password...",
+      "ERROR_PASSWORD_REQUIRED": "Password is required.",
+      "ERROR_PASSWORD_INVALID": "The password is invalid."
     }
   },
   "FORGET_PASSWORD": {
@@ -130,7 +143,7 @@
     "TABS": {
       "INFO": "General information",
       "MANDATS": "Mandates",
-      "COMPETENCES": "SKILLS"
+      "COMPETENCES": "Skills"
     },
     "INFO": {
       "LASTNAME": "Name",
@@ -155,6 +168,9 @@
     "COMPETENCES": {
       "TITLE": "Patents",
       "PLACEHOLDER": "No skills here."
-    }
-  }
+    },
+    "SAVE": "To safeguard",
+    "CANCEL": "Cancel"
+  },
+  "ERROR": "Error"
 }

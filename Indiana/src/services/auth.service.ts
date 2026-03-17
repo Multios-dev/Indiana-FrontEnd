@@ -22,22 +22,22 @@ export class AuthService {
    * TODO Call backend and store returned JWT in localStorage.
    * Replace '/api/login' by the real authentication endpoint.
    */
-  login(username: string, password: string): Observable<void> {
+  public login(username: string, password: string): Observable<void> {
     return this.http.post<JwtResponse>('/api/login', { username, password }).pipe(
       tap((res) => this.setToken(res.token)),
       map(() => void 0)
     );
   }
 
-  logout(): void {
+  public logout(): void {
     localStorage.removeItem(this.tokenKey);
   }
 
-  getToken(): string | null {
+  public getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
   }
 
-  isLoggedIn(): boolean {
+  public isLoggedIn(): boolean {
     const token = this.getToken();
     if (!token) {
       return false;
@@ -50,12 +50,12 @@ export class AuthService {
     return payload.exp * 1000 > Date.now();
   }
 
-  getDecodedToken(): any {
+  public getDecodedToken(): any {
     const token = this.getToken();
     return token ? this.parseToken(token) : null;
   }
 
-  getRoles(): string[] {
+  public getRoles(): string[] {
     const payload = this.getDecodedToken();
     return (payload && payload.roles) || [];
   }

@@ -14,7 +14,7 @@ export class TokenService {
   constructor() {}
 
   // Check si le token est présent dans le local storage.
-  get isTokenExist() {
+  public get isTokenExist() {
     return this._storageService.getItem('token') != undefined;
   }
 
@@ -70,18 +70,18 @@ export class TokenService {
 //   }
 
   // Récupère les rôles.
-  get role() {
+  public get role() {
     return this.decodeToken().realm_access.roles;
   }
 
   // Check si le rôle est présent dans le tableau de rôles
-  hasModuleRole(role: string): boolean {
+  public hasModuleRole(role: string): boolean {
     return this.role.includes(role);
   }
 
   // Check si le token est encore valide
   // Pour tester -> * 1000 - 2000000
-  isTokenValid(): boolean {
+  public isTokenValid(): boolean {
     let tokenLimitDate = new Date(this.decodeToken().exp * 1000);
     let now = new Date();
     return tokenLimitDate > now;
@@ -89,7 +89,7 @@ export class TokenService {
 
   // Check si le token va expirer
   // Pour tester -> * 1000 - 1900000
-  tokenWillExpires(): boolean {
+  public tokenWillExpires(): boolean {
     let tokenLimitDate = new Date(this.decodeToken().exp * 1000);
     let expiressSoonDate = new Date(this.decodeToken().exp * 1000 - 600000);
     let now = new Date();

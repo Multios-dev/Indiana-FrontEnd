@@ -13,7 +13,16 @@
     "DIVIDER": "ou se connecter avec",
     "NO_ACCOUNT": "Pas encore de compte ?",
     "CREATE_ACCOUNT": "Créer un compte",
-    "ERROR_BANNER": "Une erreur est survenue"
+    "ERROR_BANNER": "Une erreur est survenue",
+    "ERRORMESSAGE": {
+      "ACCOUNTNOTEXIST": "Aucun compte n'es lié à ce login",
+      "INVALIDPASSWORD": "Login ou mot de passe incorrect",
+      "INVALID": "Adresse mail ou mot de passe invalide",
+      "EMAILNOTVALIDATED": "Confirmez votre adresse mail afin d'accéder à votre compte",
+      "SERVERERROR": "Une erreur est survenue lors de la connexion. Veuillez réessayer",
+      "SENDRESETPASSWORDSUCCESS": "Un email a été envoyé avec un lien de réinitialisation du mot de passe",
+      "SENDRESETPASSWORDERROR": "Une erreur est survenur lors de l'envoi de l'email de réinitialisation du mot de passe. Veuillez réessayer"
+    }
   },
   "REGISTER": {
     "TITLE": "Créer un compte",
@@ -68,7 +77,11 @@
       "ERROR_ZIP": "Le code postal est requis.",
       "ERROR_CITY": "La commune est requise.",
       "ERROR_EMAIL_REQUIRED": "L'adresse e-mail est requise.",
-      "ERROR_EMAIL_INVALID": "Adresse e-mail invalide."
+      "ERROR_EMAIL_INVALID": "Adresse e-mail invalide.",
+      "PASSWORD": "Mot de passe",
+      "PASSWORDPLACEHOLDER": "Entrer votre mot de passe...",
+      "ERROR_PASSWORD_REQUIRED": "Le mot de passe est requis.",
+      "ERROR_PASSWORD_INVALID": "Le mot de passe est invalide."
     }
   },
   "FORGET_PASSWORD": {
@@ -155,6 +168,9 @@
     "COMPETENCES": {
       "TITLE": "Brevets & Formations",
       "PLACEHOLDER": "Aucunes compétences ici."
-    }
-  }
+    },
+    "SAVE": "Sauvegarder",
+    "CANCEL": "Annuler"
+  },
+  "ERROR": "Erreur"
 }

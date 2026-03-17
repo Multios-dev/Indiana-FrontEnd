@@ -4,6 +4,7 @@ import { MessageService } from 'primeng/api';
 @Injectable({
   providedIn: 'root',
 })
+
 export class ToastService {
   private _messageService = inject(MessageService);
 
@@ -14,7 +15,7 @@ export class ToastService {
    * @param severity Severity level: 'success', 'info', 'warn', 'error'
    * @param summary Optional summary/title
    */
-  showToast(key: string, message: string, severity: string = 'info', summary?: string) {
+  public showToast(key: string, message: string, severity: string = 'info', summary?: string) {
     this._messageService.add({
       key: key,
       detail: message,

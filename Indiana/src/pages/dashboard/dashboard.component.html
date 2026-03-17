@@ -81,11 +81,10 @@
   <!-- Minors under my responsibility -->
   <div class="card">
     <div class="card-header">
-      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="8" r="4"/>
-        <path d="M20 21a8 8 0 1 0-16 0"/>
-        <circle cx="12" cy="8" r="2" fill="#3b82f6"/>
-      </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#53acee" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
       <h2>{{"DASHBOARD.MINORS.TITLE" | translate}}</h2>
     </div>
     <!-- TODO, ici, retourner les vraies mineurs sous la responsabilité du parent (si il en a) -->
@@ -111,7 +110,7 @@
       </div>
       <span>{{"DASHBOARD.MYVIEW" |translate}}</span>
     </div>
-    <div class="action-card-cotisation" routerLink="/facturation">
+    <div class="action-card-cotisation" routerLink="/billing">
       <div class="action-icon green">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#80c058" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <rect x="2" y="5" width="20" height="14" rx="2"/>

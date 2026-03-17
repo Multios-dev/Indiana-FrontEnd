@@ -8,7 +8,10 @@ import {
   Validators,
 } from '@angular/forms';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
-import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
+import { TranslateModule, TranslatePipe, TranslateService } from '@ngx-translate/core';
+import { take } from 'rxjs';
+import { KeyCloakService } from '../../services/keycloak.service';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -23,10 +26,16 @@ import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
   styleUrls: ['./forgot-password.component.scss'],
 })
 export class ForgotPasswordComponent {
+  private _keycloakService = inject(KeyCloakService);
   private _loading = inject(NgxSpinnerService);
+  private _spinnerService = inject(NgxSpinnerService);
+  private _toastService = inject(ToastService);
+  private _translateService = inject(TranslateService);
 
-  public form: FormGroup;
   public emailSent = false;
+  public form: FormGroup;
+  public resetEmail: string = '';
+ 
 
   constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) {
     this.form = this.fb.group({
@@ -55,5 +64,22 @@ export class ForgotPasswordComponent {
       this._loading.hide();
       this.cdr.detectChanges();
     }, 1500);
+  }
+
+  public sendRequestEmail() {
+    this._spinnerService.show();
+    this._keycloakService.requestResetPassword(this.resetEmail)
+      .pipe(take(1))
+      .subscribe({
+        next: () => {
+          this._keycloakService.isResetPassword.set(false);
+          this._toastService.showToast('authToast', this._translateService.instant('LOGIN.ERRORMESSAGE.SENDRESETPASSWORDSUCCESS'), 'success', this._translateService.instant('SUCCESS'));
+          this._spinnerService.hide();
+        },
+        error: () => {
+          this._toastService.showToast('authToast', this._translateService.instant('LOGIN.ERRORMESSAGE.SENDRESETPASSWORDERROR'), 'error', this._translateService.instant('ERROR'));
+          this._spinnerService.hide();
+        }
+      });
   }
 }

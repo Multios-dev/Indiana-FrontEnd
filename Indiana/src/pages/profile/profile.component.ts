@@ -1,6 +1,7 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
+import { FormsModule } from '@angular/forms';
 
 export interface UserProfile {
   firstName: string;
@@ -28,7 +29,7 @@ export interface Mandat {
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, TranslateModule, TranslatePipe],
+  imports: [CommonModule, TranslateModule, TranslatePipe, FormsModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss'
 })
@@ -36,7 +37,8 @@ export class ProfileComponent {
 
   activeTab: 'info' | 'mandats' | 'competences' = 'info';
 
-  // TODO: remplacer par les vraies données du service
+  isEditing = false;
+
   user: UserProfile = {
     firstName: 'Paul',
     lastName: 'Martin',
@@ -44,11 +46,26 @@ export class ProfileComponent {
     email: 'simple@test.scout.be',
   };
 
+  editableUser: UserProfile = { ...this.user };
+
   get initials(): string {
     return `${this.user.firstName[0]}${this.user.lastName[0]}`.toUpperCase();
   }
 
-  // TODO: remplacer par les vraies données du service
+  startEdit() {
+    this.editableUser = { ...this.user };
+    this.isEditing = true;
+  }
+
+  cancelEdit() {
+    this.isEditing = false;
+  }
+
+  save() {
+    this.user = { ...this.editableUser };
+    this.isEditing = false;
+  }
+
   mandats: Mandat[] = [
     { id: 1, role: 'preinscribed', unit: 'Unité 17 - Les hiboux',  from: '2026-02-24', to: 'Présent', isActive: true },
     { id: 2, role: 'preinscribed', unit: 'Unité 23 - Les Cerfs',   from: '2026-02-24', to: 'Présent', isActive: true },

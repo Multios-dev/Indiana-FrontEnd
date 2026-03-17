@@ -11,23 +11,27 @@ import {
   Validators,
 } from '@angular/forms';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import { PasswordDirective } from "primeng/password";
 
 @Component({
   selector: 'app-register-manual',
   standalone: true,
   imports: [
-      CommonModule,
-      RouterModule,
-      ReactiveFormsModule,
-      TranslateModule,
-      TranslatePipe],
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
+    TranslateModule,
+    TranslatePipe,
+    PasswordDirective
+],
   templateUrl: './register-manual.component.html',
   styleUrls: ['./register-manual.component.scss'],
 })
 export class RegisterManualComponent {
-  form: FormGroup;
-  private _loading = inject(NgxSpinnerService);
   public accountCreated = false;
+  public form: FormGroup;
+
+  private _loading = inject(NgxSpinnerService);
 
   constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) {
     this.form = this.fb.group({
@@ -43,6 +47,7 @@ export class RegisterManualComponent {
       city:        ['', Validators.required],
       email:       ['', [Validators.required, Validators.email]],
       phone:       [''],
+      password:    ['', Validators.required]
     });
   }
 

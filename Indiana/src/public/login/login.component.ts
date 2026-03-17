@@ -5,6 +5,9 @@ import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
+import { KeyCloakService } from '../../services/keycloak.service';
+import { ToastService } from '../../services/toast.service';
+import { KeycloakConnectionReturn } from '../../models/keycloak/keycloak-connection-return';
 
 @Component({
   selector: 'app-login',
@@ -19,12 +22,20 @@ import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent {
+export class LoginComponent { 
+  private _keycloakService = inject(KeyCloakService);
   private _loading = inject(NgxSpinnerService);
-  
+  private _spinnerService = inject(NgxSpinnerService);
+  private _toastService = inject(ToastService);
+  private _translateService: any;
+
   public error: string | null = null;
   public loginForm: FormGroup;
+  public needOtp: boolean = false;
+  public otp: string = '';
   public showPassword = signal(false);
+  
+ 
 
   constructor(
     private _fb: FormBuilder,
@@ -37,11 +48,43 @@ export class LoginComponent {
     });
   }
 
-  togglePassword() {
+  public login() {
+      if (this.loginForm.valid) {
+        this._spinnerService.show();
+        this._keycloakService.preLogin(this.loginForm.value).subscribe({
+          next: (res: KeycloakConnectionReturn) => {
+            if(res.exists && res.valid_password) {
+              this.needOtp = true;
+              this._keycloakService.isOtp.set(true);
+            } else {
+              if(!res.exists) {
+                this._toastService.showToast('authToast', this._translateService.instant('LOGIN.ERRORMESSAGE.ACCOUNTNOTEXIST'), 'error', this._translateService.instant('ERROR'));
+              }
+              else if(!res.valid_password) {
+                this._toastService.showToast('authToast', this._translateService.instant('LOGIN.ERRORMESSAGE.INVALIDPASSWORD'), 'error', this._translateService.instant('ERROR'));
+              }
+            }
+            this._spinnerService.hide();
+          },
+          error: (err) => {
+            if (err.status === 400) {
+              this._toastService.showToast('authToast', this._translateService.instant('LOGIN.ERRORMESSAGE.INVALID'), 'error', this._translateService.instant('ERROR'));
+            } else if(err.status === 403) {
+              this._toastService.showToast('authToast', this._translateService.instant('LOGIN.ERRORMESSAGE.EMAILNOTVALIDATED'), 'error', this._translateService.instant('ERROR'));
+            } else {
+              this._toastService.showToast('authToast', this._translateService.instant('LOGIN.ERRORMESSAGE.SERVERERROR'), 'error', this._translateService.instant('ERROR'));
+            }
+            this._spinnerService.hide();
+          },
+        });
+      }
+    }
+    
+  public togglePassword() {
     this.showPassword.update(v => !v);
   }
 
-  submit() {
+  public submit() {
     this.error = null;
 
     if (this.loginForm.invalid) {
@@ -67,11 +110,11 @@ export class LoginComponent {
     // });
   }
 
-  get username() {
+  public get username() {
     return this.loginForm.get('username');
   }
 
-  get password() {
+  public get password() {
     return this.loginForm.get('password');
   }
 }

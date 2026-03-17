@@ -234,12 +234,33 @@
           </div>
 
           <div class="form-field">
+            <label class="field-label" for="password">{{ "REGISTER.MANUAL.PASSWORD" | translate }}<span class="required">*</span></label>
+            <input id="password" type="password" class="field-input"
+                   formControlName="password"
+                   placeholder="{{'REGISTER.MANUAL.PASSWORDPLACEHOLDER' | translate}}"
+                   >
+            @if (isInvalid('password')) {
+              <span class="field-error">
+                @if (form.get('password')?.errors?.['required']) {
+                  {{ "REGISTER.MANUAL.ERROR_PASSWORD_REQUIRED" | translate }}
+                }
+                @if (form.get('password')?.errors?.['password']) {
+                  {{ "REGISTER.MANUAL.ERROR_PASSWORD_INVALID" | translate }}
+                }
+              </span>
+            }
+          </div>
+          
+          <div class="form-field">
             <label class="field-label" for="phone">{{ "REGISTER.MANUAL.PHONE" | translate }}</label>
             <input id="phone" type="tel" class="field-input"
                    formControlName="phone"
                    placeholder="+32 470 00 00 00">
             <span class="field-hint">{{ "REGISTER.MANUAL.PHONE_HINT" | translate }}</span>
           </div>
+
+          
+
         </div>
 
         <!-- ── Actions ────────────────────────────────────────── -->

@@ -8,6 +8,7 @@ $font: 'Overpass', sans-serif;
   gap: 20px;
   font-family: $font;
   color: #111827;
+  margin: auto;
 }
 
 .page-title {
@@ -111,10 +112,10 @@ td {
   font-weight: 600;
   color: #fff;
 
-  &--paid     { background: #22c55e; }
-  &--lettered { background: #86c440; }
-  &--late     { background: #ef4444; }
-  &--open     { background: #f59e0b; }
+  &--paid     { background: #76c047; }
+  &--lettered { background: #76c047; }
+  &--late     { background: #d33339; }
+  &--open     { background: #fec00e; color:#111827;}
 }
 
 /* ── Actions ── */

@@ -1,22 +1,30 @@
 <div class="profile">
 
-  <!-- Header card -->
+  <!-- Header -->
   <div class="profile-header-card">
     <div class="profile-identity">
       <div class="profile-avatar">{{ initials }}</div>
       <div>
-        <div class="profile-name">{{ user.firstName }} {{ user.lastName }}</div>
+        <div class="profile-name">
+          {{ user.firstName }} {{ user.lastName }}
+        </div>
         <div class="profile-totem">Totem : {{ user.totem }}</div>
       </div>
     </div>
-    <button class="btn-modifier">
-      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
-        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-      </svg>
+
+    <!-- Boutons -->
+    <button class="btn-modifier" (click)="startEdit()" *ngIf="!isEditing">
       {{ "PROFILE.EDIT" | translate }}
     </button>
+
+    @if (isEditing){
+      <div class="edit-actions">
+        <button class="btn-cancel" (click)="cancelEdit()">{{"PROFILE.CANCEL" | translate}}</button>
+        <button class="btn-editing" (click)="save()">{{"PROFILE.SAVE" | translate}}</button>
+        
+      </div>
+    }
+    
   </div>
 
   <!-- Tabs -->
@@ -32,19 +40,19 @@
     </button>
   </div>
 
-  <!-- Tab: Informations Générales -->
+  <!-- INFO -->
   @if (activeTab === 'info') {
     <div class="tab-card">
       <div class="form-grid">
 
         <div class="form-field">
           <label>{{ "PROFILE.INFO.LASTNAME" | translate }}</label>
-          <input type="text" [value]="user.lastName" readonly />
+          <input [(ngModel)]="editableUser.lastName" [readonly]="!isEditing" />
         </div>
 
         <div class="form-field">
           <label>{{ "PROFILE.INFO.FIRSTNAME" | translate }}</label>
-          <input type="text" [value]="user.firstName" readonly />
+          <input [(ngModel)]="editableUser.firstName" [readonly]="!isEditing" />
         </div>
 
         <div class="form-field">
@@ -52,62 +60,57 @@
             {{ "PROFILE.INFO.TOTEM" | translate }}
             <span class="badge-locked">{{ "PROFILE.INFO.LOCKED" | translate }}</span>
           </label>
-          <input type="text" [value]="user.totem" readonly />
+          <input [(ngModel)]="editableUser.totem" readonly />
         </div>
 
         <div class="form-field">
           <label>{{ "PROFILE.INFO.BIRTHDATE" | translate }}</label>
-          <input type="text" [value]="user.birthDate ?? ''" readonly />
+          <input [(ngModel)]="editableUser.birthDate" [readonly]="!isEditing" />
         </div>
 
         <div class="form-field">
           <label>{{ "PROFILE.INFO.GENDER" | translate }}</label>
-          <input type="text" [value]="user.gender ?? ''" readonly />
+          <input [(ngModel)]="editableUser.gender" [readonly]="!isEditing" />
         </div>
 
         <div class="form-field">
           <label>{{ "PROFILE.INFO.NATIONAL_REG" | translate }}</label>
-          <input type="text" [value]="user.nationalReg ?? ''" readonly />
+          <input [(ngModel)]="editableUser.nationalReg" [readonly]="!isEditing" />
         </div>
 
         <div class="form-field">
           <label>{{ "PROFILE.INFO.EMAIL" | translate }}</label>
-          <input type="text" [value]="user.email ?? ''" readonly />
+          <input [(ngModel)]="editableUser.email" [readonly]="!isEditing" />
         </div>
 
         <div class="form-field">
           <label>{{ "PROFILE.INFO.PHONE" | translate }}</label>
-          <input type="text" [value]="user.phone ?? ''" readonly />
+          <input [(ngModel)]="editableUser.phone" [readonly]="!isEditing" />
         </div>
 
         <div class="form-field">
           <label>{{ "PROFILE.INFO.STREET" | translate }}</label>
-          <input type="text" [value]="user.street ?? ''" readonly />
+          <input [(ngModel)]="editableUser.street" [readonly]="!isEditing" />
         </div>
 
         <div class="form-field">
           <label>{{ "PROFILE.INFO.CITY" | translate }}</label>
-          <input type="text" [value]="user.city ?? ''" readonly />
+          <input [(ngModel)]="editableUser.city" [readonly]="!isEditing" />
         </div>
 
         <div class="form-field">
           <label>{{ "PROFILE.INFO.ZIPCODE" | translate }}</label>
-          <input type="text" [value]="user.zipCode ?? ''" readonly />
+          <input [(ngModel)]="editableUser.zipCode" [readonly]="!isEditing" />
         </div>
 
       </div>
     </div>
   }
 
-  <!-- Tab: Mandats -->
+  <!-- MANDATS -->
   @if (activeTab === 'mandats') {
     <div class="tab-card">
       <div class="section-header">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
-          fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="2" y="7" width="20" height="14" rx="2"/>
-          <path d="M16 7V5a2 2 0 0 0-4 0v2"/><path d="M8 7V5a2 2 0 0 0-4 0v2"/>
-        </svg>
         <h2>{{ "PROFILE.MANDATS.TITLE" | translate }}</h2>
       </div>
 
@@ -131,15 +134,10 @@
     </div>
   }
 
-  <!-- Tab: Compétences -->
+  <!-- COMPETENCES -->
   @if (activeTab === 'competences') {
     <div class="tab-card">
       <div class="section-header">
-        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
-          fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="12" cy="8" r="6"/>
-          <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>
-        </svg>
         <h2>{{ "PROFILE.COMPETENCES.TITLE" | translate }}</h2>
       </div>
       <p class="empty-msg">{{ "PROFILE.COMPETENCES.PLACEHOLDER" | translate }}</p>
