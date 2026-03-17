@@ -26,6 +26,7 @@ export interface Invoice {
 })
 export class BillingComponent {
 
+  // TODO, Here we have to change so it's the api and not just the datas in this ts
   activeTab = 'me';
 
   tabs = [

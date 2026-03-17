@@ -124,5 +124,37 @@
       "ACTION": "Acties",
       "EMPTY": "Geen factuur."
     }
+  },
+  "PROFILE": {
+    "EDIT": "Wijzigen",
+    "TABS": {
+      "INFO": "Algemene informatie",
+      "MANDATS": "Mandaten",
+      "COMPETENCES": "VAARDIGHEDEN"
+    },
+    "INFO": {
+      "LASTNAME": "Naam",
+      "FIRSTNAME": "Voornaam",
+      "TOTEM": "Totem",
+      "LOCKED": "Vergrendeld",
+      "BIRTHDATE": "Geboortedatum",
+      "GENDER": "Geslacht",
+      "NATIONAL_REG": "Rijksregister",
+      "EMAIL": "E-mail",
+      "PHONE": "Telefoon",
+      "STREET": "Straat",
+      "CITY": "Stad",
+      "ZIPCODE": "Postcode"
+    },
+    "MANDATS": {
+      "TITLE": "Geschiedenis van mandaten",
+      "ACTIVE": "Actief",
+      "INACTIVE": "Inactief",
+      "EMPTY": "Geen arrestatiebevelen hier."
+    },
+    "COMPETENCES": {
+      "TITLE": "Patenten",
+      "PLACEHOLDER": "Geen vaardigheden hier."
+    }
   }
 }

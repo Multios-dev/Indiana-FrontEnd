@@ -1,0 +1,149 @@
+<div class="profile">
+
+  <!-- Header card -->
+  <div class="profile-header-card">
+    <div class="profile-identity">
+      <div class="profile-avatar">{{ initials }}</div>
+      <div>
+        <div class="profile-name">{{ user.firstName }} {{ user.lastName }}</div>
+        <div class="profile-totem">Totem : {{ user.totem }}</div>
+      </div>
+    </div>
+    <button class="btn-modifier">
+      <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
+        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+      </svg>
+      {{ "PROFILE.EDIT" | translate }}
+    </button>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs-bar">
+    <button class="tab-btn" [class.active]="activeTab === 'info'" (click)="activeTab = 'info'">
+      {{ "PROFILE.TABS.INFO" | translate }}
+    </button>
+    <button class="tab-btn" [class.active]="activeTab === 'mandats'" (click)="activeTab = 'mandats'">
+      {{ "PROFILE.TABS.MANDATS" | translate }}
+    </button>
+    <button class="tab-btn" [class.active]="activeTab === 'competences'" (click)="activeTab = 'competences'">
+      {{ "PROFILE.TABS.COMPETENCES" | translate }}
+    </button>
+  </div>
+
+  <!-- Tab: Informations Générales -->
+  @if (activeTab === 'info') {
+    <div class="tab-card">
+      <div class="form-grid">
+
+        <div class="form-field">
+          <label>{{ "PROFILE.INFO.LASTNAME" | translate }}</label>
+          <input type="text" [value]="user.lastName" readonly />
+        </div>
+
+        <div class="form-field">
+          <label>{{ "PROFILE.INFO.FIRSTNAME" | translate }}</label>
+          <input type="text" [value]="user.firstName" readonly />
+        </div>
+
+        <div class="form-field">
+          <label>
+            {{ "PROFILE.INFO.TOTEM" | translate }}
+            <span class="badge-locked">{{ "PROFILE.INFO.LOCKED" | translate }}</span>
+          </label>
+          <input type="text" [value]="user.totem" readonly />
+        </div>
+
+        <div class="form-field">
+          <label>{{ "PROFILE.INFO.BIRTHDATE" | translate }}</label>
+          <input type="text" [value]="user.birthDate ?? ''" readonly />
+        </div>
+
+        <div class="form-field">
+          <label>{{ "PROFILE.INFO.GENDER" | translate }}</label>
+          <input type="text" [value]="user.gender ?? ''" readonly />
+        </div>
+
+        <div class="form-field">
+          <label>{{ "PROFILE.INFO.NATIONAL_REG" | translate }}</label>
+          <input type="text" [value]="user.nationalReg ?? ''" readonly />
+        </div>
+
+        <div class="form-field">
+          <label>{{ "PROFILE.INFO.EMAIL" | translate }}</label>
+          <input type="text" [value]="user.email ?? ''" readonly />
+        </div>
+
+        <div class="form-field">
+          <label>{{ "PROFILE.INFO.PHONE" | translate }}</label>
+          <input type="text" [value]="user.phone ?? ''" readonly />
+        </div>
+
+        <div class="form-field">
+          <label>{{ "PROFILE.INFO.STREET" | translate }}</label>
+          <input type="text" [value]="user.street ?? ''" readonly />
+        </div>
+
+        <div class="form-field">
+          <label>{{ "PROFILE.INFO.CITY" | translate }}</label>
+          <input type="text" [value]="user.city ?? ''" readonly />
+        </div>
+
+        <div class="form-field">
+          <label>{{ "PROFILE.INFO.ZIPCODE" | translate }}</label>
+          <input type="text" [value]="user.zipCode ?? ''" readonly />
+        </div>
+
+      </div>
+    </div>
+  }
+
+  <!-- Tab: Mandats -->
+  @if (activeTab === 'mandats') {
+    <div class="tab-card">
+      <div class="section-header">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+          fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="7" width="20" height="14" rx="2"/>
+          <path d="M16 7V5a2 2 0 0 0-4 0v2"/><path d="M8 7V5a2 2 0 0 0-4 0v2"/>
+        </svg>
+        <h2>{{ "PROFILE.MANDATS.TITLE" | translate }}</h2>
+      </div>
+
+      <div class="mandat-list">
+        @for (mandat of mandats; track mandat.id) {
+          <div class="mandat-item">
+            <div class="mandat-info">
+              <div class="mandat-role">{{ mandat.role }}</div>
+              <div class="mandat-unit">{{ mandat.unit }}</div>
+              <div class="mandat-period">{{ mandat.from }} – {{ mandat.to }}</div>
+            </div>
+            <span class="badge-status" [class.active]="mandat.isActive">
+              {{ mandat.isActive ? ("PROFILE.MANDATS.ACTIVE" | translate) : ("PROFILE.MANDATS.INACTIVE" | translate) }}
+            </span>
+          </div>
+        }
+        @empty {
+          <p class="empty-msg">{{ "PROFILE.MANDATS.EMPTY" | translate }}</p>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- Tab: Compétences -->
+  @if (activeTab === 'competences') {
+    <div class="tab-card">
+      <div class="section-header">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+          fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="8" r="6"/>
+          <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/>
+        </svg>
+        <h2>{{ "PROFILE.COMPETENCES.TITLE" | translate }}</h2>
+      </div>
+      <p class="empty-msg">{{ "PROFILE.COMPETENCES.PLACEHOLDER" | translate }}</p>
+    </div>
+  }
+
+</div>

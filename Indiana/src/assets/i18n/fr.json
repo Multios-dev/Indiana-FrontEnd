@@ -124,5 +124,37 @@
       "ACTION": "Actions",
       "EMPTY": "Aucune facture."
     }
+  },
+  "PROFILE": {
+    "EDIT": "Modifier",
+    "TABS": {
+      "INFO": "Informations générales",
+      "MANDATS": "Mandats",
+      "COMPETENCES": "Compétences"
+    },
+    "INFO": {
+      "LASTNAME": "Nom",
+      "FIRSTNAME": "Prénom",
+      "TOTEM": "Totem",
+      "LOCKED": "Verrouillé",
+      "BIRTHDATE": "Date de naissance",
+      "GENDER": "Genre",
+      "NATIONAL_REG": "Registre National",
+      "EMAIL": "Email",
+      "PHONE": "Téléphone",
+      "STREET": "Rue",
+      "CITY": "Ville",
+      "ZIPCODE": "Code postal"
+    },
+    "MANDATS": {
+      "TITLE": "Historique des mandats",
+      "ACTIVE": "Actif",
+      "INACTIVE": "Inactif",
+      "EMPTY": "Aucuns mandats ici."
+    },
+    "COMPETENCES": {
+      "TITLE": "Brevets & Formations",
+      "PLACEHOLDER": "Aucunes compétences ici."
+    }
   }
 }

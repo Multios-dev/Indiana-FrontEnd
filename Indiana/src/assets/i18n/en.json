@@ -124,5 +124,37 @@
       "ACTION": "Actions",
       "EMPTY": "No invoice."
     }
+  },
+  "PROFILE": {
+    "EDIT": "To modify",
+    "TABS": {
+      "INFO": "General information",
+      "MANDATS": "Mandates",
+      "COMPETENCES": "SKILLS"
+    },
+    "INFO": {
+      "LASTNAME": "Name",
+      "FIRSTNAME": "First name",
+      "TOTEM": "Totem",
+      "LOCKED": "Locked",
+      "BIRTHDATE": "Date of birth",
+      "GENDER": "Gender",
+      "NATIONAL_REG": "National Register",
+      "EMAIL": "E-mail",
+      "PHONE": "Phone",
+      "STREET": "Street",
+      "CITY": "City",
+      "ZIPCODE": "Postcode"
+    },
+    "MANDATS": {
+      "TITLE": "History of mandates",
+      "ACTIVE": "Active",
+      "INACTIVE": "Inactive",
+      "EMPTY": "No warrants here."
+    },
+    "COMPETENCES": {
+      "TITLE": "Patents",
+      "PLACEHOLDER": "No skills here."
+    }
   }
 }
