@@ -21,8 +21,7 @@ import { PasswordDirective } from "primeng/password";
     RouterModule,
     ReactiveFormsModule,
     TranslateModule,
-    TranslatePipe,
-    PasswordDirective
+    TranslatePipe
 ],
   templateUrl: './register-manual.component.html',
   styleUrls: ['./register-manual.component.scss'],
