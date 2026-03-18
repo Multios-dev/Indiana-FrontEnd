@@ -5,7 +5,7 @@
     <h1 class="title">{{ "REGISTER.TITLE" | translate }}</h1>
     <p class="subtitle">{{ "REGISTER.MANUAL.SUBTITLE" | translate }}</p>
 
-    <!-- ── Écran de confirmation ─────────────────────────────── -->
+    <!-- ── Confirmation screen ─────────────────────────────── -->
     @if (accountCreated) {
       <div class="success-card">
         <div class="success-icon-wrap">
@@ -28,7 +28,7 @@
     @if (!accountCreated) {
       <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
 
-        <!-- ── Section : Identité ────────────────────────────── -->
+        <!-- ── Section : Identity ────────────────────────────── -->
         <div class="form-section">
           <h2 class="section-title">
             <span class="section-icon section-icon--blue">
@@ -89,7 +89,7 @@
           </div>
         </div>
 
-        <!-- ── Section : Informations démographiques ─────────── -->
+        <!-- ── Section : demographic informations ─────────── -->
         <div class="form-section">
           <h2 class="section-title">
             <span class="section-icon section-icon--blue">
@@ -133,7 +133,7 @@
           </div>
         </div>
 
-        <!-- ── Section : Nationalité ─────────────────────────── -->
+        <!-- ── Section : Nationality ─────────────────────────── -->
         <div class="form-section">
           <h2 class="section-title">
             <span class="section-icon section-icon--blue">
@@ -156,7 +156,7 @@
           </div>
         </div>
 
-        <!-- ── Section : Adresse ──────────────────────────────── -->
+        <!-- ── Section : Adress ──────────────────────────────── -->
         <div class="form-section">
           <h2 class="section-title">
             <span class="section-icon section-icon--blue">

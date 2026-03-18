@@ -26,12 +26,12 @@ export class TokenService {
   $token = this._$token.asObservable();
 
   // Méthode pour indiquer à l'observable la présence ou le retrait du token dans le local storage.
-  emitTokenExist() {
+  public emitTokenExist() {
     this._$token.next(this.isTokenExist);
   }
 
   // Méthode qui va rechercher les informations de l'utilisateur dans le token
-  decodeToken(): UserInfos {
+  public decodeToken(): UserInfos {
     let token: string = this._storageService.getItem('token') ?? '';
     let jwt: any;
     if (token !== '') {

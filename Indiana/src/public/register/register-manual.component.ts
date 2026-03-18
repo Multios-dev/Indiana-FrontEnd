@@ -2,6 +2,8 @@ import { Component, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
+import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import { PasswordDirective } from "primeng/password";
 
 import {
   ReactiveFormsModule,
@@ -10,8 +12,7 @@ import {
   FormArray,
   Validators,
 } from '@angular/forms';
-import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
-import { PasswordDirective } from "primeng/password";
+
 
 @Component({
   selector: 'app-register-manual',
@@ -50,29 +51,29 @@ export class RegisterManualComponent {
     });
   }
 
-  get firstNames(): FormArray {
+  public get firstNames(): FormArray {
     return this.form.get('firstNames') as FormArray;
   }
 
-  addFirstName(): void {
+  public addFirstName(): void {
     this.firstNames.push(this.fb.control('', Validators.required));
   }
 
-  removeFirstName(index: number): void {
+  public removeFirstName(index: number): void {
     this.firstNames.removeAt(index);
   }
 
-  isFirstNameInvalid(index: number): boolean {
+  public isFirstNameInvalid(index: number): boolean {
     const ctrl = this.firstNames.at(index);
     return !!(ctrl && ctrl.invalid && ctrl.touched);
   }
 
-  isInvalid(controlName: string): boolean {
+  public isInvalid(controlName: string): boolean {
     const ctrl = this.form.get(controlName);
     return !!(ctrl && ctrl.invalid && ctrl.touched);
   }
 
-  onSubmit(): void {
+  public onSubmit(): void {
     this.form.markAllAsTouched();
     this.firstNames.controls.forEach(c => c.markAsTouched());
 

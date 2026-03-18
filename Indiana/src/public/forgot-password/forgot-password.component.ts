@@ -43,12 +43,12 @@ export class ForgotPasswordComponent {
     });
   }
 
-  isInvalid(controlName: string): boolean {
+  public isInvalid(controlName: string): boolean {
     const ctrl = this.form.get(controlName);
     return !!(ctrl && ctrl.invalid && ctrl.touched);
   }
 
-  onSubmit(): void {
+  public onSubmit(): void {
     this.form.markAllAsTouched();
 
     if (this.form.invalid) return;

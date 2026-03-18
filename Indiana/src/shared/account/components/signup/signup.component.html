@@ -12,7 +12,7 @@
             </p-step-list>
 
             <p-step-panels>
-                <!-- STEP 1 : Informations utilisateur -->
+                <!-- STEP 1 : user Informations -->
                 <p-step-panel [value]="1">
                     <ng-template #content let-activateCallback="activateCallback">
                         <form [formGroup]="userForm">
@@ -49,7 +49,7 @@
                     </ng-template>
                 </p-step-panel>
 
-                <!-- STEP 2 : Informations société -->
+                <!-- STEP 2 : Society Informations -->
                 <p-step-panel [value]="2">
                     <ng-template #content let-activateCallback="activateCallback">
                         <form [formGroup]="companyForm">

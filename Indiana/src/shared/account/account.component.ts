@@ -30,11 +30,11 @@ export class AccountComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
+  public ngOnInit() {
     this._routerUtils.toInnerLogin(this._activeRoute);
    }
 
-  login() {
+  public login() {
     if(this.isNeedResetPassword) {
       this._keyCloakService.isResetPassword.set(false);
     } else {
@@ -43,7 +43,7 @@ export class AccountComponent implements OnInit {
     }
   }
 
-  signup() {
+  public signup() {
     this._routerUtils.toInnerSignup(this._activeRoute);
     this.islogin = true;
   }

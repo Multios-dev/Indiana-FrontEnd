@@ -12,10 +12,13 @@
       </div>
     </div>
 
-    <!-- Boutons -->
-    <button class="btn-modifier" (click)="startEdit()" *ngIf="!isEditing">
-      {{ "PROFILE.EDIT" | translate }}
-    </button>
+    <!-- Buttons -->
+     @if (!isEditing){
+      <button class="btn-modifier" (click)="startEdit()">
+        {{ "PROFILE.EDIT" | translate }}
+      </button>
+     }
+    
 
     @if (isEditing){
       <div class="edit-actions">
@@ -134,7 +137,7 @@
     </div>
   }
 
-  <!-- COMPETENCES -->
+  <!-- Skills -->
   @if (activeTab === 'competences') {
     <div class="tab-card">
       <div class="section-header">

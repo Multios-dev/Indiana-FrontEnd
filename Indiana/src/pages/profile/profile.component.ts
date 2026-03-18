@@ -35,9 +35,9 @@ export interface Mandat {
 })
 export class ProfileComponent {
 
-  activeTab: 'info' | 'mandats' | 'competences' = 'info';
+  public activeTab: 'info' | 'mandats' | 'competences' = 'info';
 
-  isEditing = false;
+  public isEditing = false;
 
   user: UserProfile = {
     firstName: 'Paul',
@@ -46,22 +46,22 @@ export class ProfileComponent {
     email: 'simple@test.scout.be',
   };
 
-  editableUser: UserProfile = { ...this.user };
+  public editableUser: UserProfile = { ...this.user };
 
-  get initials(): string {
+  public get initials(): string {
     return `${this.user.firstName[0]}${this.user.lastName[0]}`.toUpperCase();
   }
 
-  startEdit() {
+  public startEdit() {
     this.editableUser = { ...this.user };
     this.isEditing = true;
   }
 
-  cancelEdit() {
+  public cancelEdit() {
     this.isEditing = false;
   }
 
-  save() {
+  public save() {
     this.user = { ...this.editableUser };
     this.isEditing = false;
   }
