@@ -123,7 +123,13 @@
   },
   "EVENTS": {
     "TITLE": "Evenementen",
-    "REGISTERED": "deelnemers"
+    "REGISTERED": "deelnemers",
+    "DATE": "Datum",
+    "LOCATION": "Locatie",
+    "BACK": "Terug naar evenementen",
+    "EDIT": "Bewerken",
+    "REGISTER": "Registreren",
+    "EXPORT_ICS": "Exporteren .ics"
   },
   "BILLING": {
     "TITLE": "Facturering",

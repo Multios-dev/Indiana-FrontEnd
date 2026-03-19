@@ -24,6 +24,7 @@ export interface ScoutEvent {
   styleUrl: './events.component.scss'
 })
 export class EventsComponent {
+  selectedEvent: ScoutEvent | null = null;
 
   // TODO: remplacer par un appel API réel
   events: ScoutEvent[] = [
@@ -86,4 +87,24 @@ export class EventsComponent {
       statusClass: 'status-closed'
     }
   ];
+
+  selectEvent(event: ScoutEvent): void {
+    this.selectedEvent = event;
+  }
+
+  closeDetail(): void {
+    this.selectedEvent = null;
+  }
+
+  editEvent(event: ScoutEvent): void {
+    // TODO: Rediriger vers une page d'édition ou ouvrir un modal d'édition
+  }
+
+  registerEvent(event: ScoutEvent): void {
+    // TODO: Appel API pour s'inscrire à l'événement
+  }
+
+  exportIcs(event: ScoutEvent): void {
+    // TODO: Générer et télécharger un fichier .ics
+  }
 }

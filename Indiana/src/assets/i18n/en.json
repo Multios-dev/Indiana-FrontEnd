@@ -123,7 +123,13 @@
   },
   "EVENTS": {
     "TITLE": "Events",
-    "REGISTERED": "participants"
+    "REGISTERED": "participants",
+    "DATE": "Date",
+    "LOCATION": "Location",
+    "BACK": "Back to events",
+    "EDIT": "Edit",
+    "REGISTER": "Register",
+    "EXPORT_ICS": "Export .ics"
   },
   "BILLING": {
     "TITLE": "Billing",
