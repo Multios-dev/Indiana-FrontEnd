@@ -25,6 +25,26 @@
     }
   },
   "REGISTER": {
+    "EID": {
+      "SUBTITLE":           "Lisez votre carte d'identité électronique pour accélérer votre inscription.",
+      "CARD_HEADING":       "Les informations suivantes seront lues sur votre carte :",
+      "FIELD_IDENTITY":     "Nom et prénoms",
+      "FIELD_ADDRESS":      "Adresse de résidence",
+      "FIELD_BIRTHDATE":    "Date de naissance",
+      "FIELD_NATIONALITY":  "Nationalité",
+      "HINT":               "Votre carte doit être insérée dans le lecteur avant de cliquer sur le bouton.",
+      "BTN_READ":           "Lire ma carte eID",
+      "READING":            "Lecture en cours…",
+      "READING_HINT":       "Ne retirez pas votre carte.",
+      "SUCCESS":            "Carte lue avec succès !",
+      "SUCCESS_REDIRECT":   "Redirection vers le formulaire…",
+      "ERROR_GENERIC":      "Une erreur est survenue lors de la lecture. Vérifiez que votre carte est bien insérée.",
+      "ERROR_NO_CARD":      "Aucune carte détectée. Insérez votre eID et réessayez.",
+      "ERROR_CANCELLED":    "Lecture annulée.",
+      "ERROR_PIN":          "Code PIN incorrect ou trop de tentatives.",
+      "BTN_RETRY":          "Réessayer",
+      "BTN_MANUAL_FALLBACK":"Continuer sans eID"
+    },
     "TITLE": "Créer un compte",
     "SUBTITLE": "Choisissez votre méthode d'inscription",
     "EID_TITLE": "Avec ma carte d'identité belge",

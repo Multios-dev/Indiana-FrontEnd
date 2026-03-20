@@ -1,0 +1,287 @@
+$blue:   #4a9fd4;
+$text:   #1a1a2e;
+$muted:  #6b7280;
+$border: #d1d5db;
+$radius: 14px;
+$font:   'Overpass', sans-serif;
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+// ── Page ──────────────────────────────────────────────────────────
+.register-page {
+  min-height: 98vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 2rem 1rem;
+  font-family: $font;
+  color: $text;
+}
+
+.register-container {
+  width: 100%;
+  max-width: 560px;
+  padding-bottom: 3rem;
+}
+
+// ── Header ────────────────────────────────────────────────────────
+.title {
+  font-size: 1.85rem;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: -.3px;
+  margin-bottom: .4rem;
+}
+
+.subtitle {
+  text-align: center;
+  color: $muted;
+  font-size: .95rem;
+  margin-bottom: 2rem;
+}
+
+// ── Card principale ───────────────────────────────────────────────
+.eid-card {
+  background: #fff;
+  border: 1.5px solid $border;
+  border-radius: $radius;
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  text-align: center;
+  animation: fadeUp .3s ease both;
+
+  &--reading { border-color: rgba($blue, .4); background: #f7fbfe; }
+  &--success { border-color: #86efac; background: #f0fdf4; }
+  &--error   { border-color: #fca5a5; background: #fff5f5; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+// ── Illustration idle ─────────────────────────────────────────────
+.eid-card__illustration {
+  width: 88px;
+  height: 88px;
+  background: #e8f3fb;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $blue;
+}
+
+.eid-card__heading {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: $text;
+}
+
+.eid-card__fields {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+  text-align: left;
+  width: 100%;
+  max-width: 300px;
+
+  li {
+    font-size: .88rem;
+    color: $muted;
+    padding-left: 1.2rem;
+    position: relative;
+
+    &::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: $blue;
+      font-weight: 700;
+    }
+  }
+}
+
+.eid-card__hint {
+  font-size: .8rem;
+  color: $muted;
+  background: #f9fafb;
+  border: 1px solid $border;
+  border-radius: 8px;
+  padding: .6rem .9rem;
+  line-height: 1.45;
+  max-width: 360px;
+}
+
+// ── Bouton principal ──────────────────────────────────────────────
+.btn-read {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  background: $blue;
+  color: #fff;
+  border: none;
+  border-radius: 9px;
+  padding: 0 1.6rem;
+  height: 46px;
+  font-family: $font;
+  font-size: .95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .2s, box-shadow .2s, transform .15s;
+  margin-top: .5rem;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba($blue, .35);
+    transform: translateY(-1px);
+  }
+  &:active { transform: translateY(0); }
+}
+
+.btn-manual {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  background: none;
+  border: 1.5px solid $border;
+  border-radius: 9px;
+  padding: 0 1.2rem;
+  height: 42px;
+  font-family: $font;
+  font-size: .88rem;
+  font-weight: 600;
+  color: $muted;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color .2s, color .2s;
+
+  &:hover { border-color: $text; color: $text; }
+}
+
+// ── Lecture en cours ──────────────────────────────────────────────
+.eid-reading-anim {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.eid-reading-ring {
+  position: absolute;
+  inset: 0;
+  border: 3px solid rgba($blue, .2);
+  border-top-color: $blue;
+  border-radius: 50%;
+  animation: spin .9s linear infinite;
+}
+
+.eid-reading-icon {
+  color: $blue;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.eid-reading-label {
+  font-size: 1rem;
+  font-weight: 700;
+  color: $blue;
+}
+
+.eid-reading-hint {
+  font-size: .82rem;
+  color: $muted;
+}
+
+// ── Succès ────────────────────────────────────────────────────────
+.eid-success-icon {
+  width: 72px;
+  height: 72px;
+  background: #dcfce7;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #16a34a;
+}
+
+.eid-success-label {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #15803d;
+}
+
+// ── Erreur ────────────────────────────────────────────────────────
+.eid-error-icon {
+  width: 72px;
+  height: 72px;
+  background: #fee2e2;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #dc2626;
+}
+
+.eid-error-label {
+  font-size: .95rem;
+  font-weight: 600;
+  color: #b91c1c;
+  max-width: 320px;
+  line-height: 1.5;
+}
+
+.eid-error-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .75rem;
+  margin-top: .25rem;
+}
+
+// ── Liens bas de page ─────────────────────────────────────────────
+.bottom-links {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+  gap: .75rem;
+}
+
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  background: none;
+  border: 1.5px solid $border;
+  border-radius: 9px;
+  padding: 0 1.1rem;
+  height: 40px;
+  font-family: $font;
+  font-size: .88rem;
+  font-weight: 600;
+  color: $muted;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color .2s, color .2s;
+
+  &:hover { border-color: $text; color: $text; }
+}
+
+.login-line {
+  font-size: .88rem;
+  color: $muted;
+}
+
+.login-link {
+  color: $blue;
+  font-weight: 600;
+  text-decoration: none;
+  &:hover { text-decoration: underline; }
+}

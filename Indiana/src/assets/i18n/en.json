@@ -82,6 +82,22 @@
       "PASSWORDPLACEHOLDER": "Enter your password...",
       "ERROR_PASSWORD_REQUIRED": "Password is required.",
       "ERROR_PASSWORD_INVALID": "The password is invalid."
+    },
+    "EID": {
+      "SUBTITLE": "Read your electronic ID card to speed up your registration.",
+      "CARD_HEADING": "The following information will be read from your card:",
+      "FIELD_IDENTITY": "First and last name",
+      "FIELD_ADDRESS": "Residence address",
+      "FIELD_BIRTHDATE": "Date of birth",
+      "FIELD_NATIONALITY": "Nationality",
+      "HINT": "Your card must be inserted into the reader before clicking the button.",
+      "BTN_READ": "Read my eID card",
+      "READING": "Now reading…",
+      "READING_HINT": "Do not remove your card.",
+      "SUCCESS": "Card read successfully!",
+      "SUCCESS_REDIRECT": "Redirection to the form…",
+      "BTN_RETRY": "Try again",
+      "BTN_MANUAL_FALLBACK": "Continue without eID"
     }
   },
   "FORGET_PASSWORD": {

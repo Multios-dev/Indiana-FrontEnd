@@ -5,7 +5,17 @@
     <h1 class="title">{{ "REGISTER.TITLE" | translate }}</h1>
     <p class="subtitle">{{ "REGISTER.MANUAL.SUBTITLE" | translate }}</p>
 
-    <!-- ── Confirmation screen ─────────────────────────────── -->
+    <!-- ── Bandeau info eID ─────────────────────────────────────── -->
+    @if (prefilledFromEid && !accountCreated) {
+      <div class="eid-banner">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"/>
+        </svg>
+        <span>{{ "REGISTER.MANUAL.EID_PREFILL_BANNER" | translate }}</span>
+      </div>
+    }
+
+    <!-- ── Confirmation screen ─────────────────────────────────── -->
     @if (accountCreated) {
       <div class="success-card">
         <div class="success-icon-wrap">
@@ -18,9 +28,7 @@
           {{ "REGISTER.MANUAL.SUCCESS_BODY" | translate }}<br>
           <strong class="success-email">{{ form.get('email')?.value }}</strong>
         </p>
-        <p class="success-hint">
-          {{ "REGISTER.MANUAL.SUCCESS_HINT" | translate }}
-        </p>
+        <p class="success-hint">{{ "REGISTER.MANUAL.SUCCESS_HINT" | translate }}</p>
         <a routerLink="/connexion" class="btn-submit btn-submit--full">{{ "REGISTER.MANUAL.SUCCESS_BTN" | translate }}</a>
       </div>
     }
@@ -28,7 +36,7 @@
     @if (!accountCreated) {
       <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
 
-        <!-- ── Section : Identity ────────────────────────────── -->
+        <!-- ── Section : Identité ──────────────────────────────── -->
         <div class="form-section">
           <h2 class="section-title">
             <span class="section-icon section-icon--blue">
@@ -40,19 +48,29 @@
           </h2>
 
           <div class="form-row">
+
+            <!-- Nom -->
             <div class="form-field">
-              <label class="field-label" for="lastName">{{ "REGISTER.MANUAL.LAST_NAME" | translate }}<span class="required">*</span></label>
+              <label class="field-label" for="lastName">
+                {{ "REGISTER.MANUAL.LAST_NAME" | translate }}<span class="required">*</span>
+                @if (isFromEid('lastName')) { <span class="eid-badge">eID</span> }
+              </label>
               <input id="lastName" type="text" class="field-input"
                      formControlName="lastName"
                      placeholder="Dupont"
-                     [class.field-input--error]="isInvalid('lastName')">
+                     [class.field-input--error]="isInvalid('lastName')"
+                     [class.field-input--eid]="isFromEid('lastName')">
               @if (isInvalid('lastName')) {
                 <span class="field-error">{{ "REGISTER.MANUAL.ERROR_LAST_NAME" | translate }}</span>
               }
             </div>
 
+            <!-- Prénoms -->
             <div class="form-field">
-              <label class="field-label">{{ "REGISTER.MANUAL.FIRST_NAMES" | translate }}<span class="required">*</span></label>
+              <label class="field-label">
+                {{ "REGISTER.MANUAL.FIRST_NAMES" | translate }}<span class="required">*</span>
+                @if (isFromEid('firstNames')) { <span class="eid-badge">eID</span> }
+              </label>
 
               <div formArrayName="firstNames">
                 @for (ctrl of firstNames.controls; track $index) {
@@ -62,7 +80,8 @@
                            class="field-input"
                            [formControlName]="$index.toString()"
                            [placeholder]="$index === 0 ? 'Marie' : ('REGISTER.MANUAL.FIRST_NAME_N_PLACEHOLDER' | translate) + ' ' + ($index + 1)"
-                           [class.field-input--error]="isFirstNameInvalid($index)">
+                           [class.field-input--error]="isFirstNameInvalid($index)"
+                           [class.field-input--eid]="isFromEid('firstNames')">
                     @if (firstNames.length > 1) {
                       <button type="button" class="btn-remove-firstname"
                               (click)="removeFirstName($index)"
@@ -86,10 +105,11 @@
                 {{ "REGISTER.MANUAL.ADD_FIRSTNAME" | translate }}
               </button>
             </div>
+
           </div>
         </div>
 
-        <!-- ── Section : demographic informations ─────────── -->
+        <!-- ── Section : Informations démographiques ───────────── -->
         <div class="form-section">
           <h2 class="section-title">
             <span class="section-icon section-icon--blue">
@@ -101,23 +121,34 @@
           </h2>
 
           <div class="form-row">
+
+            <!-- Date de naissance -->
             <div class="form-field">
-              <label class="field-label" for="birthDate">{{ "REGISTER.MANUAL.BIRTH_DATE" | translate }}<span class="required">*</span></label>
+              <label class="field-label" for="birthDate">
+                {{ "REGISTER.MANUAL.BIRTH_DATE" | translate }}<span class="required">*</span>
+                @if (isFromEid('birthDate')) { <span class="eid-badge">eID</span> }
+              </label>
               <input id="birthDate" type="date" class="field-input"
                      formControlName="birthDate"
-                     [class.field-input--error]="isInvalid('birthDate')">
+                     [class.field-input--error]="isInvalid('birthDate')"
+                     [class.field-input--eid]="isFromEid('birthDate')">
               @if (isInvalid('birthDate')) {
                 <span class="field-error">{{ "REGISTER.MANUAL.ERROR_BIRTH_DATE" | translate }}</span>
               }
             </div>
 
+            <!-- Genre -->
             <div class="form-field">
-              <label class="field-label" for="gender">{{ "REGISTER.MANUAL.GENDER" | translate }} <span class="required">*</span></label>
+              <label class="field-label" for="gender">
+                {{ "REGISTER.MANUAL.GENDER" | translate }} <span class="required">*</span>
+                @if (isFromEid('gender')) { <span class="eid-badge">eID</span> }
+              </label>
               <div class="select-wrap">
                 <select id="gender" class="field-input field-select"
                         formControlName="gender"
-                        [class.field-input--error]="isInvalid('gender')">
-                  <option value="" disabled selected>{{ "REGISTER.MANUAL.GENDER_SELECT" | translate }}</option>
+                        [class.field-input--error]="isInvalid('gender')"
+                        [class.field-input--eid]="isFromEid('gender')">
+                  <option value="" disabled>{{ "REGISTER.MANUAL.GENDER_SELECT" | translate }}</option>
                   <option value="M">{{ "REGISTER.MANUAL.GENDER_M" | translate }}</option>
                   <option value="F">{{ "REGISTER.MANUAL.GENDER_F" | translate }}</option>
                   <option value="X">{{ "REGISTER.MANUAL.GENDER_X" | translate }}</option>
@@ -130,10 +161,11 @@
                 <span class="field-error">{{ "REGISTER.MANUAL.ERROR_GENDER" | translate }}</span>
               }
             </div>
+
           </div>
         </div>
 
-        <!-- ── Section : Nationality ─────────────────────────── -->
+        <!-- ── Section : Nationalité ───────────────────────────── -->
         <div class="form-section">
           <h2 class="section-title">
             <span class="section-icon section-icon--blue">
@@ -145,18 +177,22 @@
           </h2>
 
           <div class="form-field">
-            <label class="field-label" for="nationality">{{ "REGISTER.MANUAL.NATIONALITY" | translate }} <span class="required">*</span></label>
+            <label class="field-label" for="nationality">
+              {{ "REGISTER.MANUAL.NATIONALITY" | translate }} <span class="required">*</span>
+              @if (isFromEid('nationality')) { <span class="eid-badge">eID</span> }
+            </label>
             <input id="nationality" type="text" class="field-input"
                    formControlName="nationality"
                    [placeholder]="'REGISTER.MANUAL.NATIONALITY_PLACEHOLDER' | translate"
-                   [class.field-input--error]="isInvalid('nationality')">
+                   [class.field-input--error]="isInvalid('nationality')"
+                   [class.field-input--eid]="isFromEid('nationality')">
             @if (isInvalid('nationality')) {
               <span class="field-error">{{ "REGISTER.MANUAL.ERROR_NATIONALITY" | translate }}</span>
             }
           </div>
         </div>
 
-        <!-- ── Section : Adress ──────────────────────────────── -->
+        <!-- ── Section : Adresse ───────────────────────────────── -->
         <div class="form-section">
           <h2 class="section-title">
             <span class="section-icon section-icon--blue">
@@ -168,11 +204,15 @@
           </h2>
 
           <div class="form-field">
-            <label class="field-label" for="street">{{ "REGISTER.MANUAL.STREET" | translate }} <span class="required">*</span></label>
+            <label class="field-label" for="street">
+              {{ "REGISTER.MANUAL.STREET" | translate }} <span class="required">*</span>
+              @if (isFromEid('street')) { <span class="eid-badge">eID</span> }
+            </label>
             <input id="street" type="text" class="field-input"
                    formControlName="street"
                    [placeholder]="'REGISTER.MANUAL.STREET_PLACEHOLDER' | translate"
-                   [class.field-input--error]="isInvalid('street')">
+                   [class.field-input--error]="isInvalid('street')"
+                   [class.field-input--eid]="isFromEid('street')">
             @if (isInvalid('street')) {
               <span class="field-error">{{ "REGISTER.MANUAL.ERROR_STREET" | translate }}</span>
             }
@@ -180,22 +220,30 @@
 
           <div class="form-row form-row--3">
             <div class="form-field form-field--zip">
-              <label class="field-label" for="zip">{{ "REGISTER.MANUAL.ZIP" | translate }} <span class="required">*</span></label>
+              <label class="field-label" for="zip">
+                {{ "REGISTER.MANUAL.ZIP" | translate }} <span class="required">*</span>
+                @if (isFromEid('zip')) { <span class="eid-badge">eID</span> }
+              </label>
               <input id="zip" type="text" class="field-input"
                      formControlName="zip"
                      placeholder="1000"
-                     [class.field-input--error]="isInvalid('zip')">
+                     [class.field-input--error]="isInvalid('zip')"
+                     [class.field-input--eid]="isFromEid('zip')">
               @if (isInvalid('zip')) {
                 <span class="field-error">{{ "REGISTER.MANUAL.ERROR_ZIP" | translate }}</span>
               }
             </div>
 
             <div class="form-field form-field--city">
-              <label class="field-label" for="city">{{ "REGISTER.MANUAL.CITY" | translate }} <span class="required">*</span></label>
+              <label class="field-label" for="city">
+                {{ "REGISTER.MANUAL.CITY" | translate }} <span class="required">*</span>
+                @if (isFromEid('city')) { <span class="eid-badge">eID</span> }
+              </label>
               <input id="city" type="text" class="field-input"
                      formControlName="city"
                      [placeholder]="'REGISTER.MANUAL.CITY_PLACEHOLDER' | translate"
-                     [class.field-input--error]="isInvalid('city')">
+                     [class.field-input--error]="isInvalid('city')"
+                     [class.field-input--eid]="isFromEid('city')">
               @if (isInvalid('city')) {
                 <span class="field-error">{{ "REGISTER.MANUAL.ERROR_CITY" | translate }}</span>
               }
@@ -203,7 +251,7 @@
           </div>
         </div>
 
-        <!-- ── Section : Contact ──────────────────────────────── -->
+        <!-- ── Section : Contact ───────────────────────────────── -->
         <div class="form-section">
           <h2 class="section-title">
             <span class="section-icon section-icon--blue">
@@ -237,8 +285,7 @@
             <label class="field-label" for="password">{{ "REGISTER.MANUAL.PASSWORD" | translate }}<span class="required">*</span></label>
             <input id="password" type="password" class="field-input"
                    formControlName="password"
-                   placeholder="{{'REGISTER.MANUAL.PASSWORDPLACEHOLDER' | translate}}"
-                   >
+                   placeholder="{{ 'REGISTER.MANUAL.PASSWORDPLACEHOLDER' | translate }}">
             @if (isInvalid('password')) {
               <span class="field-error">
                 @if (form.get('password')?.errors?.['required']) {
@@ -258,12 +305,9 @@
                    placeholder="+32 470 00 00 00">
             <span class="field-hint">{{ "REGISTER.MANUAL.PHONE_HINT" | translate }}</span>
           </div>
-
-          
-
         </div>
 
-        <!-- ── Actions ────────────────────────────────────────── -->
+        <!-- ── Actions ─────────────────────────────────────────── -->
         <div class="form-actions">
           <button type="button" class="btn-back" routerLink="/inscription">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

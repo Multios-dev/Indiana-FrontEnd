@@ -82,6 +82,22 @@
       "PASSWORDPLACEHOLDER": "Voer uw wachtwoord in...",
       "ERROR_PASSWORD_REQUIRED": "Wachtwoord is vereist.",
       "ERROR_PASSWORD_INVALID": "Het wachtwoord is ongeldig."
+    },
+    "EID": {
+      "SUBTITLE": "Lees uw elektronische identiteitskaart om uw registratie te versnellen.",
+      "CARD_HEADING": "De volgende informatie wordt van uw kaart gelezen:",
+      "FIELD_IDENTITY": "Voor- en achternaam",
+      "FIELD_ADDRESS": "Woonadres",
+      "FIELD_BIRTHDATE": "Geboortedatum",
+      "FIELD_NATIONALITY": "Nationaliteit",
+      "HINT": "Uw kaart moet in de lezer worden geplaatst voordat u op de knop klikt.",
+      "BTN_READ": "Lees mijn eID-kaart",
+      "READING": "Nu lezen…",
+      "READING_HINT": "Verwijder uw kaart niet.",
+      "SUCCESS": "Kaartlezen succesvol!",
+      "SUCCESS_REDIRECT": "Doorverwijzing naar het formulier…",
+      "BTN_RETRY": "Probeer het opnieuw",
+      "BTN_MANUAL_FALLBACK": "Ga verder zonder eID"
     }
   },
   "FORGET_PASSWORD": {

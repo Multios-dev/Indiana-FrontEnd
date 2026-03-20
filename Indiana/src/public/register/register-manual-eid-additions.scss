@@ -1,0 +1,47 @@
+// ── Bandeau « pré-rempli via eID » ───────────────────────────────
+// À ajouter dans register-manual.component.scss
+// (coller avant la section « Responsive »)
+
+.eid-banner {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  background: #e8f3fb;
+  border: 1.5px solid rgba(#4a9fd4, .35);
+  border-radius: 10px;
+  padding: .7rem 1rem;
+  margin-bottom: 1.25rem;
+  font-size: .87rem;
+  font-weight: 600;
+  color: #1a6fa8;
+
+  svg { flex-shrink: 0; color: #4a9fd4; }
+}
+
+// ── Badge « eID » dans les labels ────────────────────────────────
+.eid-badge {
+  display: inline-flex;
+  align-items: center;
+  background: #e8f3fb;
+  color: #1a6fa8;
+  border: 1px solid rgba(#4a9fd4, .4);
+  border-radius: 5px;
+  padding: 0 .38rem;
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  line-height: 1.6;
+  margin-left: .4rem;
+  vertical-align: middle;
+}
+
+// ── Champ pré-rempli via eID ──────────────────────────────────────
+.field-input--eid {
+  background: #f0f8ff !important;
+  border-color: rgba(#4a9fd4, .45) !important;
+
+  &:focus {
+    border-color: #4a9fd4 !important;
+    box-shadow: 0 0 0 3px rgba(#4a9fd4, .12) !important;
+  }
+}

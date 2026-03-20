@@ -17,6 +17,11 @@ export const LOGIN_ROUTES: Routes = [
       import('./register/register-manual.component').then(m => m.RegisterManualComponent),
   },
   {
+    path: 'inscription/eid',
+    loadComponent: () =>
+      import('./register/register-eid.component').then(m => m.RegisterEidComponent),
+  },
+  {
     path: 'mot-de-passe-oublie',
     loadComponent: () =>
       import('./forgot-password/forgot-password.component').then(m => m.ForgotPasswordComponent),
