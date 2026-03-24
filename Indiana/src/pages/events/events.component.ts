@@ -1,4 +1,3 @@
-// events.component.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
@@ -14,6 +13,7 @@ export interface ScoutEvent {
   capacity: number;
   statusLabel: string;
   statusClass: string;
+  description: string;
 }
 
 @Component({
@@ -38,7 +38,8 @@ export class EventsComponent {
       registered: 18,
       capacity: 25,
       statusLabel: 'Inscriptions ouvertes',
-      statusClass: 'status-open'
+      statusClass: 'status-open',
+      description: 'Formation de base pour les futurs animateurs. Apprentissage des techniques d\'animation, de la gestion de groupe et de la sécurité en camp.'
     },
     {
       name: 'Camp de Pâques',
@@ -50,7 +51,8 @@ export class EventsComponent {
       registered: 32,
       capacity: 40,
       statusLabel: 'Inscriptions ouvertes',
-      statusClass: 'status-open'
+      statusClass: 'status-open',
+      description: 'Une semaine festive en pleine nature pour toutes les tranches d\'âge. Au programme : activités, jeux de camp, veillées et moments conviviaux.'
     },
     {
       name: 'Journée sportive inter-unités',
@@ -61,7 +63,8 @@ export class EventsComponent {
       registered: 45,
       capacity: 100,
       statusLabel: 'Inscriptions ouvertes',
-      statusClass: 'status-open'
+      statusClass: 'status-open',
+      description: 'Journée de compétitions sportives amicales entre les différentes unités. Venez supporter votre unité et profiter d\'une belle journée en équipe.'
     },
     {
       name: 'Assemblée Générale 2026',
@@ -72,7 +75,8 @@ export class EventsComponent {
       registered: 0,
       capacity: 60,
       statusLabel: 'Planifié',
-      statusClass: 'status-planned'
+      statusClass: 'status-planned',
+      description: 'Assemblée générale annuelle pour discuter des orientations du mouvement, élire les responsables et présenter les projets futurs.'
     },
     {
       name: 'Formation premiers secours',
@@ -84,7 +88,8 @@ export class EventsComponent {
       registered: 20,
       capacity: 20,
       statusLabel: 'Inscriptions fermées',
-      statusClass: 'status-closed'
+      statusClass: 'status-closed',
+      description: 'Certification de premiers secours agréée par la Croix-Rouge. Formation complète couvrant réanimation, plaies, fractures et autres urgences.'
     }
   ];
 

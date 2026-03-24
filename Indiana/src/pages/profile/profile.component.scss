@@ -77,12 +77,12 @@ $font: 'Overpass', sans-serif;
 
 .btn-editing {
   align-items: center;
-  gap: 2px;
+  gap: 8px;
   background: #01aff4;
-  color: #ffffff;
+  color: #fff;
   border: none;
-  border-radius: 2px;
-  padding: 2px 4px;
+  border-radius: 8px;
+  padding: 9px 18px;
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
@@ -94,17 +94,18 @@ $font: 'Overpass', sans-serif;
 
 .btn-cancel {
   align-items: center;
-  gap: 2px;
+  gap: 8px;
   background:#dddddd;
   color: #000000;
   border: none;
-  border-radius: 2px;
-  padding: 2px 4px;
+  border-radius: 8px;
+  padding: 9px 18px;
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
   white-space: nowrap;
   transition: background 0.2s;
+  margin: 3px;
 
   &:hover { background: #b6b6b6; }
 }

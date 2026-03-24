@@ -1,0 +1,20 @@
+
+
+services:
+
+  # Angular Application
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: indiana-app
+    
+    ports:
+      - "80:80"
+    networks:
+      - indiana-network
+    restart: unless-stopped
+
+networks:
+  indiana-network:
+    driver: bridge

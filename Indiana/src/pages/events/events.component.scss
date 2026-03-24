@@ -268,13 +268,10 @@ $font: 'Overpass', sans-serif;
 .card-actions {
   padding: 24px;
   border-top: 1px solid #e5e7eb;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 12px;
-
-  @media (max-width: 480px) {
-    grid-template-columns: 1fr;
-  }
+  align-items: center;
 }
 
 /* ── Buttons ── */
@@ -305,7 +302,7 @@ $font: 'Overpass', sans-serif;
 .btn-primary {
   background: #3b82f6;
   color: #fff;
-  grid-column: 1 / 2;
+  
 
   &:hover {
     background: #2563eb;
@@ -321,8 +318,7 @@ $font: 'Overpass', sans-serif;
 .btn-secondary {
   background: #10b981;
   color: #fff;
-  grid-column: 2 / 3;
-
+  width: 100%;
   &:hover {
     background: #059669;
     box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
@@ -342,7 +338,7 @@ $font: 'Overpass', sans-serif;
   background: #f3f4f6;
   color: #111827;
   border: 1px solid #e5e7eb;
-  grid-column: 1 / -1;
+  width: 100%;
 
   &:hover {
     background: #e5e7eb;
