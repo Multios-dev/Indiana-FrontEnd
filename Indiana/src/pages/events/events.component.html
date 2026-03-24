@@ -1,3 +1,4 @@
+<!-- TODO, pas de svg, utiliser primeicons -->
 <div class="events-page">
   <h1>{{ "EVENTS.TITLE" | translate }}</h1>
 
@@ -17,6 +18,8 @@
             stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
           </svg>
+          <!-- TODO pas de caractère ASCII, primeicons aussi -->
+           <!-- @if pour remplacer ngif -->
           <span *ngIf="event.dateEnd">{{ event.dateStart }} → {{ event.dateEnd }}</span>
           <span *ngIf="!event.dateEnd">{{ event.dateStart }}</span>
         </div>

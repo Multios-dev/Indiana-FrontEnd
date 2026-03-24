@@ -50,11 +50,11 @@ export class BillingComponent {
     { id: 6, number: 'F-2026-003', date: '2026-01-20', amount: 80,  dueDate: '2026-02-20', status: 'open',     owner: 'leo' },
   ];
 
-  get activeInvoices(): Invoice[] {
+  public get activeInvoices(): Invoice[] {
     return this.invoices.filter(i => i.owner === this.activeTab);
   }
 
-  get activeTabLabel(): string {
+  public get activeTabLabel(): string {
     return this.tabs.find(t => t.id === this.activeTab)?.label ?? '';
   }
 }

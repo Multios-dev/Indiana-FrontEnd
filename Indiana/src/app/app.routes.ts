@@ -12,6 +12,7 @@ export const routes: Routes = [
     redirectTo: 'connexion',
   },
   //the routes for registration, login and forgot password are all in "login.routes.ts"
+  //TODO Changer en lazy loading
   ...LOGIN_ROUTES,
   ...TESTKEYLOGIN_ROUTES,
   ...SCOUTS_ROUTES,

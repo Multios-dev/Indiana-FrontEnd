@@ -93,23 +93,23 @@ export class EventsComponent {
     }
   ];
 
-  selectEvent(event: ScoutEvent): void {
+  public selectEvent(event: ScoutEvent): void {
     this.selectedEvent = event;
   }
 
-  closeDetail(): void {
+  public closeDetail(): void {
     this.selectedEvent = null;
   }
 
-  editEvent(event: ScoutEvent): void {
+  public editEvent(event: ScoutEvent): void {
     // TODO: Rediriger vers une page d'édition ou ouvrir un modal d'édition
   }
 
-  registerEvent(event: ScoutEvent): void {
+  public registerEvent(event: ScoutEvent): void {
     // TODO: Appel API pour s'inscrire à l'événement
   }
 
-  exportIcs(event: ScoutEvent): void {
+  public exportIcs(event: ScoutEvent): void {
     // TODO: Générer et télécharger un fichier .ics
   }
 }

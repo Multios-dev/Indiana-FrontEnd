@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 
+//TODO vérifier ce que fait ce loadComponent comparé au component
 export const SCOUTS_ROUTES: Routes = [
     {
         path: 'dashboard',

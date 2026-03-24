@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
 
-import { EidDataService, EidData } from '../../services/eid-data.service';
+import { EidDataService, EidData } from '../../../services/eid-data.service';
 
 /** États possibles du composant */
 type EidStep = 'idle' | 'reading' | 'success' | 'error';

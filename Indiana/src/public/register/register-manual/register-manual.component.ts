@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
-import { EidDataService } from '../../services/eid-data.service';
+import { EidDataService } from '../../../services/eid-data.service';
 
 import {
   ReactiveFormsModule,

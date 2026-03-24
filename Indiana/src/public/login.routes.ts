@@ -14,12 +14,12 @@ export const LOGIN_ROUTES: Routes = [
   {
     path: 'inscription/manuel',
     loadComponent: () =>
-      import('./register/register-manual.component').then(m => m.RegisterManualComponent),
+      import('./register/register-manual/register-manual.component').then(m => m.RegisterManualComponent),
   },
   {
     path: 'inscription/eid',
     loadComponent: () =>
-      import('./register/register-eid.component').then(m => m.RegisterEidComponent),
+      import('./register/register-eid/register-eid.component').then(m => m.RegisterEidComponent),
   },
   {
     path: 'mot-de-passe-oublie',
