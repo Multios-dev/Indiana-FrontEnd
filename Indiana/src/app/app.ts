@@ -4,6 +4,7 @@ import { TranslateModule, TranslatePipe } from "@ngx-translate/core";
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { HeaderComponent } from "./header/header";
 import { Sidebar } from "./sidebar/sidebar";
+import 'primeicons/primeicons.css';
 
 @Component({
   selector: 'app-root',

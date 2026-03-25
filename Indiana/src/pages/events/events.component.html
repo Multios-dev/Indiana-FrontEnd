@@ -20,7 +20,10 @@
           </svg>
           <!-- TODO pas de caractère ASCII, primeicons aussi -->
            <!-- @if pour remplacer ngif -->
-          <span *ngIf="event.dateEnd">{{ event.dateStart }} → {{ event.dateEnd }}</span>
+            @if (event.dateEnd) {
+              <span>{{ event.dateStart }} <i class="pi-arrow-right"></i> {{ event.dateEnd }}</span>
+            }
+          
           <span *ngIf="!event.dateEnd">{{ event.dateStart }}</span>
         </div>
 
