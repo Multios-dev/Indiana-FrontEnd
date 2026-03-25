@@ -195,5 +195,12 @@
     "SAVE": "To safeguard",
     "CANCEL": "Cancel"
   },
-  "ERROR": "Error"
+  "ERROR": "Error",
+  "EVENT": {
+    "DATE": {
+      "FROM": "From",
+      "TO": "to",
+      "THE": "The"
+    }
+  }
 }

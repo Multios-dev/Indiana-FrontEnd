@@ -195,5 +195,12 @@
     "SAVE": "Om te beschermen",
     "CANCEL": "Annuleren"
   },
-  "ERROR": "Fout"
+  "ERROR": "Fout",
+  "EVENT": {
+    "DATE": {
+      "FROM": "Van",
+      "TO": "bij",
+      "THE": "DE"
+    }
+  }
 }

@@ -199,5 +199,12 @@
     "SAVE": "Sauvegarder",
     "CANCEL": "Annuler"
   },
-  "ERROR": "Erreur"
+  "ERROR": "Erreur",
+  "EVENT": {
+    "DATE": {
+      "FROM": "Du",
+      "TO": "au",
+      "THE": "Le"
+    }
+  }
 }
