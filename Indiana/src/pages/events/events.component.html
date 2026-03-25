@@ -1,4 +1,3 @@
-<!-- TODO, pas de svg, utiliser primeicons -->
 <div class="events-page">
   <h1>{{ "EVENTS.TITLE" | translate }}</h1>
 
@@ -14,36 +13,29 @@
       <div class="event-meta">
         <div class="meta-row">
           <!-- Clock icon -->
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
-            stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-          </svg>
-          <!-- TODO pas de caractère ASCII, primeicons aussi -->
+          <i class="pi pi-clock"></i>
+
            <!-- @if pour remplacer ngif -->
             @if (event.dateEnd) {
-              <span>{{ event.dateStart }} <i class="pi-arrow-right"></i> {{ event.dateEnd }}</span>
+              <span>{{ event.dateStart }} <i class="pi pi-arrow-right"></i> {{ event.dateEnd }}</span>
             }
+            
+            @else {
+              <span>{{ event.dateStart }}</span>
+            }
+            
           
-          <span *ngIf="!event.dateEnd">{{ event.dateStart }}</span>
         </div>
 
         <div class="meta-row">
           <!-- Pin icon -->
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
-            stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
-          </svg>
+          <i class="pi pi-map-marker"></i>
           <span>{{ event.location }}</span>
         </div>
 
         <div class="meta-row">
           <!-- Users icon -->
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
-            stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-            <circle cx="9" cy="7" r="4"/>
-            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-          </svg>
+          <i class="pi pi-users"></i>
           <span>{{ event.registered }}/{{ event.capacity }} {{ "EVENTS.REGISTERED" | translate }}</span>
         </div>
       </div>
@@ -65,7 +57,7 @@
         <!-- Header with back button -->
         <div class="card-header">
           <button class="back-btn" (click)="closeDetail()">
-            ← {{ "EVENTS.BACK" | translate }}
+            <i class="pi pi-arrow-left"></i> {{ "EVENTS.BACK" | translate }}
           </button>
         </div>
 
@@ -87,15 +79,12 @@
           <!-- Event Details -->
           <div class="detail-meta">
             <div class="meta-item">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-              </svg>
+              <i class="pi pi-clock"></i>
               <div>
                 <div class="meta-label">{{ "EVENTS.DATE" | translate }}</div>
                 <div class="meta-value">
                   @if (selectedEvent.dateEnd) {
-                    {{ selectedEvent.dateStart }} → {{ selectedEvent.dateEnd }}
+                    {{ selectedEvent.dateStart }} <i class="pi pi-arrow-right"></i> {{ selectedEvent.dateEnd }}
                   } @else {
                     {{ selectedEvent.dateStart }}
                   }
@@ -104,10 +93,7 @@
             </div>
 
             <div class="meta-item">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
-              </svg>
+              <i class="pi pi-map-marker"></i>
               <div>
                 <div class="meta-label">{{ "EVENTS.LOCATION" | translate }}</div>
                 <div class="meta-value">{{ selectedEvent.location }}</div>
@@ -115,12 +101,7 @@
             </div>
 
             <div class="meta-item">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                <circle cx="9" cy="7" r="4"/>
-                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-              </svg>
+              <i class="pi pi-users"></i>
               <div>
                 <div class="meta-label">{{ "EVENTS.REGISTERED" | translate }}</div>
                 <div class="meta-value">{{ selectedEvent.registered }}/{{ selectedEvent.capacity }} inscrits</div>
@@ -133,32 +114,18 @@
         <div class="card-actions">
           <!-- @if (false) {
             <button class="btn btn-primary" (click)="editEvent(selectedEvent)">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
-                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
-              </svg>
+              <i class="pi pi-pencil"></i>
               {{ "EVENTS.EDIT" | translate }}
             </button>
           } -->
           @if (selectedEvent.statusClass === 'status-open') {
             <button class="btn btn-secondary" (click)="registerEvent(selectedEvent)">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                <circle cx="12" cy="7" r="4"/>
-                <path d="M16 11h6"/>
-              </svg>
+              <i class="pi pi-user-plus"></i>
               {{ "EVENTS.REGISTER" | translate }}
             </button>
           }
           <button class="btn btn-outline" (click)="exportIcs(selectedEvent)">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-              <polyline points="7 10 12 15 17 10"/>
-              <line x1="12" y1="15" x2="12" y2="3"/>
-            </svg>
+            <i class="pi pi-download"></i>
             {{ "EVENTS.EXPORT_ICS" | translate }}
           </button>
         </div>
