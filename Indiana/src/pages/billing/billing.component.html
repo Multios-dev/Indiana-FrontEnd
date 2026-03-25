@@ -34,7 +34,7 @@
         @for (invoice of activeInvoices; track invoice.id) {
           <tr>
             <td class="invoice-number">{{ invoice.number }}</td>
-            <td>{{ invoice.date }}</td>
+            <td>{{ invoice.date | date}}</td>
             <td>{{ invoice.amount | number:'1.2-2' }} €</td>
             <td>{{ invoice.dueDate }}</td>
             <td>

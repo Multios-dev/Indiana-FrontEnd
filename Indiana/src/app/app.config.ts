@@ -7,6 +7,7 @@ import { routes } from './app.routes';
 import { HttpClient, HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { httpInterceptorInterceptor } from '../Interceptors/http.interceptor';
 import { MessageService } from 'primeng/api';
+import { DATE_PIPE_DEFAULT_OPTIONS, DatePipe } from '@angular/common';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,7 +20,11 @@ export const appConfig: ApplicationConfig = {
       loader: provideTranslateHttpLoader({prefix:'assets/i18n/', suffix:'.json'}),
       fallbackLang: 'fr'
     }),
-    MessageService
+    MessageService,
+    {
+      provide: DATE_PIPE_DEFAULT_OPTIONS,
+      useValue: { dateFormat: 'dd-MM-yyyy' }
+    },
   ],
 };
 

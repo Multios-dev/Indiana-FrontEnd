@@ -16,11 +16,11 @@
           <i class="pi pi-clock"></i>
 
             @if (event.dateEnd) {
-              <span>{{ event.dateStart | date:'dd-MM-yyyy' }} - {{ event.dateEnd | date:'dd-MM-yyyy'}}</span>
+              <span>Du {{ event.dateStart | date }} au {{ event.dateEnd | date}}</span>
             }
             
             @else {
-              <span>{{ event.dateStart | date:'dd-MM-yyyy'}}</span>
+              <span>Le {{ event.dateStart | date}}</span>
             }
             
           
@@ -83,9 +83,9 @@
                 <div class="meta-label">{{ "EVENTS.DATE" | translate }}</div>
                 <div class="meta-value">
                   @if (selectedEvent.dateEnd) {
-                    {{ selectedEvent.dateStart | date:'dd-MM-yyyy'}} - {{ selectedEvent.dateEnd | date:'dd-MM-yyyy'}}
+                    Du {{ selectedEvent.dateStart | date}} au {{ selectedEvent.dateEnd | date}}
                   } @else {
-                    {{ selectedEvent.dateStart | date:'dd-MM-yyyy'}}
+                    Le {{ selectedEvent.dateStart | date}}
                   }
                 </div>
               </div>
