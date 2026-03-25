@@ -81,7 +81,8 @@
       "PASSWORD": "Wachtwoord",
       "PASSWORDPLACEHOLDER": "Voer uw wachtwoord in...",
       "ERROR_PASSWORD_REQUIRED": "Wachtwoord is vereist.",
-      "ERROR_PASSWORD_INVALID": "Het wachtwoord is ongeldig."
+      "ERROR_PASSWORD_INVALID": "Het wachtwoord is ongeldig.",
+      "EID_PREFILL_BANNER": "Vooraf ingevuld registratieformulier"
     },
     "EID": {
       "SUBTITLE": "Lees uw elektronische identiteitskaart om uw registratie te versnellen.",

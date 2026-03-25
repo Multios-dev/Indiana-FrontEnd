@@ -62,10 +62,6 @@
   transition: background 0.15s, color 0.15s;
   cursor: pointer;
 
-  svg {
-    flex-shrink: 0;
-  }
-
   &:hover {
     background: #2a2d35;
     color: #f9fafb;

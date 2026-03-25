@@ -81,7 +81,8 @@
       "PASSWORD": "Password",
       "PASSWORDPLACEHOLDER": "Enter your password...",
       "ERROR_PASSWORD_REQUIRED": "Password is required.",
-      "ERROR_PASSWORD_INVALID": "The password is invalid."
+      "ERROR_PASSWORD_INVALID": "The password is invalid.",
+      "EID_PREFILL_BANNER": "Pre-filled registration form"
     },
     "EID": {
       "SUBTITLE": "Read your electronic ID card to speed up your registration.",

@@ -94,10 +94,6 @@ $font: 'Overpass', sans-serif;
   gap: 8px;
   font-size: 13px;
   color: #4b5563;
-
-  svg {
-    flex-shrink: 0;
-  }
 }
 
 /* ── Status badges ── */
@@ -242,12 +238,6 @@ $font: 'Overpass', sans-serif;
 .meta-item {
   display: flex;
   gap: 16px;
-
-  svg {
-    flex-shrink: 0;
-    color: #6b7280;
-    margin-top: 2px;
-  }
 }
 
 .meta-label {
@@ -289,10 +279,6 @@ $font: 'Overpass', sans-serif;
   transition: all 0.2s;
   font-family: $font;
 
-  svg {
-    width: 16px;
-    height: 16px;
-  }
 
   &:active {
     transform: scale(0.98);

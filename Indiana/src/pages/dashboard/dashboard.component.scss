@@ -125,11 +125,6 @@ $font: 'Overpass', sans-serif;
   display: flex;
   align-items: flex-start;
   gap: 12px;
-
-  svg {
-    margin-top: 2px;
-    flex-shrink: 0;
-  }
 }
 
 .notif-title {
