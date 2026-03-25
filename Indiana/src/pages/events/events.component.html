@@ -16,7 +16,7 @@
           <i class="pi pi-clock"></i>
 
             @if (event.dateEnd) {
-              <span>{{ event.dateStart }} <i class="pi pi-arrow-right"></i> {{ event.dateEnd }}</span>
+              <span>{{ event.dateStart }} - {{ event.dateEnd }}</span>
             }
             
             @else {
@@ -83,7 +83,7 @@
                 <div class="meta-label">{{ "EVENTS.DATE" | translate }}</div>
                 <div class="meta-value">
                   @if (selectedEvent.dateEnd) {
-                    {{ selectedEvent.dateStart }} <i class="pi pi-arrow-right"></i> {{ selectedEvent.dateEnd }}
+                    {{ selectedEvent.dateStart }} - {{ selectedEvent.dateEnd }}
                   } @else {
                     {{ selectedEvent.dateStart }}
                   }

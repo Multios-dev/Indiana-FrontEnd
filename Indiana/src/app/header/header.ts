@@ -2,11 +2,13 @@ import { Component, signal, inject, EventEmitter, Output, Input } from '@angular
 import { CommonModule } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { ShortLanguages } from '../../enum/languages.enum';
+import { Button } from "primeng/button";
+
 
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule],
+  imports: [CommonModule, Button],
   templateUrl: './header.html',
   styleUrl: './header.scss'
 })

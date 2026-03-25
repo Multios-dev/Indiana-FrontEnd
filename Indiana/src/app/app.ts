@@ -5,6 +5,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { HeaderComponent } from "./header/header";
 import { Sidebar } from "./sidebar/sidebar";
 import 'primeicons/primeicons.css';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-root',
