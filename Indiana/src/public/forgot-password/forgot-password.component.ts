@@ -17,11 +17,12 @@ import { ToastService } from '../../services/toast.service';
   selector: 'app-forgot-password',
   standalone: true,
   imports: [
-    CommonModule, 
+    CommonModule,
+    NgxSpinnerModule, 
     RouterModule, 
     ReactiveFormsModule,
     TranslateModule,
-    TranslatePipe],
+    TranslatePipe,],
   templateUrl: './forgot-password.component.html',
   styleUrls: ['./forgot-password.component.scss'],
 })
@@ -44,6 +45,7 @@ export class ForgotPasswordComponent {
   }
 
   public isInvalid(controlName: string): boolean {
+    
     const ctrl = this.form.get(controlName);
     return !!(ctrl && ctrl.invalid && ctrl.touched);
   }
@@ -52,7 +54,7 @@ export class ForgotPasswordComponent {
     this.form.markAllAsTouched();
 
     if (this.form.invalid) return;
-
+    this._spinnerService.show();
     this._loading.show();
 
     // TODO: replace with real API call
@@ -62,6 +64,7 @@ export class ForgotPasswordComponent {
     setTimeout(() => {
       this.emailSent = true;
       this._loading.hide();
+      this._spinnerService.hide();
       this.cdr.detectChanges();
     }, 1500);
   }

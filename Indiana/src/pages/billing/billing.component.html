@@ -36,7 +36,7 @@
             <td class="invoice-number">{{ invoice.number }}</td>
             <td>{{ invoice.date | date}}</td>
             <td>{{ invoice.amount | number:'1.2-2' }} €</td>
-            <td>{{ invoice.dueDate }}</td>
+            <td>{{ invoice.dueDate | date }}</td>
             <td>
               <span class="badge" [ngClass]="'badge--' + invoice.status">
                 {{ statusLabels[invoice.status] }}

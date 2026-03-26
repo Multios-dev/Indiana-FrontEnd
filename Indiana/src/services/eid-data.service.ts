@@ -3,10 +3,11 @@ import { Injectable } from '@angular/core';
 export interface EidData {
   lastName:    string;
   firstNames:  string[];   // peut contenir plusieurs prénoms
-  birthDate:   string;     // format ISO YYYY-MM-DD
+  birthDate:   string;     // format ISO DD-MM-yyyy
   gender:      'M' | 'F' | 'X' | '';
   nationality: string;
   street:      string;
+  streetNumber: string;
   zip:         string;
   city:        string;
   /** Numéro de Registre National (optionnel, stocké mais non affiché dans le form) */

@@ -199,6 +199,21 @@
             }
           </div>
 
+          <div class="form-field">
+            <label class="field-label" for="streetNumber">
+              {{ "REGISTER.MANUAL.STREETNUMBER" | translate }} <span class="required">*</span>
+              @if (isFromEid('streetNumber')) { <span class="eid-badge">eID</span> }
+            </label>
+            <input id="streetNumber" type="text" class="field-input"
+                   formControlName="streetNumber"
+                   [placeholder]="18"
+                   [class.field-input--error]="isInvalid('streetNumber')"
+                   [class.field-input--eid]="isFromEid('streetNumber')">
+            @if (isInvalid('streetNumber')) {
+              <span class="field-error">{{ "REGISTER.MANUAL.ERROR_STREETNUMBER" | translate }}</span>
+            }
+          </div>
+
           <div class="form-row form-row--3">
             <div class="form-field form-field--zip">
               <label class="field-label" for="zip">
@@ -273,6 +288,24 @@
                 }
                 @if (form.get('password')?.errors?.['password']) {
                   {{ "REGISTER.MANUAL.ERROR_PASSWORD_INVALID" | translate }}
+                }
+              </span>
+            }
+          </div>
+
+          <div class="form-field">
+            <label class="field-label" for="confirmPassword">{{ "REGISTER.MANUAL.CONFIRM_PASSWORD" | translate }}<span class="required">*</span></label>
+            <input id="confirmPassword" type="password" class="field-input"
+                   formControlName="confirmPassword"
+                   placeholder="{{ 'REGISTER.MANUAL.PASSWORDPLACEHOLDER' | translate }}"
+                   [class.field-input--error]="isInvalid('confirmPassword') || (form.touched && form.errors?.['passwordMismatch'])">
+            @if (isInvalid('confirmPassword') || (form.touched && form.errors?.['passwordMismatch'])) {
+              <span class="field-error">
+                @if (form.get('confirmPassword')?.errors?.['required']) {
+                  {{ "REGISTER.MANUAL.ERROR_CONFIRM_PASSWORD_REQUIRED" | translate }}
+                }
+                @if (form.errors?.['passwordMismatch']) {
+                  {{ "REGISTER.MANUAL.ERROR_PASSWORD_MISMATCH" | translate }}
                 }
               </span>
             }

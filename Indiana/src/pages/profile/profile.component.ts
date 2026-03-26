@@ -67,9 +67,8 @@ export class ProfileComponent {
   }
 
   mandats: Mandat[] = [
-    { id: 1, role: 'preinscribed', unit: 'Unité 17 - Les hiboux',  from: '2026-02-24', to: 'Présent', isActive: true },
-    { id: 2, role: 'preinscribed', unit: 'Unité 23 - Les Cerfs',   from: '2026-02-24', to: 'Présent', isActive: true },
-    { id: 3, role: 'preinscribed', unit: 'Section Bruxelles',      from: '2026-02-18', to: 'Présent', isActive: true },
-    { id: 4, role: 'Membre',       unit: 'Unité 42 - Les Castors', from: '2024-09-01', to: 'Présent', isActive: true },
+    { id: 1, role: 'préinscrit', unit: 'Unité 17 - Les hiboux',  from: '2026-02-24', to: 'Présent', isActive: true },
+    { id: 2, role: 'préinscrit', unit: 'Unité 23 - Les Cerfs',   from: '2025-02-24', to: '2026-02-24', isActive: false },
+    { id: 3, role: 'Membre',       unit: 'Unité 42 - Les Castors', from: '2024-09-01', to: 'Présent', isActive: true },
   ];
 }

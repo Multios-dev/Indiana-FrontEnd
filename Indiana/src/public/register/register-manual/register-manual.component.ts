@@ -11,6 +11,8 @@ import {
   FormGroup,
   FormArray,
   Validators,
+  AbstractControl,
+  ValidationErrors,
 } from '@angular/forms';
 
 
@@ -30,11 +32,22 @@ import {
   styleUrls: ['./register-manual.component.scss'],
 })
 export class RegisterManualComponent implements OnDestroy {
+  // ── Validateur personnalisé pour la correspondance des mots de passe ─
+  private static passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
+    const password = control.get('password');
+    const confirmPassword = control.get('confirmPassword');
+
+    if (!password || !confirmPassword) {
+      return null;
+    }
+
+    return password.value === confirmPassword.value ? null : { passwordMismatch: true };
+  }
   public accountCreated = false;
-  public form: FormGroup;
+  public form!: FormGroup;
 
   /** Indique que le formulaire a été pré-rempli via eID */
-  public readonly prefilledFromEid: boolean;
+  public readonly prefilledFromEid!: boolean;
 
   /** Ensemble des noms de contrôles pré-remplis (pour les badges visuels) */
   public readonly eidPrefilled = new Set<string>();
@@ -53,12 +66,14 @@ export class RegisterManualComponent implements OnDestroy {
       gender:      ['', Validators.required],
       nationality: ['', Validators.required],
       street:      ['', Validators.required],
+      streetNumber:['', Validators.required],
       zip:         ['', Validators.required],
       city:        ['', Validators.required],
       email:       ['', [Validators.required, Validators.email]],
       phone:       [''],
       password:    ['', Validators.required],
-    });
+      confirmPassword: ['', Validators.required],
+    }, { validators: RegisterManualComponent.passwordMatchValidator });
 
     // ── Pré-remplissage depuis eID si des données sont disponibles ─
     const eid = this._eidData.getData();
@@ -72,6 +87,7 @@ export class RegisterManualComponent implements OnDestroy {
         gender:      eid.gender,
         nationality: eid.nationality,
         street:      eid.street,
+        streetNumber:eid.streetNumber,
         zip:         eid.zip,
         city:        eid.city,
       };

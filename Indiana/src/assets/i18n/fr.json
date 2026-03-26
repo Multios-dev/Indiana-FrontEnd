@@ -75,8 +75,8 @@
       "NATIONALITY": "Nationalité",
       "NATIONALITY_PLACEHOLDER": "Belge",
       "SECTION_ADDRESS": "Domicile légal",
-      "STREET": "Rue et numéro",
-      "STREET_PLACEHOLDER": "Rue de la Loi 16",
+      "STREET": "Rue",
+      "STREET_PLACEHOLDER": "Rue de la Loi",
       "ZIP": "Code postal",
       "CITY": "Commune",
       "CITY_PLACEHOLDER": "Bruxelles",
@@ -102,7 +102,13 @@
       "PASSWORDPLACEHOLDER": "Entrer votre mot de passe...",
       "ERROR_PASSWORD_REQUIRED": "Le mot de passe est requis.",
       "ERROR_PASSWORD_INVALID": "Le mot de passe est invalide.",
-      "EID_PREFILL_BANNER": "Formulaire d'inscription pré-rempli"
+      "CONFIRM_PASSWORD": "Confirmer le mot de passe",
+      "ERROR_CONFIRM_PASSWORD_REQUIRED": "La confirmation du mot de passe est requise.",
+      "ERROR_PASSWORD_MISMATCH": "Les mots de passe ne correspondent pas.",
+      "EID_PREFILL_BANNER": "Formulaire d'inscription pré-rempli",
+      "STREETNUMBER": "Numéro",
+      "ERROR_STREETNUMBER": "Le numéro est requis.",
+      "STREETNUMBER_PLACEHOLDER": "18"
     }
   },
   "FORGET_PASSWORD": {

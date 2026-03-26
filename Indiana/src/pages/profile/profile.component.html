@@ -123,7 +123,14 @@
             <div class="mandat-info">
               <div class="mandat-role">{{ mandat.role }}</div>
               <div class="mandat-unit">{{ mandat.unit }}</div>
-              <div class="mandat-period">{{ mandat.from }} – {{ mandat.to }}</div>
+              <div class="mandat-period">{{ mandat.from | date}} – 
+                @if(mandat.to == "Présent"){
+                  {{ mandat.to}}
+                }
+                @else {
+                  {{ mandat.to | date}}
+                }
+                </div>
             </div>
             <span class="badge-status" [class.active]="mandat.isActive">
               {{ mandat.isActive ? ("PROFILE.MANDATS.ACTIVE" | translate) : ("PROFILE.MANDATS.INACTIVE" | translate) }}

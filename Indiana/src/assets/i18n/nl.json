@@ -55,8 +55,8 @@
       "NATIONALITY": "Nationaliteit",
       "NATIONALITY_PLACEHOLDER": "Belgisch",
       "SECTION_ADDRESS": "Wettelijk adres",
-      "STREET": "Straat en nummer",
-      "STREET_PLACEHOLDER": "Wetstraat 16",
+      "STREET": "Straat",
+      "STREET_PLACEHOLDER": "Rue de la Wet",
       "ZIP": "Postcode",
       "CITY": "Gemeente",
       "CITY_PLACEHOLDER": "Brussel",
@@ -82,7 +82,13 @@
       "PASSWORDPLACEHOLDER": "Voer uw wachtwoord in...",
       "ERROR_PASSWORD_REQUIRED": "Wachtwoord is vereist.",
       "ERROR_PASSWORD_INVALID": "Het wachtwoord is ongeldig.",
-      "EID_PREFILL_BANNER": "Vooraf ingevuld registratieformulier"
+      "CONFIRM_PASSWORD": "Wachtwoord bevestigen",
+      "ERROR_CONFIRM_PASSWORD_REQUIRED": "Bevestiging van het wachtwoord is vereist.",
+      "ERROR_PASSWORD_MISMATCH": "Wachtwoorden komen niet overeen.",
+      "EID_PREFILL_BANNER": "Vooraf ingevuld registratieformulier",
+      "STREETNUMBER": "Nummer",
+      "ERROR_STREETNUMBER": "Het nummer is vereist.",
+      "STREETNUMBER_PLACEHOLDER": "18"
     },
     "EID": {
       "SUBTITLE": "Lees uw elektronische identiteitskaart om uw registratie te versnellen.",
