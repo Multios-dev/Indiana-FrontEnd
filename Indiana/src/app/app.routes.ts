@@ -1,8 +1,6 @@
 import { Routes } from '@angular/router';
 import { authGuard } from '../guards/auth.guard';
 import { userGuard } from '../guards/user-guard.guard';
-import { LOGIN_ROUTES } from '../public/login.routes';
-import { TESTKEYLOGIN_ROUTES } from '../shared/account/components/testKeyLogin.routes';
 import { SCOUTS_ROUTES } from '../pages/scouts.routes';
 
 export const routes: Routes = [
@@ -11,11 +9,18 @@ export const routes: Routes = [
     pathMatch: 'full',
     redirectTo: 'connexion',
   },
-  //the routes for registration, login and forgot password are all in "login.routes.ts"
-  //TODO Changer en lazy loading
-  ...LOGIN_ROUTES,
-  ...TESTKEYLOGIN_ROUTES,
-  ...SCOUTS_ROUTES,
+  //lazy loading
+  {
+    path: '',
+    loadChildren: () => import('../public/login.routes').then(m => m.LOGIN_ROUTES),
+  },
+  //Scouts routes
+  {
+    path: 'scouts',
+    loadChildren: () => import('../pages/scouts.routes').then(m => m.SCOUTS_ROUTES),
+    //Pour empêcher de pouvoir aller sur ces routes tant qu'on est pas connecté
+    //canActivate: [authGuard],
+  },
   {
     path: '**',
     redirectTo: 'connexion',

@@ -21,7 +21,7 @@ export class AuthService {
   /**
    * TODO Call backend and store returned JWT in localStorage.
    * Replace '/api/login' by the real authentication endpoint.
-   */
+   **/
   public login(username: string, password: string): Observable<void> {
     return this.http.post<JwtResponse>('/api/login', { username, password }).pipe(
       tap((res) => this.setToken(res.token)),

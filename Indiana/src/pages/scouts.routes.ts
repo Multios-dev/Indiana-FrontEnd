@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 
-//TODO vérifier ce que fait ce loadComponent comparé au component
+//loadComponent is for lazy loading instead of instant loading with a simple Component
 export const SCOUTS_ROUTES: Routes = [
     {
         path: 'dashboard',
