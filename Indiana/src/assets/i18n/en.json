@@ -81,9 +81,11 @@
       "PASSWORD": "Password",
       "PASSWORDPLACEHOLDER": "Enter your password...",
       "ERROR_PASSWORD_REQUIRED": "Password is required.",
-      "ERROR_PASSWORD_INVALID": "The password is invalid.",      "CONFIRM_PASSWORD": "Confirm password",
+      "ERROR_PASSWORD_INVALID": "The password is invalid.",
+      "CONFIRM_PASSWORD": "Confirm password",
       "ERROR_CONFIRM_PASSWORD_REQUIRED": "Confirm password is required.",
-      "ERROR_PASSWORD_MISMATCH": "Passwords do not match.",      "EID_PREFILL_BANNER": "Pre-filled registration form",
+      "ERROR_PASSWORD_MISMATCH": "Passwords do not match.",
+      "EID_PREFILL_BANNER": "Pre-filled registration form",
       "STREETNUMBER": "Number",
       "ERROR_STREETNUMBER": "The number is required.",
       "STREETNUMBER_PLACEHOLDER": "18"
@@ -205,6 +207,11 @@
       "FROM": "From",
       "TO": "to",
       "THE": "The"
+    }
+  },
+  "SIGNUP": {
+    "ERRORMESSAGE": {
+      "SERVERERROR": "An error occurred while creating the account. \nPlease try again"
     }
   }
 }

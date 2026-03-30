@@ -208,5 +208,10 @@
       "TO": "bij",
       "THE": "De"
     }
+  },
+  "SIGNUP": {
+    "ERRORMESSAGE": {
+      "SERVERERROR": "Er is een fout opgetreden bij het aanmaken van het account. Probeer het opnieuw"
+    }
   }
 }
