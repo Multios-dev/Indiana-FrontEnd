@@ -18,8 +18,7 @@ export const routes: Routes = [
   {
     path: 'scouts',
     loadChildren: () => import('../pages/scouts.routes').then(m => m.SCOUTS_ROUTES),
-    //Pour empêcher de pouvoir aller sur ces routes tant qu'on est pas connecté
-    //canActivate: [authGuard],
+    canActivate: [authGuard],
   },
   {
     path: '**',

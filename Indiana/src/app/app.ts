@@ -1,10 +1,11 @@
-import { Component, signal, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, signal, inject, effect } from '@angular/core';
+import { RouterOutlet, Router } from '@angular/router';
 import { TranslateModule, TranslatePipe } from "@ngx-translate/core";
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { HeaderComponent } from "./header/header";
 import { Sidebar } from "./sidebar/sidebar";
-import 'primeicons/primeicons.css';
+import { AuthService } from '../services/auth.service';
+// import 'primeicons/primeicons.css';
 import { ButtonModule } from 'primeng/button';
 
 @Component({
@@ -23,6 +24,25 @@ import { ButtonModule } from 'primeng/button';
 export class App {
   protected readonly title = signal('Indiana');
   sidebarOpen = false;
+  
+  private authService = inject(AuthService);
+
+  public constructor() {
+    // Fermer la sidebar quand l'utilisateur se déconnecte
+    effect(() => {
+      if (!this.authService.loggedIn()) {
+        this.sidebarOpen = false;
+      }
+    });
+  }
+
+  public get isLoggedIn(): boolean {
+    return !!this.authService.getUserId();
+  }
+
+  public get showSidebar(): boolean {
+    return this.isLoggedIn;
+  }
 
   toggleSidebar() {
     this.sidebarOpen = !this.sidebarOpen;

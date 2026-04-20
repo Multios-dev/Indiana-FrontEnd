@@ -16,11 +16,10 @@
           <i class="pi pi-clock"></i>
 
             @if (event.dateEnd) {
-              <span>{{"EVENT.DATE.FROM" | translate}} {{ event.dateStart | date }} {{"EVENT.DATE.TO" | translate}} {{ event.dateEnd | date}}</span>
+              <span>{{ "EVENT.DATE.FROM" | translate }} {{ event.dateStart }} {{ "EVENT.DATE.TO" | translate }} {{ event.dateEnd }}</span>
             }
-            
             @else {
-              <span>{{"EVENT.DATE.THE" | translate}} {{ event.dateStart | date}}</span>
+              <span>{{ "EVENT.DATE.THE" | translate }} {{ event.dateStart }}</span>
             }
             
           
@@ -83,9 +82,9 @@
                 <div class="meta-label">{{ "EVENTS.DATE" | translate }}</div>
                 <div class="meta-value">
                   @if (selectedEvent.dateEnd) {
-                    {{"EVENT.DATE.FROM" | translate}} {{ selectedEvent.dateStart | date}} {{"EVENT.DATE.TO" | translate}} {{ selectedEvent.dateEnd | date}}
+                    {{ "EVENT.DATE.FROM" | translate }} {{ selectedEvent.dateStart }} {{ "EVENT.DATE.TO" | translate }} {{ selectedEvent.dateEnd }}
                   } @else {
-                    {{"EVENT.DATE.THE" | translate}} {{ selectedEvent.dateStart | date}}
+                    {{ "EVENT.DATE.THE" | translate }} {{ selectedEvent.dateStart }}
                   }
                 </div>
               </div>

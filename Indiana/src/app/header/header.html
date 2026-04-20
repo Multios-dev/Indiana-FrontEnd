@@ -1,5 +1,5 @@
 <header class="app-header">
-  <p-button icon="pi pi-bars" (onClick)="menuToggle.emit()"></p-button>
+  <p-button icon="pi pi-bars" (onClick)="toggleMenu()" [disabled]="!isLoggedIn"></p-button>
   <div class="logo-wrap">
     <img src="assets/logo_scouts.jpg" alt="Les Scouts Pluralistes" class="logo">
   </div>

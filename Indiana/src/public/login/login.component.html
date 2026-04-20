@@ -17,17 +17,17 @@
     <form [formGroup]="loginForm" (ngSubmit)="submit()" novalidate>
 
       <!-- Email -->
-      <div class="field-group" [class.has-error]="username?.invalid && username?.touched">
+      <div class="field-group" [class.has-error]="email?.invalid && email?.touched">
         <label class="field-label">{{"LOGIN.EMAIL_LABEL" | translate}}</label>
         <input
           type="email"
-          formControlName="username"
+          formControlName="email"
           [placeholder]=" 'LOGIN.EMAIL_PLACEHOLDER' | translate"
           class="field-input"
           autocomplete="email"
         >
 
-        @if (username?.invalid && username?.touched) {
+        @if (email?.invalid && email?.touched) {
           <p class="field-hint">
             {{ "LOGIN.EMAIL_ERROR" | translate }}
           </p>
@@ -70,7 +70,7 @@
       </div>
 
       <!-- Submit -->
-      <button class="submit-btn" (click)="submit()" (click)="login()">
+      <button class="submit-btn" (click)="submit()">
         <i class="pi pi-sign-in"></i>
         {{ "LOGIN.SUBMIT" | translate }}
       </button>

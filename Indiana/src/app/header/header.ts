@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
 import { ShortLanguages } from '../../enum/languages.enum';
 import { Button } from "primeng/button";
+import { AuthService } from '../../services/auth.service';
 
 
 
@@ -14,6 +15,7 @@ import { Button } from "primeng/button";
 })
 export class HeaderComponent {
   private _translate = inject(TranslateService);
+  private authService = inject(AuthService);
 
   public currentLang = signal(this._translate.getCurrentLang() ?? ShortLanguages.FR);
 
@@ -31,4 +33,14 @@ export class HeaderComponent {
   }
   @Input() sidebarOpen = false;
   @Output() menuToggle = new EventEmitter<void>();
+
+  get isLoggedIn(): boolean {
+    return !!this.authService.getUserId();
+  }
+
+  toggleMenu(): void {
+    if (this.isLoggedIn) {
+      this.menuToggle.emit();
+    }
+  }
 }

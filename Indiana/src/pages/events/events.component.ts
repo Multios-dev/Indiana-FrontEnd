@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
+import { AsyncPipe, CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
+import { EventService } from '../../services/event.service';
+import { EventOutput } from '../../models/event-output';
 
 export interface ScoutEvent {
   name: string;
@@ -23,75 +25,99 @@ export interface ScoutEvent {
   templateUrl: './events.component.html',
   styleUrl: './events.component.scss'
 })
-export class EventsComponent {
+export class EventsComponent implements OnInit {
   selectedEvent: ScoutEvent | null = null;
+  events: ScoutEvent[] = [];
+  isLoading = false;
 
-  // TODO: remplacer par un appel API réel
-  events: ScoutEvent[] = [
-    {
-      name: 'Formation Animateur T1',
-      type: 'Formation',
-      typeClass: 'badge-formation',
-      dateStart: '2026-03-15',
-      dateEnd: '2026-03-16',
-      location: 'Centre scout de Bruxelles',
-      registered: 18,
-      capacity: 25,
-      statusLabel: 'Inscriptions ouvertes',
-      statusClass: 'status-open',
-      description: 'Formation de base pour les futurs animateurs. Apprentissage des techniques d\'animation, de la gestion de groupe et de la sécurité en camp.'
-    },
-    {
-      name: 'Camp de Pâques',
-      type: 'Camp',
-      typeClass: 'badge-camp',
-      dateStart: '2026-04-06',
-      dateEnd: '2026-04-12',
-      location: 'Domaine de Mozet',
-      registered: 32,
-      capacity: 40,
-      statusLabel: 'Inscriptions ouvertes',
-      statusClass: 'status-open',
-      description: 'Une semaine festive en pleine nature pour toutes les tranches d\'âge. Au programme : activités, jeux de camp, veillées et moments conviviaux.'
-    },
-    {
-      name: 'Journée sportive inter-unités',
-      type: 'Activité',
-      typeClass: 'badge-activite',
-      dateStart: '2026-05-10',
-      location: 'Parc du Cinquantenaire',
-      registered: 45,
-      capacity: 100,
-      statusLabel: 'Inscriptions ouvertes',
-      statusClass: 'status-open',
-      description: 'Journée de compétitions sportives amicales entre les différentes unités. Venez supporter votre unité et profiter d\'une belle journée en équipe.'
-    },
-    {
-      name: 'Assemblée Générale 2026',
-      type: 'Réunion',
-      typeClass: 'badge-reunion',
-      dateStart: '2026-06-20',
-      location: 'Maison des Scouts, Bruxelles',
-      registered: 0,
-      capacity: 60,
-      statusLabel: 'Planifié',
-      statusClass: 'status-planned',
-      description: 'Assemblée générale annuelle pour discuter des orientations du mouvement, élire les responsables et présenter les projets futurs.'
-    },
-    {
-      name: 'Formation premiers secours',
-      type: 'Formation',
-      typeClass: 'badge-formation',
-      dateStart: '2026-02-01',
-      dateEnd: '2026-02-02',
-      location: 'Croix-Rouge de Belgique',
-      registered: 20,
-      capacity: 20,
-      statusLabel: 'Inscriptions fermées',
-      statusClass: 'status-closed',
-      description: 'Certification de premiers secours agréée par la Croix-Rouge. Formation complète couvrant réanimation, plaies, fractures et autres urgences.'
+  private eventService = inject(EventService);
+  private cdr = inject(ChangeDetectorRef);
+
+  ngOnInit(): void {
+    this.loadEvents();
+  }
+
+  private loadEvents(): void {
+    this.isLoading = true;
+    this.eventService.getEvents(0, 10).subscribe({
+      next: (response: any) => {
+        // Gérer les deux cas : tableau direct ou objet avec items
+        let events: EventOutput[] = [];
+        if (Array.isArray(response)) {
+          events = response;
+        } else if (response && response.items && Array.isArray(response.items)) {
+          events = response.items;
+        } else if (response && response.data && Array.isArray(response.data)) {
+          events = response.data;
+        }
+        
+        this.events = events.map(event => this.mapEventOutputToScoutEvent(event));
+        this.isLoading = false;
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        this.isLoading = false;
+        this.cdr.detectChanges();
+        // TODO: afficher un message d'erreur à l'utilisateur
+      }
+    });
+  }
+
+  private mapEventOutputToScoutEvent(event: EventOutput): ScoutEvent {
+    // Déterminer le type et la classe associée
+    const eventType = event.event_type || 'Événement';
+    let typeClass = 'badge-default';
+    switch (eventType.toLowerCase()) {
+      case 'formation':
+        typeClass = 'badge-formation';
+        break;
+      case 'camp':
+        typeClass = 'badge-camp';
+        break;
+      case 'activité':
+      case 'activite':
+        typeClass = 'badge-activite';
+        break;
+      case 'réunion':
+      case 'reunion':
+        typeClass = 'badge-reunion';
+        break;
     }
-  ];
+
+    // Déterminer le statut (simplifié - à adapter selon la logique métier)
+    const now = new Date();
+    const startDate = event.start_date ? new Date(event.start_date) : null;
+    let statusLabel = 'Planifié';
+    let statusClass = 'status-planned';
+
+    if (startDate && startDate < now) {
+      statusLabel = 'Passé';
+      statusClass = 'status-closed';
+    } else {
+      statusLabel = 'Inscriptions ouvertes';
+      statusClass = 'status-open';
+    }
+
+    // Localisation (si adresse disponible, sinon "Localisation non disponible")
+    let location = 'Localisation non disponible';
+    if (event.address && event.address.thoroughfare) {
+      location = `${event.address.thoroughfare}${event.address.box_number ? ', ' + event.address.box_number : ''}, ${event.address.post_code} ${event.address.post_name}`;
+    }
+
+    return {
+      name: event.name || 'Sans titre',
+      type: eventType,
+      typeClass: typeClass,
+      dateStart: event.start_date ? event.start_date.split('T')[0] : '',
+      dateEnd: event.end_date ? event.end_date.split('T')[0] : undefined,
+      location: location,
+      registered: 0,  // Le backend ne retourne pas ce champ pour l'instant
+      capacity: 0,    // Le backend ne retourne pas ce champ pour l'instant
+      statusLabel: statusLabel,
+      statusClass: statusClass,
+      description: event.description || 'Pas de description disponible'
+    };
+  }
 
   public selectEvent(event: ScoutEvent): void {
     this.selectedEvent = event;

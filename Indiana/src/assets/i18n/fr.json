@@ -73,7 +73,7 @@
       "GENDER_X": "Autre",
       "SECTION_NATIONALITY": "Nationalité",
       "NATIONALITY": "Nationalité",
-      "NATIONALITY_PLACEHOLDER": "Belge",
+      "NATIONALITY_PLACEHOLDER": "Votre nationalité...",
       "SECTION_ADDRESS": "Domicile légal",
       "STREET": "Rue",
       "STREET_PLACEHOLDER": "Rue de la Loi",
@@ -172,6 +172,7 @@
     }
   },
   "PROFILE": {
+    "LOADING": "Chargement du profil...",
     "EDIT": "Modifier",
     "TABS": {
       "INFO": "Informations générales",
@@ -190,7 +191,14 @@
       "PHONE": "Téléphone",
       "STREET": "Rue",
       "CITY": "Ville",
-      "ZIPCODE": "Code postal"
+      "ZIPCODE": "Code postal",
+      "NATIONALITY": "Nationalité(s)",
+      "HOME_ADDRESS": "Adresse",
+      "GENERAL": "Identité",
+      "BOX_NUMBER": "Numéro",
+      "COUNTRY": "Pays",
+      "WEBSITE": "Site web",
+      "RESIDENTIAL_ADDRESS": "Adresse résidentielle"
     },
     "MANDATS": {
       "TITLE": "Historique des mandats",
@@ -203,7 +211,10 @@
       "PLACEHOLDER": "Aucunes compétences ici."
     },
     "SAVE": "Sauvegarder",
-    "CANCEL": "Annuler"
+    "CANCEL": "Annuler",
+    "CONFIRM_TITLE": "Confirmer les modifications",
+    "CONFIRM_MESSAGE": "Êtes-vous sûr de vouloir sauvegarder ces modifications ?",
+    "CONFIRM": "Confirmer"
   },
   "ERROR": "Erreur",
   "EVENT": {

@@ -33,14 +33,16 @@
 <!-- TODO, adapté le user footer à l'utilisateur actuellement connecté -->
   <!-- User footer -->
   <div class="sidebar-footer">
-    <div class="user-avatar">PM</div>
+    <div class="user-avatar">{{ initials }}</div>
     <div class="user-info">
-      <div class="user-name">Paul Martin</div>
-      <div class="user-role">Simple utilisateur</div>
-      <div class="user-totem">Totem : <em>Aigle</em></div>
+      <div class="user-name">{{ currentUser()?.first_names?.[0] }} {{ currentUser()?.last_name }}</div>
+      <div class="user-role">{{ currentUser()?.contact?.email }}</div>
+      @if (currentUser()?.totem) {
+        <div class="user-totem">Totem : <em>{{ currentUser()?.totem }}</em></div>
+      }
     </div>
     <!-- TODO  déconnecter réellement l'utilisateur-->
-    <button routerLink="/connexion" class="btn-logout">
+    <button (click)="logout()" class="btn-logout">
       
       <i class="pi pi-sign-out"></i>
     </button>

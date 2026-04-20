@@ -1,6 +1,8 @@
-<app-sidebar [isOpen]="sidebarOpen" />
+@if (showSidebar) {
+  <app-sidebar [isOpen]="sidebarOpen" />
+}
 <div class="wrapper" [class.sidebar-open]="sidebarOpen">
-<app-header (menuToggle)="toggleSidebar()" /> 
+<app-header (menuToggle)="toggleSidebar()" />
 <router-outlet/>
 </div>
 <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="medium" type="ball-clip-rotate" [fullScreen]="true">

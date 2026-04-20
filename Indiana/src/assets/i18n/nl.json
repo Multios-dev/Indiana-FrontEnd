@@ -53,7 +53,7 @@
       "GENDER_X": "Ander",
       "SECTION_NATIONALITY": "Nationaliteit",
       "NATIONALITY": "Nationaliteit",
-      "NATIONALITY_PLACEHOLDER": "Belgisch",
+      "NATIONALITY_PLACEHOLDER": "Jouw nationaliteit...",
       "SECTION_ADDRESS": "Wettelijk adres",
       "STREET": "Straat",
       "STREET_PLACEHOLDER": "Rue de la Wet",
@@ -168,6 +168,7 @@
     }
   },
   "PROFILE": {
+    "LOADING": "Profiel laden...",
     "EDIT": "Wijzigen",
     "TABS": {
       "INFO": "Algemene informatie",
@@ -186,7 +187,14 @@
       "PHONE": "Telefoon",
       "STREET": "Straat",
       "CITY": "Stad",
-      "ZIPCODE": "Postcode"
+      "ZIPCODE": "Postcode",
+      "NATIONALITY": "Nationaliteit(en)",
+      "HOME_ADDRESS": "Adres",
+      "GENERAL": "Identificeren",
+      "BOX_NUMBER": "Nummer",
+      "COUNTRY": "Land",
+      "WEBSITE": "Website",
+      "RESIDENTIAL_ADDRESS": "Woonadres"
     },
     "MANDATS": {
       "TITLE": "Geschiedenis van mandaten",
@@ -199,7 +207,10 @@
       "PLACEHOLDER": "Geen vaardigheden hier."
     },
     "SAVE": "Om te beschermen",
-    "CANCEL": "Annuleren"
+    "CANCEL": "Annuleren",
+    "CONFIRM_TITLE": "Wijzigingen bevestigen",
+    "CONFIRM_MESSAGE": "Weet u zeker dat u deze wijzigingen wilt opslaan?",
+    "CONFIRM": "Bevestigen"
   },
   "ERROR": "Fout",
   "EVENT": {

@@ -4,10 +4,39 @@ import { RouterModule, Router } from '@angular/router';
 import { TranslateModule, TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { EidDataService } from '../../../services/eid-data.service';
-import { KeyCloakService } from '../../../services/keycloak.service';
 import { AuthService } from '../../../services/auth.service';
 import { ToastService } from '../../../services/toast.service';
-import { KeyCloakUser } from '../../../models/keycloak/keycloak-user';
+import { UserService } from '../../../services/user.service';
+import { UserCreateInput } from '../../../models/user-create';
+
+// Codes pays ISO 3166-1 alpha-2
+const ISO_COUNTRIES = [
+  { code: 'BE', label: 'Belgique / Belgïe / Belgien' },
+  { code: 'FR', label: 'France' },
+  { code: 'NL', label: 'Pays-Bas / Nederland' },
+  { code: 'DE', label: 'Allemagne / Deutschland' },
+  { code: 'AT', label: 'Autriche / Österreich' },
+  { code: 'CH', label: 'Suisse / Schweiz / Svizzera' },
+  { code: 'LU', label: 'Luxembourg' },
+  { code: 'GB', label: 'Royaume-Uni / United Kingdom' },
+  { code: 'IE', label: 'Irlande / Ireland' },
+  { code: 'ES', label: 'Espagne / España' },
+  { code: 'IT', label: 'Italie / Italia' },
+  { code: 'PT', label: 'Portugal' },
+  { code: 'GR', label: 'Grèce' },
+  { code: 'PL', label: 'Pologne / Polska' },
+  { code: 'CZ', label: 'République Tchèque / Česko' },
+  { code: 'SK', label: 'Slovaquie / Slovensko' },
+  { code: 'HU', label: 'Hongrie / Magyarország' },
+  { code: 'RO', label: 'Roumanie / România' },
+  { code: 'BG', label: 'Bulgarie' },
+  { code: 'HR', label: 'Croatie / Hrvatska' },
+  { code: 'SI', label: 'Slovénie / Slovenija' },
+  { code: 'SE', label: 'Suède / Sverige' },
+  { code: 'NO', label: 'Norvège / Norge' },
+  { code: 'DK', label: 'Danemark / Danmark' },
+  { code: 'FI', label: 'Finlande / Suomi' },
+];
 
 import {
   ReactiveFormsModule,
@@ -18,7 +47,6 @@ import {
   AbstractControl,
   ValidationErrors,
 } from '@angular/forms';
-import { take } from 'rxjs';
 
 
 
@@ -39,7 +67,10 @@ import { take } from 'rxjs';
 
 
 export class RegisterManualComponent implements OnDestroy {
-  // ── Validateur personnalisé pour la correspondance des mots de passe ─
+  // ── Codes pays ISO 3166-1 alpha-2 ───────────────────────────
+  public readonly isoCountries = ISO_COUNTRIES;
+
+  // ── Validateur personnalisé pour la correspondance des 2 mots de passe ─
   private static passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
     const password = control.get('password');
     const confirmPassword = control.get('confirmPassword');
@@ -51,9 +82,29 @@ export class RegisterManualComponent implements OnDestroy {
     return password.value === confirmPassword.value ? null : { passwordMismatch: true };
   }
 
+  // ── Validateur personnalisé pour le numéro de téléphone ─
+  private static phoneValidator(control: AbstractControl): ValidationErrors | null {
+    const phone = control.value;
+    if (!phone) return null;
+
+    const phoneRegex = /^\+?[0-9]{8,15}$/;
+    return phoneRegex.test(phone) ? null : { invalidPhone: true };
+  }
+
+  // ── Validateur pour la date de naissance (pas dans le futur) ─
+  private static birthDateValidator(control: AbstractControl): ValidationErrors | null {
+    const birthDate = control.value;
+    if (!birthDate) return null;
+
+    const date = new Date(birthDate);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    return date <= today ? null : { invalidBirthDate: true };
+  }
+
   public accountCreated = false;
   public form!: FormGroup;
-    public userForm: FormGroup = new FormGroup({});
 
   /** Indique que le formulaire a été pré-rempli via eID */
   public readonly prefilledFromEid!: boolean;
@@ -63,7 +114,7 @@ export class RegisterManualComponent implements OnDestroy {
 
   private _authService = inject(AuthService);
   private _eidData = inject(EidDataService);
-  private _keycloakService = inject(KeyCloakService);
+  private _userService = inject(UserService);
   private _loading = inject(NgxSpinnerService);
   private _router = inject(Router);
   private _toastService = inject(ToastService);
@@ -72,19 +123,36 @@ export class RegisterManualComponent implements OnDestroy {
   constructor(private fb: FormBuilder, private cdr: ChangeDetectorRef) {
     // ── Initialisation of the empty formular ──────────────────────────
     this.form = this.fb.group({
-      lastName:    ['', Validators.required],
+      lastName:    [''],
       firstNames:  this.fb.array([
         this.fb.control('', Validators.required),
       ]),
-      birthDate:   ['', Validators.required],
-      gender:      ['', Validators.required],
-      nationality: ['', Validators.required],
-      street:      ['', Validators.required],
-      streetNumber:['', Validators.required],
-      zip:         ['', Validators.required],
-      city:        ['', Validators.required],
-      email:       ['', [Validators.required, Validators.email]],
-      phone:       [''],
+      birthDate:   ['', RegisterManualComponent.birthDateValidator],
+      gender:      [''],
+      totem:       [''],
+      quali:       [''],
+      isLegalGuardian: [false],
+      // ── Nationalités (au moins 1) ──
+      nationalities:  this.fb.array([
+        this.fb.control('', Validators.required),
+      ]),
+      // ── Contact ──
+      email:       ['', [Validators.email]],
+      phone:       ['', RegisterManualComponent.phoneValidator],
+      // ── Home Address ──
+      homeBoxNumber:   ['', Validators.required],
+      homeStreet:      ['', Validators.required],
+      homePostName:    ['', Validators.required],
+      homePostCode:    ['', Validators.required],
+      homeCountry:     ['', Validators.required],
+      // ── Residential Address (optional) ──
+      hasResidentialAddress: [false],
+      residBoxNumber:   [''],
+      residStreet:      [''],
+      residPostName:    [''],
+      residPostCode:    [''],
+      residCountry:     [''],
+      // ── Auth ──
       password:    ['', Validators.required],
       confirmPassword: ['', Validators.required],
     }, { validators: RegisterManualComponent.passwordMatchValidator });
@@ -99,11 +167,9 @@ export class RegisterManualComponent implements OnDestroy {
         lastName:    eid.lastName,
         birthDate:   eid.birthDate,
         gender:      eid.gender,
-        nationality: eid.nationality,
-        street:      eid.street,
-        streetNumber:eid.streetNumber,
-        zip:         eid.zip,
-        city:        eid.city,
+        homeStreet:  eid.street,
+        homePostCode: eid.zip,
+        homePostName: eid.city,
       };
 
       for (const [key, value] of Object.entries(scalarMap)) {
@@ -111,6 +177,13 @@ export class RegisterManualComponent implements OnDestroy {
           this.form.get(key)?.setValue(value);
           this.eidPrefilled.add(key);
         }
+      }
+
+      // Nationalité depuis eID (peut être un seul pays)
+      if (eid.nationality) {
+        const arr = this.nationalities;
+        arr.at(0)?.setValue(eid.nationality);
+        this.eidPrefilled.add('nationalities');
       }
 
       // Prénoms (FormArray) — on remplace le contrôle par défaut
@@ -127,6 +200,20 @@ export class RegisterManualComponent implements OnDestroy {
     } else {
       this.prefilledFromEid = false;
     }
+
+    // Setup listener pour les adresses résidentielles
+    this.form.get('hasResidentialAddress')?.valueChanges.subscribe(hasResidential => {
+      const residentialFields = ['residBoxNumber', 'residStreet', 'residPostName', 'residPostCode', 'residCountry'];
+      residentialFields.forEach(field => {
+        const control = this.form.get(field);
+        if (hasResidential) {
+          control?.setValidators([Validators.required]);
+        } else {
+          control?.clearValidators();
+        }
+        control?.updateValueAndValidity({ emitEvent: false });
+      });
+    });
   }
 
   // ── Accessors ────────────────────────────────────────────────────
@@ -135,12 +222,16 @@ export class RegisterManualComponent implements OnDestroy {
     return this.form.get('firstNames') as FormArray;
   }
 
+  public get nationalities(): FormArray {
+    return this.form.get('nationalities') as FormArray;
+  }
+
   /** True if the field has been pre-filled from the eID card */
   public isFromEid(controlName: string): boolean {
     return this.eidPrefilled.has(controlName);
   }
 
-  // ── Gestion names ───────────────────────────────────────────────
+  // ── Gestion prénoms ────────────────────────────────────────────
 
   public addFirstName(): void {
     this.firstNames.push(this.fb.control('', Validators.required));
@@ -152,6 +243,21 @@ export class RegisterManualComponent implements OnDestroy {
 
   public isFirstNameInvalid(index: number): boolean {
     const ctrl = this.firstNames.at(index);
+    return !!(ctrl && ctrl.invalid && ctrl.touched);
+  }
+
+  // ── Gestion nationalités ───────────────────────────────────────
+
+  public addNationality(): void {
+    this.nationalities.push(this.fb.control('', Validators.required));
+  }
+
+  public removeNationality(index: number): void {
+    this.nationalities.removeAt(index);
+  }
+
+  public isNationalityInvalid(index: number): boolean {
+    const ctrl = this.nationalities.at(index);
     return !!(ctrl && ctrl.invalid && ctrl.touched);
   }
 
@@ -167,41 +273,56 @@ export class RegisterManualComponent implements OnDestroy {
   public onSubmit(): void {
     this.form.markAllAsTouched();
     this.firstNames.controls.forEach(c => c.markAsTouched());
+    this.nationalities.controls.forEach(c => c.markAsTouched());
 
     if (this.form.invalid) return;
 
     this._loading.show();
 
-    const v = this.form.value;
+    const val = this.form.value;
+    const birthDate = val.birthDate
+      ? new Date(val.birthDate).toISOString().split('T')[0]
+      : null;
 
-    const keycloakUser: KeyCloakUser = {
-      username:       v.email,
-      email:          v.email,
-      password:       v.password,
-      first_name:     v.firstNames[0],
-      last_name:      v.lastName,
-      email_verified: false,
-      is_admin:       false,
-    };
-
-    // TODO: remplacer par le vrai groupId du rôle "Simple utilisateur"
-    const GROUP_ID = 'TODO_GROUP_ID';
-
-    this._keycloakService.createUser(keycloakUser, GROUP_ID).subscribe({
-      next: (success) => {
+    // Créer l'utilisateur via le backend avec son mot de passe
+    this._userService.createUser(
+      {
+        first_names: val.firstNames,
+        last_name: val.lastName || null,
+        birth_date: birthDate,
+        gender: val.gender || null,
+        nationality: val.nationalities,
+        totem: val.totem || null,
+        quali: val.quali || null,
+        is_legal_guardian: val.isLegalGuardian || false,
+        contact: {
+          email: val.email || null,
+          phone: val.phone || null,
+        },
+        home_address: {
+          box_number: val.homeBoxNumber,
+          thoroughfare: val.homeStreet,
+          post_name: val.homePostName,
+          post_code: val.homePostCode,
+          country: val.homeCountry,
+        },
+        residential_address: val.hasResidentialAddress
+          ? {
+              box_number: val.residBoxNumber,
+              thoroughfare: val.residStreet,
+              post_name: val.residPostName,
+              post_code: val.residPostCode,
+              country: val.residCountry,
+            }
+          : undefined,
+      },
+      val.password
+    ).subscribe({
+      next: () => {
         this._loading.hide();
-        if (success) {
-          this.accountCreated = true;
-          this._eidData.clear();
-          this.cdr.detectChanges();
-        } else {
-          this._toastService.showToast(
-            'authToast',
-            'La création du compte a échoué. Veuillez réessayer.',
-            'error',
-            'Erreur'
-          );
-        }
+        this.accountCreated = true;
+        this._eidData.clear();
+        this.cdr.detectChanges();
       },
       error: (err) => {
         this._loading.hide();
@@ -214,23 +335,6 @@ export class RegisterManualComponent implements OnDestroy {
     });
   }
 
-  public signup() {
-  this._loading.show();
-  const userSignup = this.userForm.getRawValue();
-  
-  this._keycloakService.createUser(userSignup, "TODO voir pour le group_id")
-                   .pipe(take(1))
-                   .subscribe({
-                    next: () => {
-                      this._authService.setLoggedIn();
-                      this._loading.hide();
-                    },
-                    error: () => {
-                      this._toastService.showToast('authToast', this._translateService.instant('SIGNUP.ERRORMESSAGE.SERVERERROR'), 'error', this._translateService.instant('ERROR'))
-                      this._loading.hide();
-                    }
-                   });
-}
   // ── Lifecycle ─────────────────────────────────────────────────────
 
   ngOnDestroy(): void {

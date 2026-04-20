@@ -1,156 +1,213 @@
 <div class="profile">
 
-  <!-- Header -->
-  <div class="profile-header-card">
-    <div class="profile-identity">
-      <div class="profile-avatar">{{ initials }}</div>
-      <div>
-        <div class="profile-name">
-          {{ user.firstName }} {{ user.lastName }}
+  <!-- Loading Spinner -->
+  @if (isLoading()) {
+    <div class="spinner-container">
+      <div class="spinner"></div>
+      <p class="loading-text">{{ "PROFILE.LOADING" | translate }}</p>
+    </div>
+  }
+
+  <!-- Content -->
+  @if (!isLoading()) {
+    <!-- Header -->
+    <div class="profile-header-card">
+      <div class="profile-identity">
+        <div class="profile-avatar">{{ initials }}</div>
+        <div>
+          <div class="profile-name">
+            {{ user.firstNames }} {{ user.lastName }}
+          </div>
+          <div class="profile-totem">Totem : {{ user.totem }}</div>
         </div>
-        <div class="profile-totem">Totem : {{ user.totem }}</div>
       </div>
+
+      <!-- Buttons -->
+       @if (!isEditing){
+        <button class="btn-modifier" (click)="startEdit()">
+          {{ "PROFILE.EDIT" | translate }}
+        </button>
+       }
+      
+
+      @if (isEditing){
+        <div class="edit-actions">
+          <button class="btn-cancel" (click)="cancelEdit()">{{"PROFILE.CANCEL" | translate}}</button>
+          <button class="btn-editing" (click)="save()">{{"PROFILE.SAVE" | translate}}</button>
+          
+        </div>
+      }
+      
     </div>
 
-    <!-- Buttons -->
-     @if (!isEditing){
-      <button class="btn-modifier" (click)="startEdit()">
-        {{ "PROFILE.EDIT" | translate }}
+    <!-- Tabs -->
+    <div class="tabs-bar">
+      <button class="tab-btn" [class.active]="activeTab === 'info'" (click)="activeTab = 'info'">
+        {{ "PROFILE.TABS.INFO" | translate }}
       </button>
-     }
-    
+      <button class="tab-btn" [class.active]="activeTab === 'mandats'" (click)="activeTab = 'mandats'">
+        {{ "PROFILE.TABS.MANDATS" | translate }}
+      </button>
+      <button class="tab-btn" [class.active]="activeTab === 'competences'" (click)="activeTab = 'competences'">
+        {{ "PROFILE.TABS.COMPETENCES" | translate }}
+      </button>
+    </div>
 
-    @if (isEditing){
-      <div class="edit-actions">
-        <button class="btn-cancel" (click)="cancelEdit()">{{"PROFILE.CANCEL" | translate}}</button>
-        <button class="btn-editing" (click)="save()">{{"PROFILE.SAVE" | translate}}</button>
-        
+    <!-- INFO -->
+    @if (activeTab === 'info') {
+      <div class="tab-card">
+        <div class="form-grid">
+
+          <div class="form-section-title">{{ "PROFILE.INFO.GENERAL" | translate }}</div>
+          <br>
+          <br>
+
+          <div class="form-field">
+            <label>{{ "PROFILE.INFO.LASTNAME" | translate }}</label>
+            <input [(ngModel)]="editableUser.lastName" [readonly]="!isEditing" />
+          </div>
+
+          <div class="form-field">
+            <label>{{ "PROFILE.INFO.FIRSTNAME" | translate }}</label>
+            <input [(ngModel)]="editableUser.firstNames" [readonly]="!isEditing" />
+          </div>
+
+          <div class="form-field">
+            <label>
+              {{ "PROFILE.INFO.TOTEM" | translate }}
+              <span class="badge-locked">{{ "PROFILE.INFO.LOCKED" | translate }}</span>
+            </label>
+            <input [(ngModel)]="editableUser.totem" readonly />
+          </div>
+
+          <div class="form-field">
+            <label>{{ "PROFILE.INFO.BIRTHDATE" | translate }}</label>
+            <input [(ngModel)]="editableUser.birthDate" [readonly]="!isEditing" />
+          </div>
+
+          <div class="form-field">
+            <label>{{ "PROFILE.INFO.GENDER" | translate }}</label>
+            <input [(ngModel)]="editableUser.gender" [readonly]="!isEditing" />
+          </div>
+
+          <div class="form-field">
+            <label>{{ "PROFILE.INFO.NATIONAL_REG" | translate }}</label>
+            <input [(ngModel)]="editableUser.nationalReg" [readonly]="!isEditing" />
+          </div>
+
+          <div class="form-field">
+            <label>{{ "PROFILE.INFO.NATIONALITY" | translate }}</label>
+            <input [value]="editableUser.nationality?.join(', ')" readonly />
+          </div>
+
+          <div class="form-field">
+            <label>{{ "PROFILE.INFO.EMAIL" | translate }}</label>
+            <input [(ngModel)]="editableUser.email" [readonly]="!isEditing" />
+          </div>
+
+          <div class="form-field">
+            <label>{{ "PROFILE.INFO.PHONE" | translate }}</label>
+            <input [(ngModel)]="editableUser.phone" [readonly]="!isEditing" />
+          </div>
+          <br>
+
+          <!-- Adresse principale -->
+          <div class="form-section-title">{{ "PROFILE.INFO.HOME_ADDRESS" | translate }}</div>
+
+          <br>
+
+          <div class="form-field">
+            <label>{{ "PROFILE.INFO.STREET" | translate }}</label>
+            <input [(ngModel)]="editableUser.street" [readonly]="!isEditing" />
+          </div>
+
+          <div class="form-field">
+            <label>{{ "PROFILE.INFO.BOX_NUMBER" | translate }}</label>
+            <input [(ngModel)]="editableUser.boxNumber" [readonly]="!isEditing" />
+          </div>
+
+          <div class="form-field">
+            <label>{{ "PROFILE.INFO.CITY" | translate }}</label>
+            <input [(ngModel)]="editableUser.city" [readonly]="!isEditing" />
+          </div>
+
+          <div class="form-field">
+            <label>{{ "PROFILE.INFO.ZIPCODE" | translate }}</label>
+            <input [(ngModel)]="editableUser.zipCode" [readonly]="!isEditing" />
+          </div>
+
+          <div class="form-field">
+            <label>{{ "PROFILE.INFO.COUNTRY" | translate }}</label>
+            <input [(ngModel)]="editableUser.country" [readonly]="!isEditing" />
+          </div>
+        </div>
       </div>
     }
-    
-  </div>
 
-  <!-- Tabs -->
-  <div class="tabs-bar">
-    <button class="tab-btn" [class.active]="activeTab === 'info'" (click)="activeTab = 'info'">
-      {{ "PROFILE.TABS.INFO" | translate }}
-    </button>
-    <button class="tab-btn" [class.active]="activeTab === 'mandats'" (click)="activeTab = 'mandats'">
-      {{ "PROFILE.TABS.MANDATS" | translate }}
-    </button>
-    <button class="tab-btn" [class.active]="activeTab === 'competences'" (click)="activeTab = 'competences'">
-      {{ "PROFILE.TABS.COMPETENCES" | translate }}
-    </button>
-  </div>
-
-  <!-- INFO -->
-  @if (activeTab === 'info') {
-    <div class="tab-card">
-      <div class="form-grid">
-
-        <div class="form-field">
-          <label>{{ "PROFILE.INFO.LASTNAME" | translate }}</label>
-          <input [(ngModel)]="editableUser.lastName" [readonly]="!isEditing" />
+    <!-- MANDATS -->
+    @if (activeTab === 'mandats') {
+      <div class="tab-card">
+        <div class="section-header">
+          <h2>{{ "PROFILE.MANDATS.TITLE" | translate }}</h2>
         </div>
 
-        <div class="form-field">
-          <label>{{ "PROFILE.INFO.FIRSTNAME" | translate }}</label>
-          <input [(ngModel)]="editableUser.firstName" [readonly]="!isEditing" />
-        </div>
-
-        <div class="form-field">
-          <label>
-            {{ "PROFILE.INFO.TOTEM" | translate }}
-            <span class="badge-locked">{{ "PROFILE.INFO.LOCKED" | translate }}</span>
-          </label>
-          <input [(ngModel)]="editableUser.totem" readonly />
-        </div>
-
-        <div class="form-field">
-          <label>{{ "PROFILE.INFO.BIRTHDATE" | translate }}</label>
-          <input [(ngModel)]="editableUser.birthDate" [readonly]="!isEditing" />
-        </div>
-
-        <div class="form-field">
-          <label>{{ "PROFILE.INFO.GENDER" | translate }}</label>
-          <input [(ngModel)]="editableUser.gender" [readonly]="!isEditing" />
-        </div>
-
-        <div class="form-field">
-          <label>{{ "PROFILE.INFO.NATIONAL_REG" | translate }}</label>
-          <input [(ngModel)]="editableUser.nationalReg" [readonly]="!isEditing" />
-        </div>
-
-        <div class="form-field">
-          <label>{{ "PROFILE.INFO.EMAIL" | translate }}</label>
-          <input [(ngModel)]="editableUser.email" [readonly]="!isEditing" />
-        </div>
-
-        <div class="form-field">
-          <label>{{ "PROFILE.INFO.PHONE" | translate }}</label>
-          <input [(ngModel)]="editableUser.phone" [readonly]="!isEditing" />
-        </div>
-
-        <div class="form-field">
-          <label>{{ "PROFILE.INFO.STREET" | translate }}</label>
-          <input [(ngModel)]="editableUser.street" [readonly]="!isEditing" />
-        </div>
-
-        <div class="form-field">
-          <label>{{ "PROFILE.INFO.CITY" | translate }}</label>
-          <input [(ngModel)]="editableUser.city" [readonly]="!isEditing" />
-        </div>
-
-        <div class="form-field">
-          <label>{{ "PROFILE.INFO.ZIPCODE" | translate }}</label>
-          <input [(ngModel)]="editableUser.zipCode" [readonly]="!isEditing" />
-        </div>
-
-      </div>
-    </div>
-  }
-
-  <!-- MANDATS -->
-  @if (activeTab === 'mandats') {
-    <div class="tab-card">
-      <div class="section-header">
-        <h2>{{ "PROFILE.MANDATS.TITLE" | translate }}</h2>
-      </div>
-
-      <div class="mandat-list">
-        @for (mandat of mandats; track mandat.id) {
-          <div class="mandat-item">
-            <div class="mandat-info">
-              <div class="mandat-role">{{ mandat.role }}</div>
-              <div class="mandat-unit">{{ mandat.unit }}</div>
-              <div class="mandat-period">{{ mandat.from | date}} – 
-                @if(mandat.to == "Présent"){
-                  {{ mandat.to}}
-                }
-                @else {
-                  {{ mandat.to | date}}
-                }
-                </div>
+        <div class="mandat-list">
+          @for (mandat of mandats; track mandat.id) {
+            <div class="mandat-item">
+              <div class="mandat-info">
+                <div class="mandat-role">{{ mandat.role }}</div>
+                <div class="mandat-unit">{{ mandat.unit }}</div>
+                <div class="mandat-period">{{ mandat.from | date}} – 
+                  @if(mandat.to == "Présent"){
+                    {{ mandat.to}}
+                  }
+                  @else {
+                    {{ mandat.to | date}}
+                  }
+                  </div>
+              </div>
+              <span class="badge-status" [class.active]="mandat.isActive">
+                {{ mandat.isActive ? ("PROFILE.MANDATS.ACTIVE" | translate) : ("PROFILE.MANDATS.INACTIVE" | translate) }}
+              </span>
             </div>
-            <span class="badge-status" [class.active]="mandat.isActive">
-              {{ mandat.isActive ? ("PROFILE.MANDATS.ACTIVE" | translate) : ("PROFILE.MANDATS.INACTIVE" | translate) }}
-            </span>
-          </div>
-        }
-        @empty {
-          <p class="empty-msg">{{ "PROFILE.MANDATS.EMPTY" | translate }}</p>
-        }
+          }
+          @empty {
+            <p class="empty-msg">{{ "PROFILE.MANDATS.EMPTY" | translate }}</p>
+          }
+        </div>
       </div>
-    </div>
+    }
+
+    <!-- Skills -->
+    @if (activeTab === 'competences') {
+      <div class="tab-card">
+        <div class="section-header">
+          <h2>{{ "PROFILE.COMPETENCES.TITLE" | translate }}</h2>
+        </div>
+        <p class="empty-msg">{{ "PROFILE.COMPETENCES.PLACEHOLDER" | translate }}</p>
+      </div>
+    }
   }
 
-  <!-- Skills -->
-  @if (activeTab === 'competences') {
-    <div class="tab-card">
-      <div class="section-header">
-        <h2>{{ "PROFILE.COMPETENCES.TITLE" | translate }}</h2>
+  <!-- Confirmation Modal -->
+  @if (isConfirmingUpdate) {
+    <div class="modal-overlay">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>{{ "PROFILE.CONFIRM_TITLE" | translate }}</h2>
+        </div>
+        <div class="modal-body">
+          <p>{{ "PROFILE.CONFIRM_MESSAGE" | translate }}</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn-cancel-modal" (click)="cancelConfirm()">
+            {{ "PROFILE.CANCEL" | translate }}
+          </button>
+          <button class="btn-confirm" (click)="confirmSave()">
+            {{ "PROFILE.CONFIRM" | translate }}
+          </button>
+        </div>
       </div>
-      <p class="empty-msg">{{ "PROFILE.COMPETENCES.PLACEHOLDER" | translate }}</p>
     </div>
   }
 

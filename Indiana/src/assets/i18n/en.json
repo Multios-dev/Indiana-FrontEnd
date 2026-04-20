@@ -53,7 +53,7 @@
       "GENDER_X": "Other",
       "SECTION_NATIONALITY": "Nationality",
       "NATIONALITY": "Nationality",
-      "NATIONALITY_PLACEHOLDER": "Belgian",
+      "NATIONALITY_PLACEHOLDER": "Your nationality...",
       "SECTION_ADDRESS": "Legal address",
       "STREET": "Street",
       "STREET_PLACEHOLDER": "Lawstreet",
@@ -168,6 +168,7 @@
     }
   },
   "PROFILE": {
+    "LOADING": "Loading profile...",
     "EDIT": "To modify",
     "TABS": {
       "INFO": "General information",
@@ -186,7 +187,14 @@
       "PHONE": "Phone",
       "STREET": "Street",
       "CITY": "City",
-      "ZIPCODE": "Postcode"
+      "ZIPCODE": "Postcode",
+      "NATIONALITY": "Nationality(ies)",
+      "HOME_ADDRESS": "Address",
+      "GENERAL": "Identity",
+      "BOX_NUMBER": "Number",
+      "COUNTRY": "Country",
+      "WEBSITE": "Website",
+      "RESIDENTIAL_ADDRESS": "Residential address"
     },
     "MANDATS": {
       "TITLE": "History of mandates",
@@ -199,7 +207,10 @@
       "PLACEHOLDER": "No skills here."
     },
     "SAVE": "To safeguard",
-    "CANCEL": "Cancel"
+    "CANCEL": "Cancel",
+    "CONFIRM_TITLE": "Confirm changes",
+    "CONFIRM_MESSAGE": "Are you sure you want to save these changes?",
+    "CONFIRM": "Confirm"
   },
   "ERROR": "Error",
   "EVENT": {

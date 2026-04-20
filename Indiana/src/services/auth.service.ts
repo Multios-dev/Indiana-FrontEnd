@@ -1,7 +1,11 @@
-import { Injectable, signal, WritableSignal } from '@angular/core';
+import { Injectable, signal, WritableSignal, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
+import { environment } from '../environment/environment';
+import { UserLoginInput, UserLoginOutput } from '../models/user-login';
+import { UserService } from './user.service';
+import { UserOutput } from '../models/user-output';
 
 interface JwtResponse {
   token: string;
@@ -13,10 +17,27 @@ interface JwtResponse {
 
 export class AuthService {
   private readonly tokenKey = 'jwt_token';
+  private readonly userIdKey = 'user_id';
+  private readonly loginEndpoint = environment.baseApi_url + '/auth/login';
 
   public loggedIn: WritableSignal<boolean> = signal(false);
   
-  constructor(private http: HttpClient) {}
+  private http = inject(HttpClient);
+  private userService = inject(UserService);
+
+  /**
+   * Login with email and password
+   * Returns user ID from backend
+   */
+  public loginWithEmail(email: string, password: string): Observable<UserLoginOutput> {
+    const credentials: UserLoginInput = { email, password };
+    return this.http.post<UserLoginOutput>(this.loginEndpoint, credentials).pipe(
+      tap((res) => {
+        this.setUserId(res.id);
+        this.loggedIn.set(true);
+      })
+    );
+  }
 
   /**
    * TODO Call backend and store returned JWT in localStorage.
@@ -31,10 +52,34 @@ export class AuthService {
 
   public logout(): void {
     localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem(this.userIdKey);
+    this.loggedIn.set(false);
+  }
+
+  public getUserId(): string | null {
+    return localStorage.getItem(this.userIdKey);
+  }
+
+  /**
+   * Récupère les informations de l'utilisateur connecté
+   * @returns Observable contenant les informations de l'utilisateur
+   */
+  public getCurrentUserInfo(): Observable<UserOutput> {
+    const userId = this.getUserId();
+    if (!userId) {
+      return of(null as any);
+    }
+    return this.userService.getCurrentUser(userId);
+  }
+
+  private setUserId(userId: string): void {
+    localStorage.setItem(this.userIdKey, userId);
   }
 
   public getToken(): string | null {
-    return localStorage.getItem(this.tokenKey);
+    //for test
+    return "heiheieh"
+    //return localStorage.getItem(this.tokenKey);
   }
 
   public isLoggedIn(): boolean {

@@ -4,10 +4,8 @@ import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angula
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
-import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
-import { KeyCloakService } from '../../services/keycloak.service';
+import { TranslateModule, TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ToastService } from '../../services/toast.service';
-import { KeycloakConnectionReturn } from '../../models/keycloak/keycloak-connection-return';
 
 @Component({
   selector: 'app-login',
@@ -23,63 +21,33 @@ import { KeycloakConnectionReturn } from '../../models/keycloak/keycloak-connect
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent { 
-  private _keycloakService = inject(KeyCloakService);
-  private _loading = inject(NgxSpinnerService);
+  private _auth = inject(AuthService);
   private _spinnerService = inject(NgxSpinnerService);
   private _toastService = inject(ToastService);
-  private _translateService: any;
+  private _translateService = inject(TranslateService);
+  private _router = inject(Router);
 
   public error: string | null = null;
   public loginForm: FormGroup;
-  public needOtp: boolean = false;
-  public otp: string = '';
   public showPassword = signal(false);
-  
- 
 
   constructor(
     private _fb: FormBuilder,
-    private _auth: AuthService,
-    private _router: Router,
   ) {
     this.loginForm = this._fb.group({
-      username: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
     });
   }
 
-  public login() {
-      if (this.loginForm.valid) {
-        this._spinnerService.show();
-        this._keycloakService.preLogin(this.loginForm.value).subscribe({
-          next: (res: KeycloakConnectionReturn) => {
-            if(res.exists && res.valid_password) {
-              this.needOtp = true;
-              this._keycloakService.isOtp.set(true);
-            } else {
-              if(!res.exists) {
-                this._toastService.showToast('authToast', this._translateService.instant('LOGIN.ERRORMESSAGE.ACCOUNTNOTEXIST'), 'error', this._translateService.instant('ERROR'));
-              }
-              else if(!res.valid_password) {
-                this._toastService.showToast('authToast', this._translateService.instant('LOGIN.ERRORMESSAGE.INVALIDPASSWORD'), 'error', this._translateService.instant('ERROR'));
-              }
-            }
-            this._spinnerService.hide();
-          },
-          error: (err) => {
-            if (err.status === 400) {
-              this._toastService.showToast('authToast', this._translateService.instant('LOGIN.ERRORMESSAGE.INVALID'), 'error', this._translateService.instant('ERROR'));
-            } else if(err.status === 403) {
-              this._toastService.showToast('authToast', this._translateService.instant('LOGIN.ERRORMESSAGE.EMAILNOTVALIDATED'), 'error', this._translateService.instant('ERROR'));
-            } else {
-              this._toastService.showToast('authToast', this._translateService.instant('LOGIN.ERRORMESSAGE.SERVERERROR'), 'error', this._translateService.instant('ERROR'));
-            }
-            this._spinnerService.hide();
-          },
-        });
-      }
-    }
-    
+  public get email() {
+    return this.loginForm.get('email');
+  }
+
+  public get password() {
+    return this.loginForm.get('password');
+  }
+
   public togglePassword() {
     this.showPassword.update(v => !v);
   }
@@ -92,11 +60,39 @@ export class LoginComponent {
       return;
     }
 
-    const { username, password } = this.loginForm.value;
-    this._loading.show();
-    setTimeout(() => {
-      this._loading.hide();
-    },500);
+    const { email, password } = this.loginForm.value;
+    this._spinnerService.show();
+    
+    this._auth.loginWithEmail(email, password).subscribe({
+      next: (res) => {
+        this._spinnerService.hide();
+        this._toastService.showToast(
+          'authToast',
+          this._translateService.instant('LOGIN.SUCCESS'),
+          'success',
+          this._translateService.instant('SUCCESS')
+        );
+        this._router.navigate(['/scouts/dashboard']);
+      },
+      error: (err) => {
+        this._spinnerService.hide();
+        let errorMessage = this._translateService.instant('LOGIN.ERRORMESSAGE.SERVERERROR');
+        
+        if (err.status === 401) {
+          errorMessage = this._translateService.instant('LOGIN.ERRORMESSAGE.INVALIDPASSWORD');
+        } else if (err.status === 404) {
+          errorMessage = this._translateService.instant('LOGIN.ERRORMESSAGE.ACCOUNTNOTEXIST');
+        }
+        
+        this._toastService.showToast(
+          'authToast',
+          errorMessage,
+          'error',
+          this._translateService.instant('ERROR')
+        );
+      }
+    });
+  }
 
     // this.auth.login(username!, password!).subscribe({
     //   next: () => {
@@ -108,13 +104,9 @@ export class LoginComponent {
     //     this.error = 'Identifiants invalides';
     //   },
     // });
-  }
+    // }
 
   public get username() {
     return this.loginForm.get('username');
-  }
-
-  public get password() {
-    return this.loginForm.get('password');
   }
 }

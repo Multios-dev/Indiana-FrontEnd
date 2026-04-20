@@ -160,18 +160,45 @@
           </h2>
 
           <div class="form-field">
-            <label class="field-label" for="nationality">
-              {{ "REGISTER.MANUAL.NATIONALITY" | translate }} <span class="required">*</span>
-              @if (isFromEid('nationality')) { <span class="eid-badge">eID</span> }
+            <label class="field-label">
+              {{ "REGISTER.MANUAL.NATIONALITY" | translate }}<span class="required">*</span>
+              @if (isFromEid('nationalities')) { <span class="eid-badge">eID</span> }
             </label>
-            <input id="nationality" type="text" class="field-input"
-                   formControlName="nationality"
-                   [placeholder]="'REGISTER.MANUAL.NATIONALITY_PLACEHOLDER' | translate"
-                   [class.field-input--error]="isInvalid('nationality')"
-                   [class.field-input--eid]="isFromEid('nationality')">
-            @if (isInvalid('nationality')) {
-              <span class="field-error">{{ "REGISTER.MANUAL.ERROR_NATIONALITY" | translate }}</span>
-            }
+
+            <div formArrayName="nationalities">
+              @for (ctrl of nationalities.controls; track $index) {
+                <div class="nationality-row">
+                  <div class="select-wrap">
+                    <select [id]="'nationality' + $index"
+                            class="field-input field-select"
+                            [formControlName]="$index.toString()"
+                            [class.field-input--error]="isNationalityInvalid($index)"
+                            [class.field-input--eid]="isFromEid('nationalities')">
+                      <option value="" disabled>{{ "REGISTER.MANUAL.NATIONALITY_PLACEHOLDER" | translate }}</option>
+                      @for (country of isoCountries; track country.code) {
+                        <option [value]="country.code">{{ country.label }}</option>
+                      }
+                    </select>
+                    <i class="pi pi-chevron-down select-arrow"></i>
+                  </div>
+                  @if (nationalities.length > 1) {
+                    <button type="button" class="btn-remove-nationality"
+                            (click)="removeNationality($index)"
+                            title="Supprimer cette nationalité">
+                      <i class="pi pi-times"></i>
+                    </button>
+                  }
+                </div>
+              }
+              @if (nationalities.invalid && nationalities.touched) {
+                <span class="field-error">{{ "REGISTER.MANUAL.ERROR_NATIONALITY" | translate }}</span>
+              }
+            </div>
+
+            <button type="button" class="btn-add-nationality" (click)="addNationality()">
+              <i class="pi pi-plus"></i>
+              {{ "REGISTER.MANUAL.ADD_NATIONALITY" | translate }}
+            </button>
           </div>
         </div>
 
@@ -185,65 +212,88 @@
           </h2>
 
           <div class="form-field">
-            <label class="field-label" for="street">
+            <label class="field-label" for="homeStreet">
               {{ "REGISTER.MANUAL.STREET" | translate }} <span class="required">*</span>
-              @if (isFromEid('street')) { <span class="eid-badge">eID</span> }
+              @if (isFromEid('homeStreet')) { <span class="eid-badge">eID</span> }
             </label>
-            <input id="street" type="text" class="field-input"
-                   formControlName="street"
+            <input id="homeStreet" type="text" class="field-input"
+                   formControlName="homeStreet"
                    [placeholder]="'REGISTER.MANUAL.STREET_PLACEHOLDER' | translate"
-                   [class.field-input--error]="isInvalid('street')"
-                   [class.field-input--eid]="isFromEid('street')">
-            @if (isInvalid('street')) {
+                   [class.field-input--error]="isInvalid('homeStreet')"
+                   [class.field-input--eid]="isFromEid('homeStreet')">
+            @if (isInvalid('homeStreet')) {
               <span class="field-error">{{ "REGISTER.MANUAL.ERROR_STREET" | translate }}</span>
             }
           </div>
 
           <div class="form-field">
-            <label class="field-label" for="streetNumber">
+            <label class="field-label" for="homeBoxNumber">
               {{ "REGISTER.MANUAL.STREETNUMBER" | translate }} <span class="required">*</span>
-              @if (isFromEid('streetNumber')) { <span class="eid-badge">eID</span> }
+              @if (isFromEid('homeBoxNumber')) { <span class="eid-badge">eID</span> }
             </label>
-            <input id="streetNumber" type="text" class="field-input"
-                   formControlName="streetNumber"
+            <input id="homeBoxNumber" type="text" class="field-input"
+                   formControlName="homeBoxNumber"
                    [placeholder]="18"
-                   [class.field-input--error]="isInvalid('streetNumber')"
-                   [class.field-input--eid]="isFromEid('streetNumber')">
-            @if (isInvalid('streetNumber')) {
+                   [class.field-input--error]="isInvalid('homeBoxNumber')"
+                   [class.field-input--eid]="isFromEid('homeBoxNumber')">
+            @if (isInvalid('homeBoxNumber')) {
               <span class="field-error">{{ "REGISTER.MANUAL.ERROR_STREETNUMBER" | translate }}</span>
             }
           </div>
 
           <div class="form-row form-row--3">
             <div class="form-field form-field--zip">
-              <label class="field-label" for="zip">
+              <label class="field-label" for="homePostCode">
                 {{ "REGISTER.MANUAL.ZIP" | translate }} <span class="required">*</span>
-                @if (isFromEid('zip')) { <span class="eid-badge">eID</span> }
+                @if (isFromEid('homePostCode')) { <span class="eid-badge">eID</span> }
               </label>
-              <input id="zip" type="text" class="field-input"
-                     formControlName="zip"
+              <input id="homePostCode" type="text" class="field-input"
+                     formControlName="homePostCode"
                      placeholder="1000"
-                     [class.field-input--error]="isInvalid('zip')"
-                     [class.field-input--eid]="isFromEid('zip')">
-              @if (isInvalid('zip')) {
+                     [class.field-input--error]="isInvalid('homePostCode')"
+                     [class.field-input--eid]="isFromEid('homePostCode')">
+              @if (isInvalid('homePostCode')) {
                 <span class="field-error">{{ "REGISTER.MANUAL.ERROR_ZIP" | translate }}</span>
               }
             </div>
 
             <div class="form-field form-field--city">
-              <label class="field-label" for="city">
+              <label class="field-label" for="homePostName">
                 {{ "REGISTER.MANUAL.CITY" | translate }} <span class="required">*</span>
-                @if (isFromEid('city')) { <span class="eid-badge">eID</span> }
+                @if (isFromEid('homePostName')) { <span class="eid-badge">eID</span> }
               </label>
-              <input id="city" type="text" class="field-input"
-                     formControlName="city"
+              <input id="homePostName" type="text" class="field-input"
+                     formControlName="homePostName"
                      [placeholder]="'REGISTER.MANUAL.CITY_PLACEHOLDER' | translate"
-                     [class.field-input--error]="isInvalid('city')"
-                     [class.field-input--eid]="isFromEid('city')">
-              @if (isInvalid('city')) {
+                     [class.field-input--error]="isInvalid('homePostName')"
+                     [class.field-input--eid]="isFromEid('homePostName')">
+              @if (isInvalid('homePostName')) {
                 <span class="field-error">{{ "REGISTER.MANUAL.ERROR_CITY" | translate }}</span>
               }
             </div>
+          </div>
+
+          <!-- Pays de résidence -->
+          <div class="form-field">
+            <label class="field-label" for="homeCountry">
+              {{ "REGISTER.MANUAL.COUNTRY" | translate }} <span class="required">*</span>
+              @if (isFromEid('homeCountry')) { <span class="eid-badge">eID</span> }
+            </label>
+            <div class="select-wrap">
+              <select id="homeCountry" class="field-input field-select"
+                      formControlName="homeCountry"
+                      [class.field-input--error]="isInvalid('homeCountry')"
+                      [class.field-input--eid]="isFromEid('homeCountry')">
+                <option value="" disabled>{{ "REGISTER.MANUAL.COUNTRY_PLACEHOLDER" | translate }}</option>
+                @for (country of isoCountries; track country.code) {
+                  <option [value]="country.code">{{ country.label }}</option>
+                }
+              </select>
+              <i class="pi pi-chevron-down select-arrow"></i>
+            </div>
+            @if (isInvalid('homeCountry')) {
+              <span class="field-error">{{ "REGISTER.MANUAL.ERROR_COUNTRY" | translate }}</span>
+            }
           </div>
         </div>
 
