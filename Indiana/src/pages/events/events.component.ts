@@ -3,6 +3,7 @@ import { AsyncPipe, CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { EventService } from '../../services/event.service';
 import { EventOutput } from '../../models/event-output';
+import { EventMapComponent } from '../../shared/event-map/event-map.component';
 
 export interface ScoutEvent {
   name: string;
@@ -21,13 +22,15 @@ export interface ScoutEvent {
 @Component({
   selector: 'app-events',
   standalone: true,
-  imports: [CommonModule, TranslateModule],
+  imports: [CommonModule, TranslateModule, EventMapComponent],
   templateUrl: './events.component.html',
   styleUrl: './events.component.scss'
 })
 export class EventsComponent implements OnInit {
   selectedEvent: ScoutEvent | null = null;
+  selectedEventOutput: EventOutput | null = null;  // Stocker les données brutes pour la carte
   events: ScoutEvent[] = [];
+  eventsOutput: EventOutput[] = [];  // Stocker les EventOutput bruts
   isLoading = false;
 
   // Pagination signals
@@ -76,6 +79,7 @@ export class EventsComponent implements OnInit {
           events = response.data;
         }
         
+        this.eventsOutput = events;  // Stocker les données brutes
         this.events = events.map(event => this.mapEventOutputToScoutEvent(event));
         this.isLoading = false;
         this.cdr.detectChanges();
@@ -144,8 +148,9 @@ export class EventsComponent implements OnInit {
     };
   }
 
-  public selectEvent(event: ScoutEvent): void {
+  public selectEvent(event: ScoutEvent, index: number): void {
     this.selectedEvent = event;
+    this.selectedEventOutput = this.eventsOutput[index] || null;  // Récupérer les données brutes correspondantes
   }
 
   public closeDetail(): void {

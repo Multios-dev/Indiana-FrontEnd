@@ -149,6 +149,7 @@
     "REGISTERED": "deelnemers",
     "DATE": "Datum",
     "LOCATION": "Locatie",
+    "LOCATION_MAP": "Locatie op kaart",
     "BACK": "Terug naar evenementen",
     "EDIT": "Bewerken",
     "REGISTER": "Registreren",
@@ -229,5 +230,6 @@
     "ERRORMESSAGE": {
       "SERVERERROR": "Er is een fout opgetreden bij het aanmaken van het account. Probeer het opnieuw"
     }
-  }
+  },
+  "NO_LOCATION": "Geen locatie beschikbaar"
 }

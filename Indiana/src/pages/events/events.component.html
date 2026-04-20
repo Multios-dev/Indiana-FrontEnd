@@ -39,7 +39,7 @@
 
   <div class="events-grid">
     @for (event of events; track $index) {
-        <div class="event-card" (click)="selectEvent(event)">
+        <div class="event-card" (click)="selectEvent(event, $index)">
 
       <div class="event-card-header">
         <span class="event-name">{{ event.name }}</span>
@@ -142,6 +142,14 @@
               </div>
             </div>
           </div>
+
+          <!-- Event Location Map -->
+          @if (selectedEventOutput?.latitude && selectedEventOutput?.longitude) {
+            <div class="detail-map-section">
+              <h3>{{ "EVENTS.LOCATION_MAP" | translate }}</h3>
+              <app-event-map [event]="selectedEventOutput"></app-event-map>
+            </div>
+          }
         </div>
 
         <!-- Action Buttons -->

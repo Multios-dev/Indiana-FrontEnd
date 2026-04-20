@@ -149,6 +149,7 @@
     "REGISTERED": "participants",
     "DATE": "Date",
     "LOCATION": "Location",
+    "LOCATION_MAP": "Location on map",
     "BACK": "Back to events",
     "EDIT": "Edit",
     "REGISTER": "Register",
@@ -229,5 +230,6 @@
     "ERRORMESSAGE": {
       "SERVERERROR": "An error occurred while creating the account. \nPlease try again"
     }
-  }
+  },
+  "NO_LOCATION": "No location available"
 }

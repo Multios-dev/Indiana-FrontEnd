@@ -153,6 +153,7 @@
     "REGISTERED": "participants",
     "DATE": "Date",
     "LOCATION": "Lieu",
+    "LOCATION_MAP": "Localisation sur la carte",
     "BACK": "Retour aux événements",
     "EDIT": "Modifier",
     "REGISTER": "Se pré-inscrire",
@@ -233,5 +234,6 @@
     "ERRORMESSAGE": {
       "SERVERERROR": "Une erreur est survenue lors de la création du compte. Veuillez réessayer"
     }
-  }
+  },
+  "NO_LOCATION": "Aucune localisation disponible"
 }
