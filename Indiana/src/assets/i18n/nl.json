@@ -152,7 +152,12 @@
     "BACK": "Terug naar evenementen",
     "EDIT": "Bewerken",
     "REGISTER": "Registreren",
-    "EXPORT_ICS": "Exporteren .ics"
+    "EXPORT_ICS": "Exporteren .ics",
+    "ITEMS_PER_PAGE": "Items per pagina",
+    "PAGE": "Pagina",
+    "OF": "van",
+    "PREVIOUS": "Vorige",
+    "NEXT": "Volgende"
   },
   "BILLING": {
     "TITLE": "Facturering",

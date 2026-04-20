@@ -1,6 +1,42 @@
 <div class="events-page">
   <h1>{{ "EVENTS.TITLE" | translate }}</h1>
 
+  <!-- Pagination Controls -->
+  <div class="pagination-controls">
+    <div class="page-size-selector">
+      <label>{{ "EVENTS.ITEMS_PER_PAGE" | translate }}:</label>
+      <div class="page-size-buttons">
+        @for (size of [5, 10, 20, 50]; track size) {
+          <button 
+            class="page-size-btn"
+            [class.active]="pageSize() === size"
+            (click)="changePageSize(size)">
+            {{ size }}
+          </button>
+        }
+      </div>
+    </div>
+
+    <div class="pagination-info">
+      <span>{{ "EVENTS.PAGE" | translate }} {{ currentPage() }} {{ "EVENTS.OF" | translate }} {{ totalPages || 1 }}</span>
+    </div>
+
+    <div class="pagination-buttons">
+      <button 
+        class="pagination-btn"
+        [disabled]="currentPage() === 1"
+        (click)="previousPage()">
+        <i class="pi pi-chevron-left"></i> {{ "EVENTS.PREVIOUS" | translate }}
+      </button>
+      <button 
+        class="pagination-btn"
+        [disabled]="currentPage() >= (totalPages || 1)"
+        (click)="nextPage()">
+        {{ "EVENTS.NEXT" | translate }} <i class="pi pi-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+
   <div class="events-grid">
     @for (event of events; track $index) {
         <div class="event-card" (click)="selectEvent(event)">

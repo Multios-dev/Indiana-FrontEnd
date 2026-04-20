@@ -9,22 +9,22 @@
 
   <!-- Navigation -->
   <nav class="sidebar-nav">
-    <a class="nav-item" [class.active]="activeRoute === 'dashboard'" routerLink="/scouts/dashboard">
+    <a class="nav-item" [class.active]="activeRoute() === 'dashboard'" routerLink="/scouts/dashboard">
       <i class="pi pi-table"></i>
       <span>{{ "SIDEBAR.DASHBOARD" |translate}}</span>
     </a>
 
-    <a class="nav-item" [class.active]="activeRoute === 'profile'" routerLink="/scouts/profile">
+    <a class="nav-item" [class.active]="activeRoute() === 'profile'" routerLink="/scouts/profile">
       <i class="pi pi-user"></i>
       <span>{{"SIDEBAR.PROFILE" | translate}}</span>
     </a>
 
-    <a class="nav-item" [class.active]="activeRoute === 'events'" routerLink="/scouts/events">
+    <a class="nav-item" [class.active]="activeRoute() === 'events'" routerLink="/scouts/events">
       <i class="pi pi-calendar"></i>
       <span>{{"SIDEBAR.EVENT" | translate}}</span>
     </a>
 
-    <a class="nav-item" [class.active]="activeRoute === 'billing'" routerLink="/scouts/billing">
+    <a class="nav-item" [class.active]="activeRoute() === 'billing'" routerLink="/scouts/billing">
       <i class="pi pi-credit-card"></i>
       <span>{{"SIDEBAR.FACTURATION" | translate}}</span>
     </a>

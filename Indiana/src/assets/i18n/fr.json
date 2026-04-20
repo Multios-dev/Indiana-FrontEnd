@@ -156,7 +156,12 @@
     "BACK": "Retour aux événements",
     "EDIT": "Modifier",
     "REGISTER": "Se pré-inscrire",
-    "EXPORT_ICS": "Exporter .ics"
+    "EXPORT_ICS": "Exporter .ics",
+    "ITEMS_PER_PAGE": "Éléments par page",
+    "PAGE": "Page",
+    "OF": "sur",
+    "PREVIOUS": "Précédent",
+    "NEXT": "Suivant"
   },
   "BILLING": {
     "TITLE": "Facturation",

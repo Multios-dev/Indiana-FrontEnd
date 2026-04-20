@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef, signal } from '@angular/core';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { EventService } from '../../services/event.service';
@@ -30,16 +30,50 @@ export class EventsComponent implements OnInit {
   events: ScoutEvent[] = [];
   isLoading = false;
 
+  // Pagination signals
+  pageSize = signal<number>(10);
+  currentPage = signal<number>(1);
+  totalEvents = signal<number>(0);
+
   private eventService = inject(EventService);
   private cdr = inject(ChangeDetectorRef);
 
   ngOnInit(): void {
-    this.loadEvents();
+    // D'abord récupérer le nombre total d'événements
+    this.loadTotalCount();
+  }
+
+  private loadTotalCount(): void {
+    // Récupérer tous les événements pour obtenir le nombre total (sans limite)
+    this.eventService.getEvents(0).subscribe({
+      next: (response: any) => {
+        let allEvents: EventOutput[] = [];
+        if (Array.isArray(response)) {
+          allEvents = response;
+        } else if (response && response.items && Array.isArray(response.items)) {
+          allEvents = response.items;
+        } else if (response && response.data && Array.isArray(response.data)) {
+          allEvents = response.data;
+        }
+        
+        this.totalEvents.set(allEvents.length);
+        // Ensuite charger les événements paginés
+        this.loadEvents();
+      },
+      error: (err) => {
+        console.error('Erreur lors du chargement du nombre total:', err);
+        // Charger quand même avec les événements paginés
+        this.loadEvents();
+      }
+    });
   }
 
   private loadEvents(): void {
     this.isLoading = true;
-    this.eventService.getEvents(0, 10).subscribe({
+    const offset = (this.currentPage() - 1) * this.pageSize();
+    const limit = this.pageSize();
+
+    this.eventService.getEvents(offset, limit).subscribe({
       next: (response: any) => {
         // Gérer les deux cas : tableau direct ou objet avec items
         let events: EventOutput[] = [];
@@ -137,5 +171,27 @@ export class EventsComponent implements OnInit {
 
   public exportIcs(event: ScoutEvent): void {
     // TODO: Générer et télécharger un fichier .ics
+  }
+
+  public changePageSize(size: number): void {
+    this.pageSize.set(size);
+    this.currentPage.set(1);
+    this.loadEvents();
+  }
+
+  public nextPage(): void {
+    this.currentPage.update(page => page + 1);
+    this.loadEvents();
+  }
+
+  public previousPage(): void {
+    if (this.currentPage() > 1) {
+      this.currentPage.update(page => page - 1);
+      this.loadEvents();
+    }
+  }
+
+  public get totalPages(): number {
+    return Math.ceil(this.totalEvents() / this.pageSize());
   }
 }

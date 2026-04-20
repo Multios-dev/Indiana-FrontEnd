@@ -152,7 +152,12 @@
     "BACK": "Back to events",
     "EDIT": "Edit",
     "REGISTER": "Register",
-    "EXPORT_ICS": "Export .ics"
+    "EXPORT_ICS": "Export .ics",
+    "ITEMS_PER_PAGE": "Items per page",
+    "PAGE": "Page",
+    "OF": "of",
+    "PREVIOUS": "Previous",
+    "NEXT": "Next"
   },
   "BILLING": {
     "TITLE": "Billing",

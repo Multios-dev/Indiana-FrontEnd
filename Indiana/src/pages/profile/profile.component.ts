@@ -164,8 +164,6 @@ export class ProfileComponent implements OnInit {
       };
     }
 
-    console.log('Payload envoyé:', JSON.stringify(updatePayload, null, 2));
-
     this.userService.updateUser(userId, updatePayload).subscribe({
       next: () => {
         this.user = { ...this.editableUser };

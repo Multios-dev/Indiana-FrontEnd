@@ -4,7 +4,7 @@
  */
 
 export interface ContactInput {
-  email?: string | null;  // Validé automatiquement par regex email (EmailStr en Pydantic)
+  email?: string | null;  // Validé automatiquement par regex email
   phone?: string | null;  // Format: +?[0-9]{8,15}
 }
 

@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../environment/environment';
 import { Observable } from 'rxjs';
 import { EventOutput, EventsResponse } from '../models/event-output';
@@ -15,13 +15,18 @@ export class EventService {
   /**
    * Récupère la liste des événements avec pagination
    * @param skip nombre d'événements à ignorer (par défaut 0)
-   * @param limit nombre d'événements à retourner (par défaut 10)
+   * @param limit nombre d'événements à retourner (optionnel, si non fourni, retourne tous les événements)
    * @returns Observable contenant la réponse paginée des événements
    */
-  getEvents(skip: number = 0, limit: number = 10): Observable<EventsResponse> {
-    return this.httpClient.get<EventsResponse>(
-      `${EventService.ENDPOINT_URL}?skip=${skip}&limit=${limit}`
-    );
+  getEvents(skip: number = 0, limit?: number): Observable<EventsResponse> {
+    let params = new HttpParams();
+    params = params.set('skip', skip.toString());
+    
+    if (limit !== undefined && limit !== null) {
+      params = params.set('limit', limit.toString());
+    }
+    
+    return this.httpClient.get<EventsResponse>(EventService.ENDPOINT_URL, { params });
   }
 
   /**

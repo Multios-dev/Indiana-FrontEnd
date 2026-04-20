@@ -1,9 +1,10 @@
 import { Component, Input, inject, OnInit, signal } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterModule, NavigationEnd } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
 import { AuthService } from '../../services/auth.service';
 import { UserOutput } from '../../models/user-output';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-sidebar',
@@ -19,7 +20,7 @@ import { UserOutput } from '../../models/user-output';
 })
 export class Sidebar implements OnInit {
    @Input() isOpen = false;
-  @Input() activeRoute = 'dashboard';
+  public activeRoute = signal<string>('dashboard');
 
   private authService = inject(AuthService);
   private router = inject(Router);
@@ -28,6 +29,20 @@ export class Sidebar implements OnInit {
 
   ngOnInit(): void {
     this.loadUserInfo();
+    this.updateActiveRoute();
+    
+    // Écouter les changements de route
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.updateActiveRoute();
+      });
+  }
+
+  private updateActiveRoute(): void {
+    const urlSegments = this.router.url.split('/');
+    const lastSegment = urlSegments[urlSegments.length - 1];
+    this.activeRoute.set(lastSegment || 'dashboard');
   }
 
   private loadUserInfo(): void {
