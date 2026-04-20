@@ -117,37 +117,27 @@ export class ProfileComponent implements OnInit {
 
   private loadMandats(): void {
     const userId = this.authService.getUserId();
-    console.log('🔍 loadMandats - userId:', userId);
     
     if (!userId) {
       console.error('❌ ID utilisateur non trouvé');
       return;
     }
-
-    console.log('📡 Appel API: getMembershipsByUserId avec userId:', userId);
     
     this.membershipService.getMembershipsByUserId(userId).subscribe({
       next: (response: any) => {
-        console.log('📥 Réponse API memberships:', response);
         
         // Gérer les deux cas : tableau direct ou objet avec items
         let memberships: Membership[] = [];
         if (Array.isArray(response)) {
           memberships = response;
-          console.log('✅ Format: tableau direct');
         } else if (response && response.items && Array.isArray(response.items)) {
           memberships = response.items;
-          console.log('✅ Format: objet avec items');
         } else if (response && response.data && Array.isArray(response.data)) {
           memberships = response.data;
-          console.log('✅ Format: objet avec data');
         }
-
-        console.log('📊 Nombre de memberships:', memberships.length);
 
         // Convertir les memberships en mandats
         this.mandats = memberships.map(membership => this.mapMembershipToMandat(membership));
-        console.log('✅ Mandats chargés:', this.mandats);
       },
       error: (err: any) => {
         console.error('❌ Erreur lors du chargement des mandats:', err);

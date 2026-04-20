@@ -29,8 +29,6 @@ export class MembershipService {
     if (limit !== undefined && limit !== null) {
       params = params.set('limit', limit.toString());
     }
-
-    console.log('🔧 MembershipService - URL:', `${this.ENDPOINT_URL}?${params.toString()}`);
     return this.httpClient.get<Membership[]>(this.ENDPOINT_URL, { params });
   }
 
