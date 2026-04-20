@@ -37,4 +37,9 @@ export class EventService {
   getEventById(eventId: string): Observable<EventOutput> {
     return this.httpClient.get<EventOutput>(`${EventService.ENDPOINT_URL}/${eventId}`);
   }
+
+  getEventsCount(): Observable<number> {
+  return this.httpClient.get<number>(`${EventService.ENDPOINT_URL}/count`);
+}
+
 }

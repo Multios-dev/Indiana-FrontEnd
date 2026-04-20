@@ -4,8 +4,10 @@ import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
+import { MembershipService } from '../../services/membership.service';
 import { ToastService } from '../../services/toast.service';
 import { UserOutput } from '../../models/user-output';
+import { Membership } from '../../models/membership';
 
 export interface UserProfile {
   firstNames: string;  // Prénoms séparés par des virgules
@@ -50,6 +52,7 @@ export class ProfileComponent implements OnInit {
 
   private authService = inject(AuthService);
   private userService = inject(UserService);
+  private membershipService = inject(MembershipService);
   private toastService = inject(ToastService);
   
   public activeTab: 'info' | 'mandats' | 'competences' = 'info';
@@ -69,8 +72,11 @@ export class ProfileComponent implements OnInit {
 
   public editableUser: UserProfile = { ...this.user };
 
+  mandats: Mandat[] = [];
+
   ngOnInit(): void {
     this.loadUserProfile();
+    this.loadMandats();
   }
 
   private loadUserProfile(): void {
@@ -102,11 +108,74 @@ export class ProfileComponent implements OnInit {
         this.editableUser = { ...this.user };
         this.isLoading.set(false);
       },
-      error: (err) => {
+      error: (err: any) => {
         console.error('Erreur lors du chargement du profil:', err);
         this.isLoading.set(false);
       }
     });
+  }
+
+  private loadMandats(): void {
+    const userId = this.authService.getUserId();
+    console.log('🔍 loadMandats - userId:', userId);
+    
+    if (!userId) {
+      console.error('❌ ID utilisateur non trouvé');
+      return;
+    }
+
+    console.log('📡 Appel API: getMembershipsByUserId avec userId:', userId);
+    
+    this.membershipService.getMembershipsByUserId(userId).subscribe({
+      next: (response: any) => {
+        console.log('📥 Réponse API memberships:', response);
+        
+        // Gérer les deux cas : tableau direct ou objet avec items
+        let memberships: Membership[] = [];
+        if (Array.isArray(response)) {
+          memberships = response;
+          console.log('✅ Format: tableau direct');
+        } else if (response && response.items && Array.isArray(response.items)) {
+          memberships = response.items;
+          console.log('✅ Format: objet avec items');
+        } else if (response && response.data && Array.isArray(response.data)) {
+          memberships = response.data;
+          console.log('✅ Format: objet avec data');
+        }
+
+        console.log('📊 Nombre de memberships:', memberships.length);
+
+        // Convertir les memberships en mandats
+        this.mandats = memberships.map(membership => this.mapMembershipToMandat(membership));
+        console.log('✅ Mandats chargés:', this.mandats);
+      },
+      error: (err: any) => {
+        console.error('❌ Erreur lors du chargement des mandats:', err);
+        console.error('   URL:', err.url);
+        console.error('   Status:', err.status);
+        console.error('   Message:', err.message);
+        // Garder un array vide en cas d'erreur
+        this.mandats = [];
+      }
+    });
+  }
+
+  private mapMembershipToMandat(membership: Membership): Mandat {
+    const today = new Date();
+    const startDate = new Date(membership.start_date);
+    const endDate = membership.end_date ? new Date(membership.end_date) : null;
+
+    // Vérifier si le mandat est actif
+    const isActive = startDate <= today && (!endDate || endDate >= today);
+
+    return {
+      id: parseInt(membership.id, 10) || 0,
+      role: membership.role,
+      unit: membership.organization_id,
+      from: membership.start_date,
+      to: endDate ? membership.end_date! : 'Présent',
+      isActive
+    };
   }
 
   public get initials(): string {
@@ -187,10 +256,4 @@ export class ProfileComponent implements OnInit {
   public save() {
     this.isConfirmingUpdate = true;
   }
-
-  mandats: Mandat[] = [
-    { id: 1, role: 'préinscrit', unit: 'Unité 17 - Les hiboux',  from: '2026-02-24', to: 'Présent', isActive: true },
-    { id: 2, role: 'préinscrit', unit: 'Unité 23 - Les Cerfs',   from: '2025-02-24', to: '2026-02-24', isActive: false },
-    { id: 3, role: 'Membre',       unit: 'Unité 42 - Les Castors', from: '2024-09-01', to: 'Présent', isActive: true },
-  ];
 }

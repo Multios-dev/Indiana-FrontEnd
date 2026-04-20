@@ -44,19 +44,10 @@ export class EventsComponent implements OnInit {
   }
 
   private loadTotalCount(): void {
-    // Récupérer tous les événements pour obtenir le nombre total (sans limite)
-    this.eventService.getEvents(0).subscribe({
-      next: (response: any) => {
-        let allEvents: EventOutput[] = [];
-        if (Array.isArray(response)) {
-          allEvents = response;
-        } else if (response && response.items && Array.isArray(response.items)) {
-          allEvents = response.items;
-        } else if (response && response.data && Array.isArray(response.data)) {
-          allEvents = response.data;
-        }
-        
-        this.totalEvents.set(allEvents.length);
+    // Récupérer le nombre total d'événements
+    this.eventService.getEventsCount().subscribe({
+      next: (total: number) => {
+        this.totalEvents.set(total);
         // Ensuite charger les événements paginés
         this.loadEvents();
       },
