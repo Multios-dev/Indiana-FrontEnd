@@ -109,7 +109,7 @@ export class ProfileComponent implements OnInit {
         this.isLoading.set(false);
       },
       error: (err: any) => {
-        console.error('Erreur lors du chargement du profil:', err);
+        // console.error('Erreur lors du chargement du profil:', err);
         this.isLoading.set(false);
       }
     });
@@ -119,7 +119,7 @@ export class ProfileComponent implements OnInit {
     const userId = this.authService.getUserId();
     
     if (!userId) {
-      console.error('❌ ID utilisateur non trouvé');
+      // console.error('❌ ID utilisateur non trouvé');
       return;
     }
     
@@ -140,10 +140,10 @@ export class ProfileComponent implements OnInit {
         this.mandats = memberships.map(membership => this.mapMembershipToMandat(membership));
       },
       error: (err: any) => {
-        console.error('❌ Erreur lors du chargement des mandats:', err);
-        console.error('   URL:', err.url);
-        console.error('   Status:', err.status);
-        console.error('   Message:', err.message);
+        // console.error('❌ Erreur lors du chargement des mandats:', err);
+        // console.error('   URL:', err.url);
+        // console.error('   Status:', err.status);
+        // console.error('   Message:', err.message);
         // Garder un array vide en cas d'erreur
         this.mandats = [];
       }
@@ -231,8 +231,8 @@ export class ProfileComponent implements OnInit {
         //this.toastService.success('Profil mis à jour avec succès');
       },
       error: (err) => {
-        console.error('Erreur lors de la mise à jour du profil:', err);
-        console.error('Réponse du serveur:', err.error);
+        // console.error('Erreur lors de la mise à jour du profil:', err);
+        // console.error('Réponse du serveur:', err.error);
         this.isConfirmingUpdate = false;
         //this.toastService.error('Erreur lors de la mise à jour du profil');
       }
