@@ -220,7 +220,8 @@
     "CANCEL": "Annuler",
     "CONFIRM_TITLE": "Confirmer les modifications",
     "CONFIRM_MESSAGE": "Êtes-vous sûr de vouloir sauvegarder ces modifications ?",
-    "CONFIRM": "Confirmer"
+    "CONFIRM": "Confirmer",
+    "SAVING": "Sauvegarde en cours..."
   },
   "ERROR": "Erreur",
   "EVENT": {

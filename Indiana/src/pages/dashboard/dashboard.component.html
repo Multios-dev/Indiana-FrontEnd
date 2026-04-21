@@ -63,15 +63,29 @@
       <i class="pi pi-users" style="font-size: 24px; color: #53acee;"></i>
       <h2>{{"DASHBOARD.MINORS.TITLE" | translate}}</h2>
     </div>
-    <!-- TODO, ici, retourner les vraies mineurs sous la responsabilité du parent (si il en a) -->
-    <div class="minor-item">
-      <div class="minor-avatar">LM</div>
-      <div class="minor-info">
-        <div class="minor-name">Léo Martin</div>
-        <div class="minor-details">Père · Totem : <em>Renard Agile</em></div>
+    <ng-container *ngIf="isLoadingMinors()">
+      <div style="text-align: center; padding: 20px;">
+        <p>{{"COMMON.LOADING" | translate}}</p>
       </div>
-      <button class="btn-fiche">{{"DASHBOARD.MINORS.VIEWS" | translate}}</button>
-    </div>
+    </ng-container>
+    <ng-container *ngIf="!isLoadingMinors()">
+      <ng-container *ngIf="minors().length > 0; else noMinors">
+        <div *ngFor="let minor of minors()" class="minor-item">
+          <div class="minor-avatar">{{ getInitials(minor) }}</div>
+          <div class="minor-info">
+            <div class="minor-name">{{ minor.first_names?.join(' ') }} {{ minor.last_name }}</div>
+            <div class="minor-details" *ngIf="minor.totem">Totem : <em>{{ minor.totem }}</em></div>
+            <div class="minor-details" *ngIf="!minor.totem && minor.gender">{{ minor.gender }}</div>
+          </div>
+          <button class="btn-fiche" (click)="viewMinorProfile(minor.id)">{{"DASHBOARD.MINORS.VIEWS" | translate}}</button>
+        </div>
+      </ng-container>
+      <ng-template #noMinors>
+        <div style="text-align: center; padding: 20px; color: #999;">
+          <p>{{"DASHBOARD.MINORS.NO_MINORS" | translate}}</p>
+        </div>
+      </ng-template>
+    </ng-container>
   </div>
 
   <!-- Quick actions -->

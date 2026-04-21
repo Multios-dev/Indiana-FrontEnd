@@ -60,11 +60,11 @@ export class UserService {
   }
 
   /**
-   * Récupère les id's des (potentiels) mineurs sous la responsabilité de l'utilisateur
+   * Récupère les mineurs sous la responsabilité de l'utilisateur
    * @param userId l'ID de l'utilisateur connecté (depuis le localStorage)
-   * @returns Observable contenant les id's des mineurs
+   * @returns Observable contenant les informations des mineurs
    */
-  getMinorsUsersById(userId: string): Observable<any> {
-    return this.httpClient.get<any>(`${UserService.ENDPOINT_URL}+"/minors"/${userId}`);
+  getMinorsUsersById(userId: string): Observable<UserOutput[]> {
+    return this.httpClient.get<UserOutput[]>(`${UserService.ENDPOINT_URL}/${userId}/minors`);
   }
 }

@@ -216,7 +216,8 @@
     "CANCEL": "Annuleren",
     "CONFIRM_TITLE": "Wijzigingen bevestigen",
     "CONFIRM_MESSAGE": "Weet u zeker dat u deze wijzigingen wilt opslaan?",
-    "CONFIRM": "Bevestigen"
+    "CONFIRM": "Bevestigen",
+    "SAVING": "Bezig met opslaan..."
   },
   "ERROR": "Fout",
   "EVENT": {

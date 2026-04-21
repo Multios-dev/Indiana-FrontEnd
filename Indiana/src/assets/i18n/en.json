@@ -216,7 +216,8 @@
     "CANCEL": "Cancel",
     "CONFIRM_TITLE": "Confirm changes",
     "CONFIRM_MESSAGE": "Are you sure you want to save these changes?",
-    "CONFIRM": "Confirm"
+    "CONFIRM": "Confirm",
+    "SAVING": "Saving..."
   },
   "ERROR": "Error",
   "EVENT": {

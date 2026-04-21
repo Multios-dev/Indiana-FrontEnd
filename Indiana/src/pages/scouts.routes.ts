@@ -22,4 +22,9 @@ export const SCOUTS_ROUTES: Routes = [
         loadComponent: () =>
         import('./profile/profile.component').then(m => m.ProfileComponent)
     },
+    {
+        path: 'profile/:userId',
+        loadComponent: () =>
+        import('./profile/profile.component').then(m => m.ProfileComponent)
+    },
 ]

@@ -23,7 +23,7 @@
       </div>
 
       <!-- Buttons -->
-       @if (!isEditing){
+       @if (!isEditing && canEditProfile){
         <button class="btn-modifier" (click)="startEdit()">
           {{ "PROFILE.EDIT" | translate }}
         </button>
@@ -32,8 +32,8 @@
 
       @if (isEditing){
         <div class="edit-actions">
-          <button class="btn-cancel" (click)="cancelEdit()">{{"PROFILE.CANCEL" | translate}}</button>
-          <button class="btn-editing" (click)="save()">{{"PROFILE.SAVE" | translate}}</button>
+          <button class="btn-cancel" (click)="cancelEdit()" [disabled]="isSavingUpdate">{{"PROFILE.CANCEL" | translate}}</button>
+          <button class="btn-editing" (click)="save()" [disabled]="isSavingUpdate">{{"PROFILE.SAVE" | translate}}</button>
           
         </div>
       }
@@ -197,16 +197,25 @@
           <h2>{{ "PROFILE.CONFIRM_TITLE" | translate }}</h2>
         </div>
         <div class="modal-body">
-          <p>{{ "PROFILE.CONFIRM_MESSAGE" | translate }}</p>
+          @if (isSavingUpdate) {
+            <div class="spinner-container">
+              <div class="spinner"></div>
+              <p class="loading-text">{{ "PROFILE.SAVING" | translate }}</p>
+            </div>
+          } @else {
+            <p>{{ "PROFILE.CONFIRM_MESSAGE" | translate }}</p>
+          }
         </div>
-        <div class="modal-footer">
-          <button class="btn-cancel-modal" (click)="cancelConfirm()">
-            {{ "PROFILE.CANCEL" | translate }}
-          </button>
-          <button class="btn-confirm" (click)="confirmSave()">
-            {{ "PROFILE.CONFIRM" | translate }}
-          </button>
-        </div>
+        @if (!isSavingUpdate) {
+          <div class="modal-footer">
+            <button class="btn-cancel-modal" (click)="cancelConfirm()">
+              {{ "PROFILE.CANCEL" | translate }}
+            </button>
+            <button class="btn-confirm" (click)="confirmSave()">
+              {{ "PROFILE.CONFIRM" | translate }}
+            </button>
+          </div>
+        }
       </div>
     </div>
   }

@@ -1,7 +1,8 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
 import { MembershipService } from '../../services/membership.service';
@@ -54,6 +55,19 @@ export class ProfileComponent implements OnInit {
   private userService = inject(UserService);
   private membershipService = inject(MembershipService);
   private toastService = inject(ToastService);
+  private activatedRoute = inject(ActivatedRoute);
+  private cdr = inject(ChangeDetectorRef);
+  
+  // ID de l'utilisateur dont on affiche le profil (peut être différent de l'utilisateur connecté)
+  private displayedUserId: string | null = null;
+  // ID de l'utilisateur actuellement connecté
+  private currentUserId: string | null = null;
+  // Indique si on affiche le profil de l'utilisateur connecté
+  public isOwnProfile = true;
+  // Indique si l'utilisateur connecté peut modifier ce profil (propre profil ou mineur à charge)
+  public canEditProfile = false;
+  // Liste des mineurs sous la responsabilité de l'utilisateur connecté
+  private minorsUnderMyResponsibility: UserOutput[] = [];
   
   public activeTab: 'info' | 'mandats' | 'competences' = 'info';
 
@@ -62,6 +76,8 @@ export class ProfileComponent implements OnInit {
   public isLoading = signal(true);
 
   public isConfirmingUpdate = false;
+
+  public isSavingUpdate = false;
 
   user: UserProfile = {
     firstNames: '',
@@ -75,12 +91,76 @@ export class ProfileComponent implements OnInit {
   mandats: Mandat[] = [];
 
   ngOnInit(): void {
-    this.loadUserProfile();
-    this.loadMandats();
+    // Récupérer l'ID de l'utilisateur connecté
+    this.currentUserId = this.authService.getUserId();
+    
+    // Récupérer le userId depuis les paramètres de la route
+    this.activatedRoute.params.subscribe(params => {
+      if (params['userId']) {
+        this.displayedUserId = params['userId'];
+        this.isOwnProfile = false;
+      } else {
+        this.displayedUserId = this.currentUserId;
+        this.isOwnProfile = true;
+      }
+      
+      // Vérifier immédiatement les permissions (pour le profil de l'utilisateur connecté, pas besoin d'attendre)
+      this.checkEditPermission();
+      
+      // Charger les mineurs de l'utilisateur connecté pour vérifier les permissions (pour les autres profils)
+      this.loadMinorsUnderMyResponsibility();
+      this.loadUserProfile();
+      this.loadMandats();
+    });
+  }
+
+  /**
+   * Charger la liste des mineurs sous la responsabilité de l'utilisateur connecté
+   */
+  private loadMinorsUnderMyResponsibility(): void {
+    if (!this.currentUserId) {
+      return;
+    }
+
+    this.userService.getMinorsUsersById(this.currentUserId).subscribe({
+      next: (minors: UserOutput[]) => {
+        this.minorsUnderMyResponsibility = minors || [];
+        // Re-vérifier les permissions en cas de changement
+        this.checkEditPermission();
+        this.cdr.markForCheck();
+      },
+      error: (err) => {
+        // Pas d'erreur bloquante, on continue
+        this.minorsUnderMyResponsibility = [];
+        this.checkEditPermission();
+      }
+    });
+  }
+
+  /**
+   * Vérifier si l'utilisateur peut modifier le profil actuellement affiché
+   */
+  private checkEditPermission(): void {
+    if (this.isOwnProfile) {
+      // Cas 1: C'est son propre profil
+      this.canEditProfile = true;
+    } else if (this.minorsUnderMyResponsibility.some(minor => minor.id === this.displayedUserId)) {
+      // Cas 2: C'est un mineur sous sa responsabilité
+      this.canEditProfile = true;
+    } else {
+      // Cas 3: Pas autorisé à modifier
+      this.canEditProfile = false;
+    }
   }
 
   private loadUserProfile(): void {
-    this.authService.getCurrentUserInfo().subscribe({
+    if (!this.displayedUserId) {
+      this.isLoading.set(false);
+      return;
+    }
+    
+    // Utiliser la méthode du service pour récupérer n'importe quel utilisateur
+    this.userService.getUserById(this.displayedUserId).subscribe({
       next: (userInfo: UserOutput) => {
         this.user = {
           firstNames: userInfo.first_names?.join(', ') || '',
@@ -116,14 +196,11 @@ export class ProfileComponent implements OnInit {
   }
 
   private loadMandats(): void {
-    const userId = this.authService.getUserId();
-    
-    if (!userId) {
-      // console.error('❌ ID utilisateur non trouvé');
+    if (!this.displayedUserId) {
       return;
     }
     
-    this.membershipService.getMembershipsByUserId(userId).subscribe({
+    this.membershipService.getMembershipsByUserId(this.displayedUserId).subscribe({
       next: (response: any) => {
         
         // Gérer les deux cas : tableau direct ou objet avec items
@@ -176,6 +253,11 @@ export class ProfileComponent implements OnInit {
   }
 
   public startEdit() {
+    // Vérifier que l'utilisateur est autorisé à modifier ce profil
+    if (!this.canEditProfile) {
+      //this.toastService.error('Vous n\'êtes pas autorisé à modifier ce profil');
+      return;
+    }
     this.editableUser = { ...this.user };
     this.isEditing = true;
   }
@@ -185,8 +267,7 @@ export class ProfileComponent implements OnInit {
   }
 
   public confirmSave() {
-    const userId = this.authService.getUserId();
-    if (!userId) {
+    if (!this.displayedUserId) {
       //this.toastService.error('Erreur: ID utilisateur non trouvé');
       return;
     }
@@ -223,17 +304,27 @@ export class ProfileComponent implements OnInit {
       };
     }
 
-    this.userService.updateUser(userId, updatePayload).subscribe({
+    // Activer le spinner de sauvegarde
+    this.isSavingUpdate = true;
+    this.cdr.markForCheck();
+
+    this.userService.updateUser(this.displayedUserId, updatePayload).subscribe({
       next: () => {
         this.user = { ...this.editableUser };
         this.isEditing = false;
         this.isConfirmingUpdate = false;
+        this.isSavingUpdate = false;
+        // Forcer la détection de changement pour que l'UI se mette à jour immédiatement
+        this.cdr.markForCheck();
         //this.toastService.success('Profil mis à jour avec succès');
       },
       error: (err) => {
         // console.error('Erreur lors de la mise à jour du profil:', err);
         // console.error('Réponse du serveur:', err.error);
         this.isConfirmingUpdate = false;
+        this.isSavingUpdate = false;
+        // Forcer la détection de changement même en cas d'erreur
+        this.cdr.markForCheck();
         //this.toastService.error('Erreur lors de la mise à jour du profil');
       }
     });
@@ -241,9 +332,11 @@ export class ProfileComponent implements OnInit {
 
   public cancelConfirm() {
     this.isConfirmingUpdate = false;
+    this.cdr.markForCheck();
   }
   
   public save() {
     this.isConfirmingUpdate = true;
+    this.cdr.markForCheck();
   }
 }
