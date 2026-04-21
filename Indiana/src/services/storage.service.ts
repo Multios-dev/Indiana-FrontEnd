@@ -7,14 +7,14 @@ export class StorageService {
   constructor() {}
 
   public getItem(key: string) {
-    return localStorage.getItem('TempoTeris_' + key);
+    return localStorage.getItem('Indiana_' + key);
   }
 
   public setItem(key: string, value: string) {
-    localStorage.setItem('TempoTeris_' + key, value);
+    localStorage.setItem('Indiana_' + key, value);
   }
 
   public removeItem(key: string) {
-    localStorage.removeItem('TempoTeris_' + key);
+    localStorage.removeItem('Indiana_' + key);
   }
 }

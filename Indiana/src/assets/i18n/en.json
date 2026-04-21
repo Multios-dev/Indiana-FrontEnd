@@ -231,5 +231,32 @@
       "SERVERERROR": "An error occurred while creating the account. \nPlease try again"
     }
   },
-  "NO_LOCATION": "No location available"
+  "NO_LOCATION": "No location available",
+  "COUNTRY": {
+    "BELGIUM": "Belgium",
+    "FRANCE": "France",
+    "NETHERLANDS": "The Netherlands",
+    "GERMANY": "Germany",
+    "AUSTRIA": "Austria",
+    "SWITZERLAND": "Swiss",
+    "LUXEMBOURG": "Luxembourg",
+    "UNITED_KINGDOM": "United Kingdom",
+    "IRELAND": "Ireland",
+    "SPAIN": "Spain",
+    "ITALY": "Italy",
+    "PORTUGAL": "Portugal",
+    "GREECE": "Greece",
+    "POLAND": "Poland",
+    "CZECH_REPUBLIC": "Czech Republic",
+    "SLOVAKIA": "Slovakia",
+    "HUNGARY": "Hungary",
+    "ROMANIA": "Romania",
+    "BULGARIA": "Bulgaria",
+    "CROATIA": "Croatia",
+    "SLOVENIA": "Slovenia",
+    "SWEDEN": "Suede",
+    "NORWAY": "Norway",
+    "DENMARK": "Denmark",
+    "FINLAND": "Finland"
+  }
 }

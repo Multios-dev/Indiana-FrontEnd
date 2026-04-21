@@ -33,7 +33,7 @@ export interface UserProfile {
 }
 
 export interface Mandat {
-  id: number;
+  id: string;
   role: string;
   unit: string;
   from: string;
@@ -159,7 +159,7 @@ export class ProfileComponent implements OnInit {
     const isActive = startDate <= today && (!endDate || endDate >= today);
 
     return {
-      id: parseInt(membership.id, 10) || 0,
+      id: membership.id,
       role: membership.role,
       unit: membership.organization_id,
       from: membership.start_date,

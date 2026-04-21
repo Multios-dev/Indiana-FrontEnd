@@ -235,5 +235,32 @@
       "SERVERERROR": "Une erreur est survenue lors de la création du compte. Veuillez réessayer"
     }
   },
-  "NO_LOCATION": "Aucune localisation disponible"
+  "NO_LOCATION": "Aucune localisation disponible",
+  "COUNTRY": {
+    "BELGIUM": "Belgique",
+    "FRANCE": "France",
+    "NETHERLANDS": "Pays-bas",
+    "GERMANY": "Allemagne",
+    "AUSTRIA": "Autriche",
+    "SWITZERLAND": "Suisse",
+    "LUXEMBOURG": "Luxembourg",
+    "UNITED_KINGDOM": "Royaume-Uni",
+    "IRELAND": "Irlande",
+    "SPAIN": "Espagne",
+    "ITALY": "Italie",
+    "PORTUGAL": "Portugal",
+    "GREECE": "Grèce",
+    "POLAND": "Pologne",
+    "CZECH_REPUBLIC": "République tchèque",
+    "SLOVAKIA": "Slovaquie",
+    "HUNGARY": "Hongrie",
+    "ROMANIA": "Roumanie",
+    "BULGARIA": "Bulgarie",
+    "CROATIA": "Croatie",
+    "SLOVENIA": "Slovénie",
+    "SWEDEN": "Suède",
+    "NORWAY": "Norvège",
+    "DENMARK": "Danemark",
+    "FINLAND": "Finlande"
+  }
 }

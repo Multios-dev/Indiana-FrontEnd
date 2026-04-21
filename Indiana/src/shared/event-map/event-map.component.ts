@@ -76,7 +76,7 @@ export class EventMapComponent implements OnInit, AfterViewInit, OnDestroy {
 
   constructor(private cdr: ChangeDetectorRef) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     // Vérifier si l'événement a des coordonnées valides
     this.hasValidLocation = !!(
       this.event?.latitude !== null && 
@@ -86,7 +86,7 @@ export class EventMapComponent implements OnInit, AfterViewInit, OnDestroy {
     );
   }
 
-  ngAfterViewInit(): void {
+  public ngAfterViewInit(): void {
     if (this.hasValidLocation && this.event && this.mapContainer) {
       // Délai pour s'assurer que le DOM est complètement rendu
       setTimeout(() => {
@@ -149,7 +149,7 @@ export class EventMapComponent implements OnInit, AfterViewInit, OnDestroy {
     return div.innerHTML;
   }
 
-  ngOnDestroy(): void {
+  public ngOnDestroy(): void {
     if (this.map) {
       this.map.remove();
       this.map = null;

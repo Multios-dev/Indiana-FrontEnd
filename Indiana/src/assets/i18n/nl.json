@@ -231,5 +231,32 @@
       "SERVERERROR": "Er is een fout opgetreden bij het aanmaken van het account. Probeer het opnieuw"
     }
   },
-  "NO_LOCATION": "Geen locatie beschikbaar"
+  "NO_LOCATION": "Geen locatie beschikbaar",
+  "COUNTRY": {
+    "BELGIUM": "België",
+    "FRANCE": "Frankrijk",
+    "NETHERLANDS": "Nederland",
+    "GERMANY": "Duitsland",
+    "AUSTRIA": "Oostenrijk",
+    "SWITZERLAND": "Zwitsers",
+    "LUXEMBOURG": "Luxemburg",
+    "UNITED_KINGDOM": "Verenigd Koninkrijk",
+    "IRELAND": "Ierland",
+    "SPAIN": "Spanje",
+    "ITALY": "Italië",
+    "PORTUGAL": "Portugal",
+    "GREECE": "Griekenland",
+    "POLAND": "Polen",
+    "CZECH_REPUBLIC": "Tsjechische Republiek",
+    "SLOVAKIA": "Slowakije",
+    "HUNGARY": "Hongarije",
+    "ROMANIA": "Roemenië",
+    "BULGARIA": "Bulgarije",
+    "CROATIA": "Kroatië",
+    "SLOVENIA": "Slovenië",
+    "SWEDEN": "Suède",
+    "NORWAY": "Noorwegen",
+    "DENMARK": "Denemarken",
+    "FINLAND": "Finland"
+  }
 }

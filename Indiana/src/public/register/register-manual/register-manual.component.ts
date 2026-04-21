@@ -9,33 +9,33 @@ import { ToastService } from '../../../services/toast.service';
 import { UserService } from '../../../services/user.service';
 import { UserCreateInput } from '../../../models/user-create';
 
-// Codes pays ISO 3166-1 alpha-2
+// Codes pays ISO 3166-1 alpha-2 à changer de place
 const ISO_COUNTRIES = [
-  { code: 'BE', label: 'Belgique / Belgïe / Belgien' },
-  { code: 'FR', label: 'France' },
-  { code: 'NL', label: 'Pays-Bas / Nederland' },
-  { code: 'DE', label: 'Allemagne / Deutschland' },
-  { code: 'AT', label: 'Autriche / Österreich' },
-  { code: 'CH', label: 'Suisse / Schweiz / Svizzera' },
-  { code: 'LU', label: 'Luxembourg' },
-  { code: 'GB', label: 'Royaume-Uni / United Kingdom' },
-  { code: 'IE', label: 'Irlande / Ireland' },
-  { code: 'ES', label: 'Espagne / España' },
-  { code: 'IT', label: 'Italie / Italia' },
-  { code: 'PT', label: 'Portugal' },
-  { code: 'GR', label: 'Grèce' },
-  { code: 'PL', label: 'Pologne / Polska' },
-  { code: 'CZ', label: 'République Tchèque / Česko' },
-  { code: 'SK', label: 'Slovaquie / Slovensko' },
-  { code: 'HU', label: 'Hongrie / Magyarország' },
-  { code: 'RO', label: 'Roumanie / România' },
-  { code: 'BG', label: 'Bulgarie' },
-  { code: 'HR', label: 'Croatie / Hrvatska' },
-  { code: 'SI', label: 'Slovénie / Slovenija' },
-  { code: 'SE', label: 'Suède / Sverige' },
-  { code: 'NO', label: 'Norvège / Norge' },
-  { code: 'DK', label: 'Danemark / Danmark' },
-  { code: 'FI', label: 'Finlande / Suomi' },
+  { code: 'BE', label: ' "COUNTRY.BELGIUM" | translate' },
+  { code: 'FR', label: ' "COUNTRY.FRANCE" | translate ' },
+  { code: 'NL', label: ' "COUNTRY.NETHERLANDS" | translate ' },
+  { code: 'DE', label: ' "COUNTRY.GERMANY" | translate ' },
+  { code: 'AT', label: ' "COUNTRY.AUSTRIA" | translate ' },
+  { code: 'CH', label: ' "COUNTRY.SWITZERLAND" | translate ' },
+  { code: 'LU', label: ' "COUNTRY.LUXEMBOURG" | translate ' },
+  { code: 'GB', label: ' "COUNTRY.UNITED_KINGDOM" | translate ' },
+  { code: 'IE', label: ' "COUNTRY.IRELAND" | translate ' },
+  { code: 'ES', label: ' "COUNTRY.SPAIN" | translate ' },
+  { code: 'IT', label: ' "COUNTRY.ITALY" | translate ' },
+  { code: 'PT', label: ' "COUNTRY.PORTUGAL" | translate ' },
+  { code: 'GR', label: ' "COUNTRY.GREECE" | translate ' },
+  { code: 'PL', label: ' "COUNTRY.POLAND" | translate ' },
+  { code: 'CZ', label: ' "COUNTRY.CZECH_REPUBLIC" | translate ' },
+  { code: 'SK', label: ' "COUNTRY.SLOVAKIA" | translate ' },
+  { code: 'HU', label: ' "COUNTRY.HUNGARY" | translate ' },
+  { code: 'RO', label: ' "COUNTRY.ROMANIA" | translate ' },
+  { code: 'BG', label: ' "COUNTRY.BULGARIA" | translate ' },
+  { code: 'HR', label: ' "COUNTRY.CROATIA" | translate ' },
+  { code: 'SI', label: ' "COUNTRY.SLOVENIA" | translate ' },
+  { code: 'SE', label: ' "COUNTRY.SWEDEN" | translate ' },
+  { code: 'NO', label: ' "COUNTRY.NORWAY" | translate ' },
+  { code: 'DK', label: ' "COUNTRY.DENMARK" | translate ' },
+  { code: 'FI', label: ' "COUNTRY.FINLAND" | translate ' },
 ];
 
 import {
@@ -47,6 +47,8 @@ import {
   AbstractControl,
   ValidationErrors,
 } from '@angular/forms';
+import { PasswordValidator } from '../../../shared/account/validators/password.validator';
+import { birthDateValidator } from '../../../shared/account/validators/birthday.validator';
 
 
 
@@ -69,39 +71,6 @@ import {
 export class RegisterManualComponent implements OnDestroy {
   // ── Codes pays ISO 3166-1 alpha-2 ───────────────────────────
   public readonly isoCountries = ISO_COUNTRIES;
-
-  // ── Validateur personnalisé pour la correspondance des 2 mots de passe ─
-  private static passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
-    const password = control.get('password');
-    const confirmPassword = control.get('confirmPassword');
-
-    if (!password || !confirmPassword) {
-      return null;
-    }
-
-    return password.value === confirmPassword.value ? null : { passwordMismatch: true };
-  }
-
-  // ── Validateur personnalisé pour le numéro de téléphone ─
-  private static phoneValidator(control: AbstractControl): ValidationErrors | null {
-    const phone = control.value;
-    if (!phone) return null;
-
-    const phoneRegex = /^\+?[0-9]{8,15}$/;
-    return phoneRegex.test(phone) ? null : { invalidPhone: true };
-  }
-
-  // ── Validateur pour la date de naissance (pas dans le futur) ─
-  private static birthDateValidator(control: AbstractControl): ValidationErrors | null {
-    const birthDate = control.value;
-    if (!birthDate) return null;
-
-    const date = new Date(birthDate);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-
-    return date <= today ? null : { invalidBirthDate: true };
-  }
 
   public accountCreated = false;
   public form!: FormGroup;
@@ -127,7 +96,7 @@ export class RegisterManualComponent implements OnDestroy {
       firstNames:  this.fb.array([
         this.fb.control('', Validators.required),
       ]),
-      birthDate:   ['', RegisterManualComponent.birthDateValidator],
+      birthDate:   ['', birthDateValidator],
       gender:      [''],
       totem:       [''],
       quali:       [''],
@@ -138,7 +107,7 @@ export class RegisterManualComponent implements OnDestroy {
       ]),
       // ── Contact ──
       email:       ['', [Validators.email]],
-      phone:       ['', RegisterManualComponent.phoneValidator],
+      phone:       ['', Validators.pattern(/^\+?\d{10,12}$/)],
       // ── Home Address ──
       homeBoxNumber:   ['', Validators.required],
       homeStreet:      ['', Validators.required],
@@ -155,7 +124,7 @@ export class RegisterManualComponent implements OnDestroy {
       // ── Auth ──
       password:    ['', Validators.required],
       confirmPassword: ['', Validators.required],
-    }, { validators: RegisterManualComponent.passwordMatchValidator });
+    }, { validators: PasswordValidator('password','confirmPassword') });
 
     // ── Pré-remplissage depuis eID si des données sont disponibles ─
     const eid = this._eidData.getData();
@@ -335,6 +304,7 @@ export class RegisterManualComponent implements OnDestroy {
     });
   }
 
+  
   // ── Lifecycle ─────────────────────────────────────────────────────
 
   ngOnDestroy(): void {

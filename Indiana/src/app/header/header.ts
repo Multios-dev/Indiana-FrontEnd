@@ -27,18 +27,18 @@ export class HeaderComponent {
   // List of languages
   public langList = [ShortLanguages.FR, ShortLanguages.EN, ShortLanguages.NL];
 
-  switchLang(lang: ShortLanguages) {
+  public switchLang(lang: ShortLanguages) {
     this._translate.use(lang);
     this.currentLang.set(lang);
   }
   @Input() sidebarOpen = false;
   @Output() menuToggle = new EventEmitter<void>();
 
-  get isLoggedIn(): boolean {
+  public get isLoggedIn(): boolean {
     return !!this.authService.getUserId();
   }
 
-  toggleMenu(): void {
+  public toggleMenu(): void {
     if (this.isLoggedIn) {
       this.menuToggle.emit();
     }
