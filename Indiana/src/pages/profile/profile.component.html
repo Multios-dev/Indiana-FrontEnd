@@ -138,7 +138,16 @@
 
           <div class="form-field">
             <label>{{ "PROFILE.INFO.COUNTRY" | translate }}</label>
-            <input [(ngModel)]="editableUser.country" [readonly]="!isEditing" />
+            @if (isEditing) {
+              <select [(ngModel)]="editableUser.country" class="country-select">
+                <option value="" disabled selected>{{ "PROFILE.INFO.SELECT_COUNTRY" | translate }}</option>
+                @for (country of countries; track country.code) {
+                  <option [value]="country.name">{{ country.name }}</option>
+                }
+              </select>
+            } @else {
+              <input [(ngModel)]="editableUser.country" readonly />
+            }
           </div>
         </div>
       </div>

@@ -1,8 +1,9 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { SidebarService } from '../../services/sidebar.service';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
 import { TranslateModule, TranslatePipe, TranslateService } from '@ngx-translate/core';
 import { ToastService } from '../../services/toast.service';
@@ -20,12 +21,13 @@ import { ToastService } from '../../services/toast.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent { 
+export class LoginComponent implements OnInit { 
   private _auth = inject(AuthService);
   private _spinnerService = inject(NgxSpinnerService);
   private _toastService = inject(ToastService);
   private _translateService = inject(TranslateService);
   private _router = inject(Router);
+  private _sidebarService = inject(SidebarService);
 
   public error: string | null = null;
   public loginForm: FormGroup;
@@ -38,6 +40,11 @@ export class LoginComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
     });
+  }
+
+  ngOnInit(): void {
+    // Fermer la sidebar sur la page de connexion
+    this._sidebarService.closeSidebar();
   }
 
   public get email() {

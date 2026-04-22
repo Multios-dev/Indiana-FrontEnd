@@ -32,6 +32,7 @@ export class HeaderComponent {
     this.currentLang.set(lang);
   }
   @Input() sidebarOpen = false;
+  @Input() showMenuButton = true;
   @Output() menuToggle = new EventEmitter<void>();
 
   public get isLoggedIn(): boolean {

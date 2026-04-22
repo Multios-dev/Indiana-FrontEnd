@@ -73,7 +73,7 @@
         <div *ngFor="let minor of minors()" class="minor-item">
           <div class="minor-avatar">{{ getInitials(minor) }}</div>
           <div class="minor-info">
-            <div class="minor-name">{{ minor.first_names?.join(' ') }} {{ minor.last_name }}</div>
+            <div class="minor-name">{{ minor.first_names[0] }} {{ minor.last_name }}</div>
             <div class="minor-details" *ngIf="minor.totem">Totem : <em>{{ minor.totem }}</em></div>
             <div class="minor-details" *ngIf="!minor.totem && minor.gender">{{ minor.gender }}</div>
           </div>

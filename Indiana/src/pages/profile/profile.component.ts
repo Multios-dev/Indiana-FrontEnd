@@ -9,6 +9,7 @@ import { MembershipService } from '../../services/membership.service';
 import { ToastService } from '../../services/toast.service';
 import { UserOutput } from '../../models/user-output';
 import { Membership } from '../../models/membership';
+import { COUNTRIES_LIST, getCountryName, getCountryCode } from '../../utils/countries-mapper';
 
 export interface UserProfile {
   firstNames: string;  // Prénoms séparés par des virgules
@@ -57,6 +58,9 @@ export class ProfileComponent implements OnInit {
   private toastService = inject(ToastService);
   private activatedRoute = inject(ActivatedRoute);
   private cdr = inject(ChangeDetectorRef);
+  
+  // Liste des pays disponibles pour les adresses
+  public countries = COUNTRIES_LIST;
   
   // ID de l'utilisateur dont on affiche le profil (peut être différent de l'utilisateur connecté)
   private displayedUserId: string | null = null;
@@ -172,18 +176,18 @@ export class ProfileComponent implements OnInit {
           birthDate: userInfo.birth_date,
           gender: userInfo.gender,
           nationality: userInfo.nationality,
-          // Adresse principale
+          // Adresse principale - convertir le code pays en nom affichable
           street: userInfo.home_address?.thoroughfare,
           boxNumber: userInfo.home_address?.box_number,
           city: userInfo.home_address?.post_name,
           zipCode: userInfo.home_address?.post_code,
-          country: userInfo.home_address?.country,
-          // Adresse résidentielle
+          country: getCountryName(userInfo.home_address?.country),
+          // Adresse résidentielle - convertir le code pays en nom affichable
           residentialStreet: userInfo.residential_address?.thoroughfare,
           residentialBoxNumber: userInfo.residential_address?.box_number,
           residentialCity: userInfo.residential_address?.post_name,
           residentialZipCode: userInfo.residential_address?.post_code,
-          residentialCountry: userInfo.residential_address?.country,
+          residentialCountry: getCountryName(userInfo.residential_address?.country),
         };
         this.editableUser = { ...this.user };
         this.isLoading.set(false);
@@ -273,6 +277,7 @@ export class ProfileComponent implements OnInit {
     }
 
     // Mapping du UserProfile vers UserUpdateInput - complet avec adresses
+    // Convertir le nom du pays en code ISO pour le backend
     const updatePayload: any = {
       first_names: this.editableUser.firstNames?.split(',').map(n => n.trim()) || [],
       last_name: this.editableUser.lastName || null,
@@ -289,7 +294,7 @@ export class ProfileComponent implements OnInit {
         box_number: this.editableUser.boxNumber || null,
         post_name: this.editableUser.city || '',
         post_code: this.editableUser.zipCode || '',
-        country: this.editableUser.country || '',
+        country: getCountryCode(this.editableUser.country) || '',
       }
     };
 
@@ -300,7 +305,7 @@ export class ProfileComponent implements OnInit {
         box_number: this.editableUser.residentialBoxNumber || null,
         post_name: this.editableUser.residentialCity || '',
         post_code: this.editableUser.residentialZipCode || '',
-        country: this.editableUser.residentialCountry || '',
+        country: getCountryCode(this.editableUser.residentialCountry) || '',
       };
     }
 

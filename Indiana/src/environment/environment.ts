@@ -1,4 +1,4 @@
 export const environment = {
-    baseApi_url: "http://localhost:8000",
+    baseApi_url: "https://backend.teris.be",
     baseKeyCloakUrl: "https://mc-auth-test.isospec.eu"
 };

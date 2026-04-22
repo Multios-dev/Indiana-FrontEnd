@@ -88,7 +88,11 @@
       "EID_PREFILL_BANNER": "Pre-filled registration form",
       "STREETNUMBER": "Number",
       "ERROR_STREETNUMBER": "The number is required.",
-      "STREETNUMBER_PLACEHOLDER": "18"
+      "STREETNUMBER_PLACEHOLDER": "18",
+      "ADD_NATIONALITY": "Add a nationality",
+      "COUNTRY": "Country",
+      "COUNTRY_PLACEHOLDER": "Your country...",
+      "ERROR_COUNTRY": "You must select a country."
     },
     "EID": {
       "SUBTITLE": "Read your electronic ID card to speed up your registration.",
@@ -133,7 +137,8 @@
     "MINORS": {
       "TITLE": "Minors under my responsibility",
       "VIEW": "See the file",
-      "VIEWS": "See the file"
+      "VIEWS": "See the file",
+      "NO_MINORS": "You do not have any minors under your responsibility"
     },
     "MYVIEW": "My file",
     "MYCOTISATIONS": "Pay my dues"
@@ -199,6 +204,7 @@
       "GENERAL": "Identity",
       "BOX_NUMBER": "Number",
       "COUNTRY": "Country",
+      "SELECT_COUNTRY": "Select a country",
       "WEBSITE": "Website",
       "RESIDENTIAL_ADDRESS": "Residential address"
     },
@@ -259,5 +265,8 @@
     "NORWAY": "Norway",
     "DENMARK": "Denmark",
     "FINLAND": "Finland"
+  },
+  "COMMON": {
+    "LOADING": "Loading..."
   }
 }

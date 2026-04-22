@@ -5,6 +5,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { HeaderComponent } from "./header/header";
 import { Sidebar } from "./sidebar/sidebar";
 import { AuthService } from '../services/auth.service';
+import { SidebarService } from '../services/sidebar.service';
 // import 'primeicons/primeicons.css';
 import { ButtonModule } from 'primeng/button';
 
@@ -23,15 +24,15 @@ import { ButtonModule } from 'primeng/button';
 })
 export class App {
   protected readonly title = signal('Indiana');
-  sidebarOpen = false;
   
   private authService = inject(AuthService);
+  public sidebarService = inject(SidebarService);
 
   public constructor() {
     // Fermer la sidebar quand l'utilisateur se déconnecte
     effect(() => {
       if (!this.authService.loggedIn()) {
-        this.sidebarOpen = false;
+        this.sidebarService.closeSidebar();
       }
     });
   }
@@ -45,6 +46,10 @@ export class App {
   }
 
   toggleSidebar() {
-    this.sidebarOpen = !this.sidebarOpen;
+    this.sidebarService.toggleSidebar();
+  }
+
+  get sidebarOpen(): boolean {
+    return this.sidebarService.sidebarOpen();
   }
 }

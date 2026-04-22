@@ -108,7 +108,11 @@
       "EID_PREFILL_BANNER": "Formulaire d'inscription pré-rempli",
       "STREETNUMBER": "Numéro",
       "ERROR_STREETNUMBER": "Le numéro est requis.",
-      "STREETNUMBER_PLACEHOLDER": "18"
+      "STREETNUMBER_PLACEHOLDER": "18",
+      "ADD_NATIONALITY": "Ajouter une nationalité",
+      "COUNTRY": "Pays",
+      "COUNTRY_PLACEHOLDER": "Votre pays...",
+      "ERROR_COUNTRY": "Vous devez sélectionner un pays."
     }
   },
   "FORGET_PASSWORD": {
@@ -137,7 +141,8 @@
     "MINORS": {
       "TITLE": "Mineurs sous ma responsabilité",
       "VIEW": "Voir la fiche",
-      "VIEWS": "Voir la fiche"
+      "VIEWS": "Voir la fiche",
+      "NO_MINORS": "Vous ne possèdez aucuns mineurs sous votre responsabilité"
     },
     "MYVIEW": "Ma fiche",
     "MYCOTISATIONS": "Payer mes cotisations"
@@ -203,6 +208,7 @@
       "GENERAL": "Identité",
       "BOX_NUMBER": "Numéro",
       "COUNTRY": "Pays",
+      "SELECT_COUNTRY": "Sélectionner un pays",
       "WEBSITE": "Site web",
       "RESIDENTIAL_ADDRESS": "Adresse résidentielle"
     },
@@ -263,5 +269,8 @@
     "NORWAY": "Norvège",
     "DENMARK": "Danemark",
     "FINLAND": "Finlande"
+  },
+  "COMMON": {
+    "LOADING": "Chargement..."
   }
 }

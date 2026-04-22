@@ -88,7 +88,11 @@
       "EID_PREFILL_BANNER": "Vooraf ingevuld registratieformulier",
       "STREETNUMBER": "Nummer",
       "ERROR_STREETNUMBER": "Het nummer is vereist.",
-      "STREETNUMBER_PLACEHOLDER": "18"
+      "STREETNUMBER_PLACEHOLDER": "18",
+      "ADD_NATIONALITY": "Voeg een nationaliteit toe",
+      "COUNTRY": "Land",
+      "COUNTRY_PLACEHOLDER": "Jouw land...",
+      "ERROR_COUNTRY": "U moet een land selecteren."
     },
     "EID": {
       "SUBTITLE": "Lees uw elektronische identiteitskaart om uw registratie te versnellen.",
@@ -133,7 +137,8 @@
     "MINORS": {
       "TITLE": "Minderjarigen onder mijn verantwoordelijkheid",
       "VIEW": "Zie het bestand",
-      "VIEWS": "Zie het bestand"
+      "VIEWS": "Zie het bestand",
+      "NO_MINORS": "U heeft geen minderjarigen onder uw verantwoordelijkheid"
     },
     "MYVIEW": "Mijn dossier",
     "MYCOTISATIONS": "Betaal mijn contributie"
@@ -199,6 +204,7 @@
       "GENERAL": "Identificeren",
       "BOX_NUMBER": "Nummer",
       "COUNTRY": "Land",
+      "SELECT_COUNTRY": "Selecteer een land",
       "WEBSITE": "Website",
       "RESIDENTIAL_ADDRESS": "Woonadres"
     },
@@ -259,5 +265,8 @@
     "NORWAY": "Noorwegen",
     "DENMARK": "Denemarken",
     "FINLAND": "Finland"
+  },
+  "COMMON": {
+    "LOADING": "Laden..."
   }
 }
