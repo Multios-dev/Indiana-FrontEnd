@@ -14,68 +14,110 @@
      }
 
     <!-- Form -->
-    <form [formGroup]="loginForm" (ngSubmit)="submit()" novalidate>
+    @if (step() === 'credentials') {
+      <form [formGroup]="loginForm" (ngSubmit)="submit()" novalidate>
 
-      <!-- Email -->
-      <div class="field-group" [class.has-error]="email?.invalid && email?.touched">
-        <label class="field-label">{{"LOGIN.EMAIL_LABEL" | translate}}</label>
-        <input
-          type="email"
-          formControlName="email"
-          [placeholder]=" 'LOGIN.EMAIL_PLACEHOLDER' | translate"
-          class="field-input"
-          autocomplete="email"
-        >
-
-        @if (email?.invalid && email?.touched) {
-          <p class="field-hint">
-            {{ "LOGIN.EMAIL_ERROR" | translate }}
-          </p>
-        }
-        
-      </div>
-
-      <!-- Password -->
-      <div class="field-group" [class.has-error]="password?.invalid && password?.touched">
-        <label class="field-label">{{ "LOGIN.PASSWORD_LABEL" | translate }}</label>
-        <div class="input-wrapper">
+        <!-- Email -->
+        <div class="field-group" [class.has-error]="email?.invalid && email?.touched">
+          <label class="field-label">{{"LOGIN.EMAIL_LABEL" | translate}}</label>
           <input
-            [type]="showPassword() ? 'text' : 'password'"
-            formControlName="password"
-            placeholder="********"
+            type="email"
+            formControlName="email"
+            [placeholder]=" 'LOGIN.EMAIL_PLACEHOLDER' | translate"
             class="field-input"
-            autocomplete="current-password"
+            autocomplete="email"
           >
 
-          <button type="button" (click)="togglePassword()" class="eye-btn">
-            @if (!showPassword()) {
-              <i class="pi pi-eye"></i>
-            } @else {
-              <i class="pi pi-eye-slash"></i>
-            }
-          </button>
+          @if (email?.invalid && email?.touched) {
+            <p class="field-hint">
+              {{ "LOGIN.EMAIL_ERROR" | translate }}
+            </p>
+          }
+          
         </div>
 
-        @if (password?.invalid && password?.touched) {
-          <p class="field-hint">
-            {{ "LOGIN.PASSWORD_ERROR" | translate }}
-          </p>
-        }
-        
-        <div class="forgot-wrap">
-          <a routerLink="/mot-de-passe-oublie" class="forgot-link">
-            {{ "LOGIN.FORGOT_PASSWORD" | translate }}
-          </a>
+        <!-- Password -->
+        <div class="field-group" [class.has-error]="password?.invalid && password?.touched">
+          <label class="field-label">{{ "LOGIN.PASSWORD_LABEL" | translate }}</label>
+          <div class="input-wrapper">
+            <input
+              [type]="showPassword() ? 'text' : 'password'"
+              formControlName="password"
+              placeholder="********"
+              class="field-input"
+              autocomplete="current-password"
+            >
+
+            <button type="button" (click)="togglePassword()" class="eye-btn">
+              @if (!showPassword()) {
+                <i class="pi pi-eye"></i>
+              } @else {
+                <i class="pi pi-eye-slash"></i>
+              }
+            </button>
+          </div>
+
+          @if (password?.invalid && password?.touched) {
+            <p class="field-hint">
+              {{ "LOGIN.PASSWORD_ERROR" | translate }}
+            </p>
+          }
+          
+          <div class="forgot-wrap">
+            <a routerLink="/mot-de-passe-oublie" class="forgot-link">
+              {{ "LOGIN.FORGOT_PASSWORD" | translate }}
+            </a>
+          </div>
         </div>
-      </div>
 
-      <!-- Submit -->
-      <button class="submit-btn" (click)="submit()">
-        <i class="pi pi-sign-in"></i>
-        {{ "LOGIN.SUBMIT" | translate }}
-      </button>
+        <!-- Submit -->
+        <button type="submit" class="submit-btn">
+          <i class="pi pi-sign-in"></i>
+          {{ "LOGIN.SUBMIT" | translate }}
+        </button>
 
-    </form>
+      </form>
+    }
+
+    <!-- OTP Form -->
+    @if (step() === 'otp') {
+      <form [formGroup]="otpForm" (ngSubmit)="submit()" novalidate>
+
+        <p class="otp-info">{{ "LOGIN.OTP_INFO" | translate }}</p>
+
+        <!-- OTP Code -->
+        <div class="field-group" [class.has-error]="otpForm.get('otp_code')?.invalid && otpForm.get('otp_code')?.touched">
+          <label class="field-label">{{ "LOGIN.OTP_CODE_LABEL" | translate }}</label>
+          <input
+            type="text"
+            formControlName="otp_code"
+            [placeholder]=" 'LOGIN.OTP_CODE_PLACEHOLDER' | translate"
+            class="field-input"
+            maxlength="6"
+            inputmode="numeric"
+          >
+
+          @if (otpForm.get('otp_code')?.invalid && otpForm.get('otp_code')?.touched) {
+            <p class="field-hint">
+              {{ "LOGIN.OTP_CODE_ERROR" | translate }}
+            </p>
+          }
+        </div>
+
+        <!-- Submit OTP -->
+        <button type="submit" class="submit-btn">
+          <i class="pi pi-check"></i>
+          {{ "LOGIN.VERIFY_OTP" | translate }}
+        </button>
+
+        <!-- Back Button -->
+        <button type="button" (click)="resetToCredentials()" class="back-btn">
+          <i class="pi pi-arrow-left"></i>
+          {{ "LOGIN.BACK" | translate }}
+        </button>
+
+      </form>
+    }
 
     <!-- Divider -->
     <div class="divider">

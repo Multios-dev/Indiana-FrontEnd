@@ -1,0 +1,9 @@
+{
+  "/api/keycloak": {
+    "target": "https://mc-auth-test.isospec.eu",
+    "pathRewrite": { "^/api/keycloak": "" },
+    "changeOrigin": true,
+    "secure": false,
+    "logLevel": "debug"
+  }
+}

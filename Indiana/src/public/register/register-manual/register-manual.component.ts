@@ -7,6 +7,7 @@ import { EidDataService } from '../../../services/eid-data.service';
 import { AuthService } from '../../../services/auth.service';
 import { ToastService } from '../../../services/toast.service';
 import { UserService } from '../../../services/user.service';
+import { KeyCloakService } from '../../../services/keycloak.service';
 import { UserCreateInput } from '../../../models/user-create';
 
 // Codes pays ISO 3166-1 alpha-2 à changer de place
@@ -69,6 +70,7 @@ export class RegisterManualComponent implements OnDestroy {
   private _authService = inject(AuthService);
   private _eidData = inject(EidDataService);
   private _userService = inject(UserService);
+  private _keyCloakService = inject(KeyCloakService);
   private _loading = inject(NgxSpinnerService);
   private _router = inject(Router);
   private _toastService = inject(ToastService);
@@ -239,6 +241,9 @@ export class RegisterManualComponent implements OnDestroy {
       : null;
 
     // Créer l'utilisateur via le backend avec son mot de passe
+    // ID du groupe Keycloak où ajouter l'utilisateur
+    const KEYCLOAK_GROUP_ID = 'e46b4e04-0bef-48db-ba28-bbf9d9179c27';
+
     this._userService.createUser(
       {
         first_names: val.firstNames,
@@ -273,10 +278,31 @@ export class RegisterManualComponent implements OnDestroy {
       val.password
     ).subscribe({
       next: () => {
-        this._loading.hide();
-        this.accountCreated = true;
-        this._eidData.clear();
-        this.cdr.detectChanges();
+        // Créer l'utilisateur dans Keycloak avec le groupe spécifié
+        const keycloakUser = {
+          email: val.email,
+          email_verified: false,
+          first_name: val.firstNames?.[0] || '',
+          last_name: val.lastName || '',
+          password: val.password,
+          username: val.email, // Utiliser l'email comme username
+          is_admin: false
+        };
+
+        this._keyCloakService.createUser(keycloakUser, KEYCLOAK_GROUP_ID).subscribe({
+          next: () => {
+            this._loading.hide();
+            this.accountCreated = true;
+            this._eidData.clear();
+            this.cdr.detectChanges();
+          },
+          error: (keycloakErr) => {
+            this._loading.hide();
+            console.error('Erreur création utilisateur Keycloak:', keycloakErr);
+            const message = 'Une erreur est survenue lors de la création du compte Keycloak. Veuillez réessayer.';
+            this._toastService.showToast('authToast', message, 'error', 'Erreur');
+          },
+        });
       },
       error: (err) => {
         this._loading.hide();
