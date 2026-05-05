@@ -30,7 +30,8 @@
       "SERVERERROR": "Une erreur est survenue lors de la connexion. Veuillez réessayer",
       "SENDRESETPASSWORDSUCCESS": "Un email a été envoyé avec un lien de réinitialisation du mot de passe",
       "SENDRESETPASSWORDERROR": "Une erreur est survenur lors de l'envoi de l'email de réinitialisation du mot de passe. Veuillez réessayer"
-    }
+    },
+    "SUCCESS": "Connexion réussie !"
   },
   "REGISTER": {
     "EID": {

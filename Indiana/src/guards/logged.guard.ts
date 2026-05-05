@@ -6,13 +6,10 @@ export const loggedGuard: CanActivateFn = (route, state) => {
   const auth = inject(AuthService);
   const router = inject(Router);
   
-  // Si l'utilisateur a un ID, il est connecté, rediriger vers le dashboard
-  const userId = auth.getUserId();
-  if (userId) {
+  if (auth.isLoggedIn()) {
     router.navigate(['/scouts/dashboard']);
     return false;
   }
   
-  // Sinon, autoriser l'accès à la page de connexion
   return true;
 };

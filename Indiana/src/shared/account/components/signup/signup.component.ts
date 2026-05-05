@@ -101,7 +101,7 @@ export class SignupComponent implements OnInit {
                      .pipe(take(1))
                      .subscribe({
                       next: () => {
-                        this._authService.setLoggedIn();
+                        this._authService.isLoggedIn();
                         this._spinnerService.hide();
                       },
                       error: () => {

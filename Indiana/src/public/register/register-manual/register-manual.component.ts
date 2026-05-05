@@ -93,7 +93,7 @@ export class RegisterManualComponent implements OnDestroy {
         this.fb.control('', Validators.required),
       ]),
       // ── Contact ──
-      email:       ['', [Validators.email]],
+      email:       ['', [Validators.email, Validators.required]],
       phone:       ['', Validators.pattern(/^\+?\d{10,12}$/)],
       // ── Home Address ──
       homeBoxNumber:   ['', Validators.required],

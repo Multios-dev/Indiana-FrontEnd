@@ -22,7 +22,8 @@
       "SERVERERROR": "Er is een fout opgetreden tijdens het verbinden. Probeer het opnieuw",
       "SENDRESETPASSWORDSUCCESS": "Er is een e-mail verzonden met een link voor het opnieuw instellen van het wachtwoord",
       "SENDRESETPASSWORDERROR": "An error occurred while sending the password reset email. Probeer het opnieuw"
-    }
+    },
+    "SUCCESS": "Verbinding succesvol!"
   },
   "REGISTER": {
     "TITLE": "Account aanmaken",

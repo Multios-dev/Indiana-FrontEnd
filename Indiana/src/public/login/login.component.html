@@ -1,106 +1,154 @@
 <div class="login-page">
-
   <div class="login-card">
 
-    <!-- Title -->
-    <h1 class="title">{{"LOGIN.TITLE" | translate}}</h1>
-    <p class="subtitle">{{"LOGIN.SUBTITLE" | translate}}</p>
+    <!-- ══════════════════════════════════════════════
+         ÉTAPE 1 — Email + Mot de passe
+    ══════════════════════════════════════════════ -->
+    @if (step() === 'credentials') {
 
-    <!-- Error -->
-     @if (error) {
-      <div class="error-banner">
-        <i class="pi pi-exclamation-triangle"></i> {{ error }}
-      </div>
-     }
+      <h1 class="title">{{ "LOGIN.TITLE" | translate }}</h1>
+      <p class="subtitle">{{ "LOGIN.SUBTITLE" | translate }}</p>
 
-    <!-- Form -->
-    <form [formGroup]="loginForm" (ngSubmit)="submit()" novalidate>
+      <form [formGroup]="credentialsForm" (ngSubmit)="submitCredentials()" novalidate>
 
-      <!-- Email -->
-      <div class="field-group" [class.has-error]="email?.invalid && email?.touched">
-        <label class="field-label">{{"LOGIN.EMAIL_LABEL" | translate}}</label>
-        <input
-          type="email"
-          formControlName="email"
-          [placeholder]=" 'LOGIN.EMAIL_PLACEHOLDER' | translate"
-          class="field-input"
-          autocomplete="email"
-        >
-
-        @if (email?.invalid && email?.touched) {
-          <p class="field-hint">
-            {{ "LOGIN.EMAIL_ERROR" | translate }}
-          </p>
-        }
-        
-      </div>
-
-      <!-- Password -->
-      <div class="field-group" [class.has-error]="password?.invalid && password?.touched">
-        <label class="field-label">{{ "LOGIN.PASSWORD_LABEL" | translate }}</label>
-        <div class="input-wrapper">
+        <!-- Email -->
+        <div class="field-group" [class.has-error]="email?.invalid && email?.touched">
+          <label class="field-label">{{ "LOGIN.EMAIL_LABEL" | translate }}</label>
           <input
-            [type]="showPassword() ? 'text' : 'password'"
-            formControlName="password"
-            placeholder="********"
+            type="email"
+            formControlName="email"
+            [placeholder]="'LOGIN.EMAIL_PLACEHOLDER' | translate"
             class="field-input"
-            autocomplete="current-password"
+            autocomplete="email"
           >
-
-          <button type="button" (click)="togglePassword()" class="eye-btn">
-            @if (!showPassword()) {
-              <i class="pi pi-eye"></i>
-            } @else {
-              <i class="pi pi-eye-slash"></i>
-            }
-          </button>
+          @if (email?.invalid && email?.touched) {
+            <p class="field-hint">{{ "LOGIN.EMAIL_ERROR" | translate }}</p>
+          }
         </div>
 
-        @if (password?.invalid && password?.touched) {
-          <p class="field-hint">
-            {{ "LOGIN.PASSWORD_ERROR" | translate }}
-          </p>
-        }
-        
-        <div class="forgot-wrap">
-          <a routerLink="/mot-de-passe-oublie" class="forgot-link">
-            {{ "LOGIN.FORGOT_PASSWORD" | translate }}
-          </a>
+        <!-- Mot de passe -->
+        <div class="field-group" [class.has-error]="password?.invalid && password?.touched">
+          <label class="field-label">{{ "LOGIN.PASSWORD_LABEL" | translate }}</label>
+          <div class="input-wrapper">
+            <input
+              [type]="showPassword() ? 'text' : 'password'"
+              formControlName="password"
+              placeholder="********"
+              class="field-input"
+              autocomplete="current-password"
+            >
+            <button type="button" (click)="togglePassword()" class="eye-btn">
+              @if (!showPassword()) {
+                <i class="pi pi-eye"></i>
+              } @else {
+                <i class="pi pi-eye-slash"></i>
+              }
+            </button>
+          </div>
+          @if (password?.invalid && password?.touched) {
+            <p class="field-hint">{{ "LOGIN.PASSWORD_ERROR" | translate }}</p>
+          }
+          <div class="forgot-wrap">
+            <a routerLink="/mot-de-passe-oublie" class="forgot-link">
+              {{ "LOGIN.FORGOT_PASSWORD" | translate }}
+            </a>
+          </div>
         </div>
+
+        <!-- Bouton -->
+        <button type="submit" class="submit-btn" [disabled]="isLoading()">
+          @if (isLoading()) {
+            <span class="spinner"></span>
+            {{ "LOGIN.LOADING" | translate }}
+          } @else {
+            <i class="pi pi-sign-in"></i>
+            {{ "LOGIN.SUBMIT" | translate }}
+          }
+        </button>
+
+      </form>
+
+      <!-- Divider -->
+      <div class="divider">
+        <span>{{ "LOGIN.DIVIDER" | translate }}</span>
       </div>
 
-      <!-- Submit -->
-      <button class="submit-btn" (click)="submit()">
-        <i class="pi pi-sign-in"></i>
-        {{ "LOGIN.SUBMIT" | translate }}
-      </button>
+      <!-- OAuth -->
+      <div class="oauth-grid">
+        <button type="button" class="oauth-btn">
+          <img src="assets/google.jpg" alt="" class="oauth-icon">
+          Google
+        </button>
+        <button type="button" class="oauth-btn">
+          <i class="pi pi-id-card"></i>
+          <strong>itsme</strong>
+        </button>
+      </div>
 
-    </form>
+      <!-- Inscription -->
+      <p class="signup-line">
+        {{ "LOGIN.NO_ACCOUNT" | translate }}
+        <a routerLink="/inscription" class="signup-link">
+          {{ "LOGIN.CREATE_ACCOUNT" | translate }}
+        </a>
+      </p>
 
-    <!-- Divider -->
-    <div class="divider">
-      <span>{{ "LOGIN.DIVIDER" | translate }}</span>
-    </div>
+    }
 
-    <!-- OAuth -->
-    <div class="oauth-grid">
-      <button type="button" class="oauth-btn">
-        <img src="assets/google.jpg" alt="" class="oauth-icon">
-        Google
-      </button>
-      <button type="button" class="oauth-btn">
-        <i class="pi pi-id-card"></i>
-        <strong>itsme</strong>
-      </button>
-    </div>
+    <!-- ══════════════════════════════════════════════
+         ÉTAPE 2 — Code OTP
+    ══════════════════════════════════════════════ -->
+    @if (step() === 'otp') {
 
-    <!-- Sign up -->
-    <p class="signup-line">
-      {{ "LOGIN.NO_ACCOUNT" | translate }}
-      <a routerLink="/inscription" class="signup-link">
-        {{ "LOGIN.CREATE_ACCOUNT" | translate }}
-      </a>
-    </p>
+      <div class="otp-header">
+        <div class="otp-icon-wrap">
+          <i class="pi pi-envelope otp-icon"></i>
+        </div>
+        <h1 class="title">{{ "LOGIN.OTP_SENT" | translate }}</h1>
+        <p class="subtitle">{{ "LOGIN.OTP_INFO" | translate }}</p>
+      </div>
+
+      <form [formGroup]="otpForm" (ngSubmit)="submitOtp()" novalidate>
+
+        <!-- Code OTP -->
+        <div class="field-group" [class.has-error]="otp?.invalid && otp?.touched">
+          <label class="field-label">{{ "LOGIN.OTP_CODE_LABEL" | translate }}</label>
+          <input
+            type="text"
+            formControlName="otp"
+            [placeholder]="'LOGIN.OTP_CODE_PLACEHOLDER' | translate"
+            class="field-input otp-input"
+            inputmode="numeric"
+            maxlength="6"
+            autocomplete="one-time-code"
+          >
+          @if (otp?.invalid && otp?.touched) {
+            <p class="field-hint">{{ "LOGIN.OTP_CODE_ERROR" | translate }}</p>
+          }
+        </div>
+
+        <!-- Bouton vérifier -->
+        <button type="submit" class="submit-btn" [disabled]="isLoading()">
+          @if (isLoading()) {
+            <span class="spinner"></span>
+            {{ "LOGIN.LOADING" | translate }}
+          } @else {
+            <i class="pi pi-check-circle"></i>
+            {{ "LOGIN.VERIFY_OTP" | translate }}
+          }
+        </button>
+
+      </form>
+
+      <!-- Retour -->
+      <div class="back-wrap">
+        <button type="button" class="back-btn" (click)="backToCredentials()">
+          <i class="pi pi-arrow-left"></i>
+          {{ "LOGIN.BACK" | translate }}
+        </button>
+      </div>
+
+    }
 
   </div>
 </div>

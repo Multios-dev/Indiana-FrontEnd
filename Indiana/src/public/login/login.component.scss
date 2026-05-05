@@ -276,3 +276,58 @@ $font: 'Overpass', sans-serif;
     grid-template-columns: 1fr;
   }
 }
+// ── OTP step ─────────────────────────────────────────────────────
+.otp-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.otp-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba($blue, .12);
+  margin: 0 auto 1.25rem;
+}
+
+.otp-icon {
+  font-size: 1.75rem;
+  color: $blue;
+}
+
+.otp-input {
+  letter-spacing: .35em;
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+// ── Back button ───────────────────────────────────────────────────
+.back-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.back-btn {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  background: none;
+  border: none;
+  color: $muted;
+  font-family: $font;
+  font-size: .9rem;
+  cursor: pointer;
+  padding: .4rem .6rem;
+  border-radius: $radius;
+  transition: color .15s, background .15s;
+
+  &:hover {
+    color: $text;
+    background: rgba(0,0,0,.04);
+  }
+}

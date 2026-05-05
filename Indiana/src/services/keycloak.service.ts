@@ -3,7 +3,6 @@ import { inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../environment/environment';
 import { KeyCloakAdmin } from '../models/keycloak/keycloak-admin';
-//import { LoginForm } from '../shared/account/models/login-form';
 import { KeycloakConnectionReturn, KeycloakConnectionReturnOtp } from '../models/keycloak/keycloak-connection-return';
 import { KeyCloakLogin } from '../models/keycloak/keycloak-login';
 import { KeyCloakUserGroup } from '../models/keycloak/keycloak-user-group';
@@ -20,8 +19,6 @@ import { LoginForm } from '../shared/account/models/login-form';
 export class KeyCloakService {
 
   private readonly _url = environment.baseKeyCloakUrl + '/users';
-  // URL proxy pour éviter les erreurs CORS en développement
-  private readonly _proxyUrl = '/api/keycloak/users';
 
   private _storageService = inject(StorageService);
   private _tokenService = inject(TokenService);
@@ -64,9 +61,7 @@ export class KeyCloakService {
   //#region USER
   public createUser(keycloakUser: KeyCloakUser, groupId: string): Observable<boolean> {
     const params = new HttpParams().set('group_id', groupId);
-    // Utiliser le proxy en développement pour éviter les erreurs CORS
-    const url = this._proxyUrl + '/create_user';
-    return this.http.post<boolean>(url, keycloakUser, { params });
+    return this.http.post<boolean>(this._url + '/create_user', keycloakUser, { params });
   }
 
   public deleteUser(id: string): Observable<boolean> {

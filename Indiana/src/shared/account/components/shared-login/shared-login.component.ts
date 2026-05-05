@@ -144,7 +144,7 @@ export class SharedLoginComponent implements OnInit {
         this._storageService.setItem('token', res.access_token);
         this._tokenService.emitTokenExist();
         this._storageService.setItem('username', loginFormOtp.username);
-        this._authService.setLoggedIn();
+        this._authService.isLoggedIn();
         this._spinnerService.hide();
       },
       error: (err) => {

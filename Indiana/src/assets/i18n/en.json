@@ -22,7 +22,8 @@
       "SERVERERROR": "An error occurred while connecting. \nPlease try again",
       "SENDRESETPASSWORDSUCCESS": "An email was sent with a password reset link",
       "SENDRESETPASSWORDERROR": "An error occurred while sending the password reset email. \nPlease try again"
-    }
+    },
+    "SUCCESS": "Connection successful!"
   },
   "REGISTER": {
     "TITLE": "Create an account",

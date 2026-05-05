@@ -45,11 +45,11 @@ export class App {
     return this.isLoggedIn;
   }
 
-  toggleSidebar() {
+  public toggleSidebar() {
     this.sidebarService.toggleSidebar();
   }
 
-  get sidebarOpen(): boolean {
+  public get sidebarOpen(): boolean {
     return this.sidebarService.sidebarOpen();
   }
 }
