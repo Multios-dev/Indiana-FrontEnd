@@ -152,7 +152,7 @@ public submitCredentials(): void {
       // 1. Stocker le token Keycloak
       this._auth.loginWithKeycloak(res.access_token);
 
-      // 2. Appeler le backend local pour récupérer le profil
+      // 2. Appeler le backend pour récupérer le profil
       this._auth.loginWithEmail(this._pendingUsername, this._pendingPassword).subscribe({
         next: () => {
           this._spinnerService.hide();
@@ -166,24 +166,9 @@ public submitCredentials(): void {
           );
 
           this._router.navigate(['/scouts/dashboard']);
-        },
-        error: (err) => {
-          this._spinnerService.hide();
-          this.isLoading.set(false);
-          console.error('Erreur backend local:', err);
-          // On navigue quand même car Keycloak est OK
-          this._router.navigate(['/scouts/dashboard']);
         }
       });
-    },
-    error: (err) => {
-      this._spinnerService.hide();
-      this.isLoading.set(false);
-      const key = err.status === 401
-        ? 'LOGIN.ERRORMESSAGE.INVALIDOTP'
-        : 'LOGIN.ERRORMESSAGE.SERVERERROR';
-      this._showError(key);
-    },
+    }
   });
 }
 

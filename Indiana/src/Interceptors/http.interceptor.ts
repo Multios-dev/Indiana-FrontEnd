@@ -4,7 +4,7 @@ import { AuthService } from '../services/auth.service';
 import { environment } from '../environment/environment';
 
 export const httpInterceptorInterceptor: HttpInterceptorFn = (req, next) => {
-  // Requêtes Keycloak : pas de Bearer (géré par keycloakApiKeyInterceptor)
+  //Keycloak requests: no Bearer (managed by keycloakApiKeyInterceptor)
   if (req.url.includes(environment.baseKeyCloakUrl)) {
     return next(req);
   }

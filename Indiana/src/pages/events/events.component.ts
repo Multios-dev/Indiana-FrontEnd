@@ -63,11 +63,6 @@ export class EventsComponent implements OnInit {
         this.totalEvents.set(total);
         // Ensuite charger les événements paginés
         this.loadEvents();
-      },
-      error: (err) => {
-        console.error('Erreur lors du chargement du nombre total:', err);
-        // Charger quand même avec les événements paginés
-        this.loadEvents();
       }
     });
   }
@@ -95,7 +90,6 @@ export class EventsComponent implements OnInit {
       error: (err) => {
         this.isLoading = false;
         this.cdr.detectChanges();
-        // TODO: afficher un message d'erreur à l'utilisateur
       }
     });
   }
@@ -166,7 +160,7 @@ private loadParticipantsCounts(events: EventOutput[]): void {
       dateStart: event.start_date ? event.start_date.split('T')[0] : '',
       dateEnd: event.end_date ? event.end_date.split('T')[0] : undefined,
       location: location,
-      registered: 0,  // Sera remplacé par la vraie valeur lors du chargement des participants
+      registered: 0,  // Valeur par défaut, sera mise à jour après la récupération du nombre de participants
       capacity: event.max_participants,    
       statusLabel: statusLabel,
       statusClass: statusClass,

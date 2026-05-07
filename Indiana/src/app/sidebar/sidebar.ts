@@ -31,7 +31,7 @@ export class Sidebar implements OnInit {
     this.loadUserInfo();
     this.updateActiveRoute();
     
-    // Écouter les changements de route
+    // Listen to route changes to update the active route
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd))
       .subscribe(() => {

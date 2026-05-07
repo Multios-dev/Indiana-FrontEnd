@@ -59,19 +59,19 @@ export class ProfileComponent implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private cdr = inject(ChangeDetectorRef);
   
-  // Liste des pays disponibles pour les adresses
-  public countries = COUNTRIES_LIST;
-  
   // ID de l'utilisateur dont on affiche le profil (peut être différent de l'utilisateur connecté)
   private displayedUserId: string | null = null;
   // ID de l'utilisateur actuellement connecté
   private currentUserId: string | null = null;
+  // Liste des mineurs sous la responsabilité de l'utilisateur connecté
+  private minorsUnderMyResponsibility: UserOutput[] = [];
+  
+  // Liste des pays disponibles pour les adresses
+  public countries = COUNTRIES_LIST;
   // Indique si on affiche le profil de l'utilisateur connecté
   public isOwnProfile = true;
   // Indique si l'utilisateur connecté peut modifier ce profil (propre profil ou mineur à charge)
   public canEditProfile = false;
-  // Liste des mineurs sous la responsabilité de l'utilisateur connecté
-  private minorsUnderMyResponsibility: UserOutput[] = [];
   
   public activeTab: 'info' | 'mandats' | 'competences' = 'info';
 

@@ -22,10 +22,10 @@ export class DashboardComponent implements OnInit {
   private userService = inject(UserService);
   private router = inject(Router);
 
-  minors = signal<UserOutput[]>([]);
-  isLoadingMinors = signal(false);
+  public minors = signal<UserOutput[]>([]);
+  public isLoadingMinors = signal(false);
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.loadMinors();
   }
 
@@ -52,7 +52,7 @@ export class DashboardComponent implements OnInit {
   /**
    * Génère les initiales d'un mineur
    */
-  getInitials(minor: UserOutput): string {
+  public getInitials(minor: UserOutput): string {
     const firstChar = minor.first_names?.[0]?.[0]?.toUpperCase() || '';
     const lastChar = minor.last_name?.[0]?.toUpperCase() || '';
     return `${firstChar}${lastChar}`;
@@ -61,7 +61,7 @@ export class DashboardComponent implements OnInit {
   /**
    * Navigue vers la page de profil du mineur
    */
-  viewMinorProfile(minorId: string): void {
+  public viewMinorProfile(minorId: string): void {
     // Passer l'ID du mineur en paramètre de route
     this.router.navigate(['/scouts/profile', minorId]);
   }
