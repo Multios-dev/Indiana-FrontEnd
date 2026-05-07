@@ -161,10 +161,30 @@
             </button>
           } -->
           @if (selectedEvent.statusClass === 'status-open') {
-            <button class="btn btn-secondary" (click)="registerEvent(selectedEvent)">
-              <i class="pi pi-user-plus"></i>
-              {{ "EVENTS.REGISTER" | translate }}
-            </button>
+            @if (isLoadingParticipation) {
+              <div class="participation-status loading">
+                <i class="pi pi-spin pi-spinner"></i>
+                {{ "EVENTS.CHECKING_STATUS" | translate }}
+              </div>
+            } @else if (isUserParticipating) {
+              <div class="participation-status registered">
+                <i class="pi pi-check-circle"></i>
+                {{ "EVENTS.ALREADY_REGISTERED" | translate }}
+              </div>
+            } @else {
+              <button 
+                class="btn btn-secondary" 
+                (click)="registerEvent(selectedEvent)"
+                [disabled]="isSubmittingParticipation">
+                @if (isSubmittingParticipation) {
+                  <i class="pi pi-spin pi-spinner"></i>
+                  {{ "EVENTS.REGISTERING" | translate }}
+                } @else {
+                  <i class="pi pi-user-plus"></i>
+                  {{ "EVENTS.REGISTER" | translate }}
+                }
+              </button>
+            }
           }
           <button class="btn btn-outline" (click)="exportIcs(selectedEvent)">
             <i class="pi pi-download"></i>

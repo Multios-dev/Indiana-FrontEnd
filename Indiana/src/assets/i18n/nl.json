@@ -23,7 +23,9 @@
       "SENDRESETPASSWORDSUCCESS": "Er is een e-mail verzonden met een link voor het opnieuw instellen van het wachtwoord",
       "SENDRESETPASSWORDERROR": "An error occurred while sending the password reset email. Probeer het opnieuw"
     },
-    "SUCCESS": "Verbinding succesvol!"
+    "SUCCESS": "Verbinding succesvol!",
+    "OTP_SENT": "Je code staat in je authenticator-app",
+    "OTP_INFO": "Voer de verificatiecode in"
   },
   "REGISTER": {
     "TITLE": "Account aanmaken",
@@ -159,6 +161,9 @@
     "BACK": "Terug naar evenementen",
     "EDIT": "Bewerken",
     "REGISTER": "Registreren",
+    "REGISTERING": "Registratie in uitvoering...",
+    "CHECKING_STATUS": "Registratiestatus controleren...",
+    "ALREADY_REGISTERED": "Al geregistreerd",
     "EXPORT_ICS": "Exporteren .ics",
     "ITEMS_PER_PAGE": "Items per pagina",
     "PAGE": "Pagina",

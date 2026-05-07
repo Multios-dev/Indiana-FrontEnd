@@ -23,7 +23,9 @@
       "SENDRESETPASSWORDSUCCESS": "An email was sent with a password reset link",
       "SENDRESETPASSWORDERROR": "An error occurred while sending the password reset email. \nPlease try again"
     },
-    "SUCCESS": "Connection successful!"
+    "SUCCESS": "Connection successful!",
+    "OTP_SENT": "Your code is in your authenticator app",
+    "OTP_INFO": "Please enter verification code"
   },
   "REGISTER": {
     "TITLE": "Create an account",
@@ -159,6 +161,9 @@
     "BACK": "Back to events",
     "EDIT": "Edit",
     "REGISTER": "Register",
+    "REGISTERING": "Registering...",
+    "CHECKING_STATUS": "Checking registration...",
+    "ALREADY_REGISTERED": "Already registered",
     "EXPORT_ICS": "Export .ics",
     "ITEMS_PER_PAGE": "Items per page",
     "PAGE": "Page",

@@ -18,7 +18,7 @@ export class EventService {
    * @param limit nombre d'événements à retourner (optionnel, si non fourni, retourne tous les événements)
    * @returns Observable contenant la réponse paginée des événements
    */
-  getEvents(skip: number = 0, limit?: number): Observable<EventsResponse> {
+  public getEvents(skip: number = 0, limit?: number): Observable<EventsResponse> {
     let params = new HttpParams();
     params = params.set('skip', skip.toString());
     
@@ -34,12 +34,16 @@ export class EventService {
    * @param eventId l'ID de l'événement
    * @returns Observable contenant les détails de l'événement
    */
-  getEventById(eventId: string): Observable<EventOutput> {
+  public getEventById(eventId: string): Observable<EventOutput> {
     return this.httpClient.get<EventOutput>(`${EventService.ENDPOINT_URL}/${eventId}`);
   }
 
-  getEventsCount(): Observable<number> {
+  public getEventsCount(): Observable<number> {
   return this.httpClient.get<number>(`${EventService.ENDPOINT_URL}/count`);
 }
+
+  public getEventsParticipantsCount(eventId: string): Observable<number> {
+    return this.httpClient.get<number>(`${EventService.ENDPOINT_URL}/${eventId}/participants/count`);
+  }
 
 }

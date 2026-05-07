@@ -27,6 +27,7 @@ export interface EventOutput {
   latitude?: number | null;
   longitude?: number | null;
   parent_id?: string | null;
+  max_participants: number;
   audiences: AudienceOutput[];
   address?: AddressOutput | null;
 }
