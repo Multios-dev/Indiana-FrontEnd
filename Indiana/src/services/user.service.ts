@@ -15,8 +15,7 @@ export class UserService {
   static readonly ENDPOINT_NAME: string = "users";
   static readonly ENDPOINT_URL: string = environment.baseApi_url + "/" + UserService.ENDPOINT_NAME;
 
-  auth(username:String, password:String): Observable<UserInfos> {
-    //TODO change the service
+  public auth(username:String, password:String): Observable<UserInfos> {
     return this.httpClient.post<UserInfos>(UserService.ENDPOINT_URL+ "/auth",{username,password});
   }
 
@@ -26,7 +25,7 @@ export class UserService {
    * @param password le mot de passe de l'utilisateur
    * @returns Observable contenant les informations de l'utilisateur créé
    */
-  createUser(userInput: UserCreateInput, password: string): Observable<any> {
+  public createUser(userInput: UserCreateInput, password: string): Observable<any> {
     const payload = { ...userInput, password };
     return this.httpClient.post<any>(UserService.ENDPOINT_URL, payload);
   }
@@ -37,7 +36,7 @@ export class UserService {
    * @param userInput les données d'entrée pour la mise à jour
    * @returns Observable contenant les informations de l'utilisateur mis à jour
    */
-  updateUser(userId: string, userInput: UserUpdateInput): Observable<any> {
+  public updateUser(userId: string, userInput: UserUpdateInput): Observable<any> {
     return this.httpClient.put<any>(`${UserService.ENDPOINT_URL}/${userId}`, userInput);
   }
 
@@ -46,7 +45,7 @@ export class UserService {
    * @param userId l'ID de l'utilisateur
    * @returns Observable contenant les informations de l'utilisateur
    */
-  getUserById(userId: string): Observable<any> {
+  public getUserById(userId: string): Observable<any> {
     return this.httpClient.get<any>(`${UserService.ENDPOINT_URL}/${userId}`);
   }
 
@@ -55,7 +54,7 @@ export class UserService {
    * @param userId l'ID de l'utilisateur connecté (depuis le localStorage)
    * @returns Observable contenant les informations de l'utilisateur
    */
-  getCurrentUser(userId: string): Observable<UserOutput> {
+  public getCurrentUser(userId: string): Observable<UserOutput> {
     return this.getUserById(userId);
   }
 
@@ -64,7 +63,7 @@ export class UserService {
    * @param userId l'ID de l'utilisateur connecté (depuis le localStorage)
    * @returns Observable contenant les informations des mineurs
    */
-  getMinorsUsersById(userId: string): Observable<UserOutput[]> {
+  public getMinorsUsersById(userId: string): Observable<UserOutput[]> {
     return this.httpClient.get<UserOutput[]>(`${UserService.ENDPOINT_URL}/${userId}/minors`);
   }
 }

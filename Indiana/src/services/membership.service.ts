@@ -18,7 +18,7 @@ export class MembershipService {
    * @param limit nombre de résultats à retourner (optionnel)
    * @returns Observable contenant la liste des memberships
    */
-  getMembershipsByUserId(userId: string, skip?: number, limit?: number): Observable<Membership[] | any> {
+  public getMembershipsByUserId(userId: string, skip?: number, limit?: number): Observable<Membership[] | any> {
     let params = new HttpParams();
     params = params.set('user_id', userId);
     
@@ -37,7 +37,7 @@ export class MembershipService {
    * @param membershipId ID du membership
    * @returns Observable contenant les détails du membership
    */
-  getMembershipById(membershipId: string): Observable<Membership> {
+  public getMembershipById(membershipId: string): Observable<Membership> {
     return this.httpClient.get<Membership>(`${this.ENDPOINT_URL}/${membershipId}`);
   }
 
@@ -46,7 +46,7 @@ export class MembershipService {
    * @param membership Données du membership à créer
    * @returns Observable contenant le membership créé
    */
-  createMembership(membership: Omit<Membership, 'id'>): Observable<Membership> {
+  public createMembership(membership: Omit<Membership, 'id'>): Observable<Membership> {
     return this.httpClient.post<Membership>(this.ENDPOINT_URL, membership);
   }
 
@@ -56,7 +56,7 @@ export class MembershipService {
    * @param membership Données du membership à mettre à jour
    * @returns Observable contenant le membership mis à jour
    */
-  updateMembership(membershipId: string, membership: Partial<Membership>): Observable<Membership> {
+  public updateMembership(membershipId: string, membership: Partial<Membership>): Observable<Membership> {
     return this.httpClient.put<Membership>(`${this.ENDPOINT_URL}/${membershipId}`, membership);
   }
 
@@ -65,7 +65,7 @@ export class MembershipService {
    * @param membershipId ID du membership à supprimer
    * @returns Observable
    */
-  deleteMembership(membershipId: string): Observable<any> {
+  public deleteMembership(membershipId: string): Observable<any> {
     return this.httpClient.delete(`${this.ENDPOINT_URL}/${membershipId}`);
   }
 }
