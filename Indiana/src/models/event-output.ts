@@ -1,3 +1,5 @@
+//TODO : dans les models, les "?" et null ne servent à rien pour les strings, à retirer
+
 /**
  * Modèles pour les événements
  * Correspondent aux modèles Pydantic du backend

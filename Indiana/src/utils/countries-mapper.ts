@@ -13,6 +13,8 @@ export const COUNTRIES_LIST: Country[] = [
   // Ajouter d'autres pays ici selon les besoins
 ];
 
+//TODO utiliser country.code et country.name au lieu des méthodes en dessous, pas d'intérêt à mettre dans les utils
+
 /**
  * Convertit un code pays ISO en nom affichable
  * @param code Code ISO du pays (ex: "BE")

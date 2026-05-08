@@ -9,6 +9,7 @@ import { EventOutput } from '../../models/event-output';
 import { EventMapComponent } from '../../shared/event-map/event-map.component';
 import { forkJoin } from 'rxjs';
 
+//TODO rajouter un séparateur dans event-output et rajouter les éléments de ScoutEvent
 export interface ScoutEvent {
   name: string;
   type: string;
@@ -39,6 +40,9 @@ export class EventsComponent implements OnInit {
   isSubmittingParticipation = false;
   isUserParticipating = false;  // Indique si l'utilisateur est déjà inscrit
   isLoadingParticipation = false;  // État de chargement de la vérification de participation
+
+  //TODO aucun intérêts d'avoir des signals pour les événements, on peut se contenter
+  // d'une simple liste et d'un booléen pour le chargement, à retirer
 
   // Pagination signals
   pageSize = signal<number>(10);
@@ -73,19 +77,11 @@ export class EventsComponent implements OnInit {
     const limit = this.pageSize();
 
     this.eventService.getEvents(offset, limit).subscribe({
+      //TODO: pourquoi ":any" ? on devrait pouvoir typer la réponse du backend en EventsResponse, à corriger
       next: (response: any) => {
-        // Gérer les deux cas : tableau direct ou objet avec items
-        let events: EventOutput[] = [];
-        if (Array.isArray(response)) {
-          events = response;
-        } else if (response && response.items && Array.isArray(response.items)) {
-          events = response.items;
-        } else if (response && response.data && Array.isArray(response.data)) {
-          events = response.data;
-        }
         
-        this.eventsOutput = events;  // Stocker les données brutes
-        this.loadParticipantsCounts(events);
+        this.eventsOutput = response;  // Stocker les données brutes
+        this.loadParticipantsCounts(this.eventsOutput);
       },
       error: (err) => {
         this.isLoading = false;
@@ -94,6 +90,8 @@ export class EventsComponent implements OnInit {
     });
   }
 
+  //TODO demander au backend de retourner directement le nombre de participants dans la réponse des événements
+  // pour éviter d'avoir à faire une requête par événement, à corriger dès que possible
 private loadParticipantsCounts(events: EventOutput[]): void {
   const requests = events.map(event =>
     this.eventService.getEventsParticipantsCount(event.id).pipe(
@@ -116,6 +114,7 @@ private loadParticipantsCounts(events: EventOutput[]): void {
     // Déterminer le type et la classe associée
     const eventType = event.event_type || 'Événement';
     let typeClass = 'badge-default';
+    //TODO: passer par une énumération pour les types d'événements et les classes associées
     switch (eventType.toLowerCase()) {
       case 'formation':
         typeClass = 'badge-formation';
@@ -132,7 +131,7 @@ private loadParticipantsCounts(events: EventOutput[]): void {
         typeClass = 'badge-reunion';
         break;
     }
-
+    //TODO pour les labels passer par i18n
     // Déterminer le statut (simplifié - à adapter selon la logique métier)
     const now = new Date();
     const startDate = event.start_date ? new Date(event.start_date) : null;
@@ -154,7 +153,8 @@ private loadParticipantsCounts(events: EventOutput[]): void {
     }
 
     return {
-      name: event.name || 'Sans titre',
+      //TODO: remap non nécessaire puisque déjà mapper, juste compléter les infos manquantes
+      name: event.name || 'Sans titre', //dans le html 
       type: eventType,
       typeClass: typeClass,
       dateStart: event.start_date ? event.start_date.split('T')[0] : '',
@@ -185,7 +185,10 @@ private loadParticipantsCounts(events: EventOutput[]): void {
     }
 
     this.isLoadingParticipation = true;
-    
+    //TODO: vérifier si on a les droits de voir les participants
+    //Sinon inutile de les charger
+
+    //Si on n'est pas super-admin, juste faire un call pour vérifier si on en fait parti ou pas
     this.participationService.getParticipationByUserAndEvent(userId, this.selectedEventOutput.id).subscribe({
       next: (result) => {
         // result peut être null ou un tableau de participations
@@ -246,7 +249,6 @@ private loadParticipantsCounts(events: EventOutput[]): void {
       next: (result) => {
         this.isSubmittingParticipation = false;
         this.isUserParticipating = true;  // Mettre à jour immédiatement le statut
-        this.cdr.detectChanges();
         this.toastService.showToast(
           'participationToast',
           'Vous êtes maintenant inscrit à l\'événement',

@@ -56,6 +56,7 @@ export class AuthService {
     this.loggedIn.set(false);
   }
 
+  //TODO vérifier si il renvoie une chaîne vide ou null et adapter le type de retour
   public getUserId(): string | null {
     return localStorage.getItem(this.userIdKey);
   }

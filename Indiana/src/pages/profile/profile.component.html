@@ -64,6 +64,7 @@
 
           <div class="form-field">
             <label>{{ "PROFILE.INFO.LASTNAME" | translate }}</label>
+            <!-- TODO, reactiveForm au lieu des ngModel -->
             <input [(ngModel)]="editableUser.lastName" [readonly]="!isEditing" />
           </div>
 

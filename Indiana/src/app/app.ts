@@ -22,9 +22,7 @@ import { ButtonModule } from 'primeng/button';
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class App {
-  protected readonly title = signal('Indiana');
-  
+export class App {  
   private authService = inject(AuthService);
   public sidebarService = inject(SidebarService);
 
@@ -36,13 +34,9 @@ export class App {
       }
     });
   }
-
-  public get isLoggedIn(): boolean {
-    return !!this.authService.getUserId();
-  }
-
+  //TODO: retirer tout ce qui est en rapport avec la sidebar, il faut passer par le header
   public get showSidebar(): boolean {
-    return this.isLoggedIn;
+    return !!this.authService.getUserId();
   }
 
   public toggleSidebar() {

@@ -24,6 +24,10 @@ export class HeaderComponent {
     [ShortLanguages.EN]: '',
     [ShortLanguages.NL]: '',
   };
+
+  //TODO pipe clé valeur pour les langues pour utilisé l'enum
+  //record dans l'énumération pour les langues et les drapeaux
+  
   // List of languages
   public langList = [ShortLanguages.FR, ShortLanguages.EN, ShortLanguages.NL];
 

@@ -11,7 +11,7 @@ export const httpInterceptorInterceptor: HttpInterceptorFn = (req, next) => {
 
   const auth = inject(AuthService);
   const token = auth.getToken();
-
+  //TODO: interceptor léger, à améliorer
   if (token) {
     req = req.clone({
       setHeaders: { Authorization: `Bearer ${token}` },

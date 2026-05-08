@@ -22,6 +22,7 @@ export class DashboardComponent implements OnInit {
   private userService = inject(UserService);
   private router = inject(Router);
 
+  //remplacé par un booléen le signal et une simple liste pour les minors au lieu d'un signal
   public minors = signal<UserOutput[]>([]);
   public isLoadingMinors = signal(false);
 
@@ -49,6 +50,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  //TODO centraliser la méthode pour les initials pour le tableau de bord et la sidebar
   /**
    * Génère les initiales d'un mineur
    */

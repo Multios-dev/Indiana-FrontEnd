@@ -11,6 +11,7 @@ import { UserOutput } from '../../models/user-output';
 import { Membership } from '../../models/membership';
 import { COUNTRIES_LIST, getCountryName, getCountryCode } from '../../utils/countries-mapper';
 
+//TODO regarder pour les interfaces, à mettre peut-être dans models
 export interface UserProfile {
   firstNames: string;  // Prénoms séparés par des virgules
   lastName: string;
@@ -69,21 +70,21 @@ export class ProfileComponent implements OnInit {
   // Liste des pays disponibles pour les adresses
   public countries = COUNTRIES_LIST;
   // Indique si on affiche le profil de l'utilisateur connecté
-  public isOwnProfile = true;
+  public isOwnProfile: boolean = true;
   // Indique si l'utilisateur connecté peut modifier ce profil (propre profil ou mineur à charge)
-  public canEditProfile = false;
-  
+  public canEditProfile: boolean = false;
+
   public activeTab: 'info' | 'mandats' | 'competences' = 'info';
 
-  public isEditing = false;
+  public isEditing: boolean = false;
 
   public isLoading = signal(true);
 
-  public isConfirmingUpdate = false;
+  public isConfirmingUpdate: boolean = false;
 
   public isSavingUpdate = false;
 
-  user: UserProfile = {
+  public user: UserProfile = {
     firstNames: '',
     lastName: '',
     totem: '',
@@ -92,7 +93,7 @@ export class ProfileComponent implements OnInit {
 
   public editableUser: UserProfile = { ...this.user };
 
-  mandats: Mandat[] = [];
+  public mandats: Mandat[] = [];
 
   ngOnInit(): void {
     // Récupérer l'ID de l'utilisateur connecté
@@ -131,7 +132,6 @@ export class ProfileComponent implements OnInit {
         this.minorsUnderMyResponsibility = minors || [];
         // Re-vérifier les permissions en cas de changement
         this.checkEditPermission();
-        this.cdr.markForCheck();
       },
       error: (err) => {
         // Pas d'erreur bloquante, on continue
@@ -167,6 +167,9 @@ export class ProfileComponent implements OnInit {
     this.userService.getUserById(this.displayedUserId).subscribe({
       next: (userInfo: UserOutput) => {
         this.user = {
+
+          //TODO récuperer userInfo et uniquement modifier country et residentialCountry pour les convertir en nom de pays affichable,
+          //le reste est déjà dans le bon format pour le UserProfile
           firstNames: userInfo.first_names?.join(', ') || '',
           lastName: userInfo.last_name || '',
           totem: userInfo.totem || '',
@@ -205,27 +208,11 @@ export class ProfileComponent implements OnInit {
     }
     
     this.membershipService.getMembershipsByUserId(this.displayedUserId).subscribe({
-      next: (response: any) => {
-        
-        // Gérer les deux cas : tableau direct ou objet avec items
-        let memberships: Membership[] = [];
-        if (Array.isArray(response)) {
-          memberships = response;
-        } else if (response && response.items && Array.isArray(response.items)) {
-          memberships = response.items;
-        } else if (response && response.data && Array.isArray(response.data)) {
-          memberships = response.data;
-        }
-
+      next: (response: Membership[]) => {
         // Convertir les memberships en mandats
-        this.mandats = memberships.map(membership => this.mapMembershipToMandat(membership));
+        this.mandats = response.map(membership => this.mapMembershipToMandat(membership));
       },
       error: (err: any) => {
-        // console.error('❌ Erreur lors du chargement des mandats:', err);
-        // console.error('   URL:', err.url);
-        // console.error('   Status:', err.status);
-        // console.error('   Message:', err.message);
-        // Garder un array vide en cas d'erreur
         this.mandats = [];
       }
     });
@@ -278,6 +265,8 @@ export class ProfileComponent implements OnInit {
 
     // Mapping du UserProfile vers UserUpdateInput - complet avec adresses
     // Convertir le nom du pays en code ISO pour le backend
+
+    //TODO récupérer le formulaire une fois implémenté dans html
     const updatePayload: any = {
       first_names: this.editableUser.firstNames?.split(',').map(n => n.trim()) || [],
       last_name: this.editableUser.lastName || null,
@@ -309,6 +298,7 @@ export class ProfileComponent implements OnInit {
       };
     }
 
+    //TODO retirer les markForCheck et voir pourquoi ça ne marche pas
     // Activer le spinner de sauvegarde
     this.isSavingUpdate = true;
     this.cdr.markForCheck();

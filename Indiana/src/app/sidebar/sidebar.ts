@@ -28,6 +28,7 @@ export class Sidebar implements OnInit {
   public currentUser = signal<UserOutput | null>(null);
 
   ngOnInit(): void {
+    //TODO activated route en html pour la surbrillance du menu
     this.loadUserInfo();
     this.updateActiveRoute();
     
