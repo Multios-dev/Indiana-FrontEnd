@@ -3,8 +3,9 @@ import { Router, RouterModule, NavigationEnd } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
 import { AuthService } from '../../services/auth.service';
+import { UserUtilService } from '../../services/user-util.service';
 import { UserOutput } from '../../models/user-output';
-import { filter } from 'rxjs/operators';
+import { filter, min } from 'rxjs/operators';
 
 @Component({
   selector: 'app-sidebar',
@@ -23,8 +24,9 @@ export class Sidebar implements OnInit {
   public activeRoute = signal<string>('dashboard');
 
   private authService = inject(AuthService);
+  private userUtilService = inject(UserUtilService);
   private router = inject(Router);
-
+  
   public currentUser = signal<UserOutput | null>(null);
 
   ngOnInit(): void {
@@ -59,10 +61,7 @@ export class Sidebar implements OnInit {
 
   public get initials(): string {
     const user = this.currentUser();
-    if (!user) return '';
-    const firstName = user.first_names?.[0]?.charAt(0).toUpperCase() || '';
-    const lastName = user.last_name?.charAt(0).toUpperCase() || '';
-    return firstName + lastName;
+    return this.userUtilService.getInitials(user as UserOutput);
   }
 
   public logout(): void {

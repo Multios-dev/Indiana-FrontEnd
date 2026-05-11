@@ -4,6 +4,7 @@ import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
+import { UserUtilService } from '../../services/user-util.service';
 import { UserOutput } from '../../models/user-output';
 
 @Component({
@@ -20,6 +21,7 @@ import { UserOutput } from '../../models/user-output';
 export class DashboardComponent implements OnInit {
   private authService = inject(AuthService);
   private userService = inject(UserService);
+  private userUtilService = inject(UserUtilService);
   private router = inject(Router);
 
   //remplacé par un booléen le signal et une simple liste pour les minors au lieu d'un signal
@@ -50,14 +52,11 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  //TODO centraliser la méthode pour les initials pour le tableau de bord et la sidebar
   /**
-   * Génère les initiales d'un mineur
+   * Retourne les initiales d'un mineur via le service utilitaire
    */
   public getInitials(minor: UserOutput): string {
-    const firstChar = minor.first_names?.[0]?.[0]?.toUpperCase() || '';
-    const lastChar = minor.last_name?.[0]?.toUpperCase() || '';
-    return `${firstChar}${lastChar}`;
+    return this.userUtilService.getInitials(minor);
   }
 
   /**

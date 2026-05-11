@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
+import { UserUtilService } from '../../services/user-util.service';
 import { MembershipService } from '../../services/membership.service';
 import { ToastService } from '../../services/toast.service';
 import { UserOutput } from '../../models/user-output';
@@ -59,7 +60,7 @@ export class ProfileComponent implements OnInit {
   private toastService = inject(ToastService);
   private activatedRoute = inject(ActivatedRoute);
   private cdr = inject(ChangeDetectorRef);
-  
+  private userUtilService = inject(UserUtilService);
   // ID de l'utilisateur dont on affiche le profil (peut être différent de l'utilisateur connecté)
   private displayedUserId: string | null = null;
   // ID de l'utilisateur actuellement connecté
@@ -237,10 +238,7 @@ export class ProfileComponent implements OnInit {
   }
 
   public get initials(): string {
-    const names = this.user.firstNames?.split(',')[0]?.trim() || '';
-    const firstChar = names?.[0]?.toUpperCase() || '';
-    const lastChar = this.user.lastName?.[0]?.toUpperCase() || '';
-    return `${firstChar}${lastChar}`;
+    return this.userUtilService.getInitials(this.user.firstNames, this.user.lastName);
   }
 
   public startEdit() {
@@ -314,8 +312,6 @@ export class ProfileComponent implements OnInit {
         //this.toastService.success('Profil mis à jour avec succès');
       },
       error: (err) => {
-        // console.error('Erreur lors de la mise à jour du profil:', err);
-        // console.error('Réponse du serveur:', err.error);
         this.isConfirmingUpdate = false;
         this.isSavingUpdate = false;
         // Forcer la détection de changement même en cas d'erreur
