@@ -3,19 +3,31 @@ import { inject } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { environment } from '../environment/environment';
 
+/**
+ * Interceptor HTTP centralisé pour gérer :
+ * - Authentification Bearer pour les requêtes API normales
+ * - API key pour les requêtes Keycloak
+ */
 export const httpInterceptorInterceptor: HttpInterceptorFn = (req, next) => {
-  //Keycloak requests: no Bearer (managed by keycloakApiKeyInterceptor)
-  if (req.url.includes(environment.baseKeyCloakUrl)) {
-    return next(req);
-  }
+  // Vérifier si c'est une requête Keycloak
+  const isKeycloakRequest = req.url.includes(environment.baseKeyCloakUrl) || req.url.includes('/api/keycloak');
 
-  const auth = inject(AuthService);
-  const token = auth.getToken();
-  //TODO: interceptor léger, à améliorer
-  if (token) {
+  if (isKeycloakRequest) {
+    // Ajouter l'API key pour les requêtes Keycloak
     req = req.clone({
-      setHeaders: { Authorization: `Bearer ${token}` },
+      setHeaders: {
+        'x-api-key': environment.keycloakApiKey,
+      },
     });
+  } else {
+    // Ajouter le Bearer token pour les autres requêtes
+    const auth = inject(AuthService);
+    const token = auth.getToken();
+    if (token) {
+      req = req.clone({
+        setHeaders: { Authorization: `Bearer ${token}` },
+      });
+    }
   }
 
   return next(req);
