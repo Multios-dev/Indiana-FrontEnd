@@ -4,7 +4,7 @@ export interface Membership {
   organization_id: string;
   role: string;
   start_date: string;
-  end_date?: string | null;
+  end_date: string;
   price?: number | null;
 }
 

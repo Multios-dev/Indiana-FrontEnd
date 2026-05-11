@@ -18,8 +18,8 @@ export interface UserOutput {
   id: string;
   first_names: string[];
   last_name: string;
-  birth_date?: string;
-  gender?: string;
+  birth_date: string;
+  gender: string;
   nationality: string[];
   totem?: string;
   quali?: string;

@@ -7,13 +7,13 @@
 
 export interface AudienceOutput {
   id: string;
-  label?: string | null;
+  label: string;
 }
 
 export interface AddressOutput {
   id: string;
   thoroughfare: string;
-  box_number?: string | null;
+  box_number: string;
   post_name: string;
   post_code: string;
   country: string;
@@ -22,12 +22,12 @@ export interface AddressOutput {
 export interface EventOutput {
   id: string;
   name: string;
-  description?: string | null;
+  description: string;
   event_type: string;
-  start_date?: string | null;  // Format: ISO 8601 datetime
-  end_date?: string | null;    // Format: ISO 8601 datetime
-  latitude?: number | null;
-  longitude?: number | null;
+  start_date: string;  // Format: ISO 8601 datetime
+  end_date: string;    // Format: ISO 8601 datetime
+  latitude: number;
+  longitude: number;
   parent_id?: string | null;
   max_participants: number;
   audiences: AudienceOutput[];
