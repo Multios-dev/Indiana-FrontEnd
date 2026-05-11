@@ -1,6 +1,5 @@
 <aside class="sidebar" [class.open]="isOpen">
 <!-- sidebar dans auth afin de l'afficher une fois qu'on est connecté -->
-    <!-- TODO, cacher les routes auxquelles un utilisateur n'a pas accès -->
   <!-- Logo / Unit -->
   <div class="sidebar-header">
     <img src="assets/logo_scouts.jpg" alt="Logo" class="sidebar-logo" />
@@ -9,24 +8,24 @@
 
   <!-- Navigation -->
   <nav class="sidebar-nav">
-    <a class="nav-item" [class.active]="activeRoute() === 'dashboard'" routerLink="/scouts/dashboard">
+    <a class="nav-item" routerLink="/scouts/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
       <i class="pi pi-table"></i>
       <span>{{ "SIDEBAR.DASHBOARD" |translate}}</span>
     </a>
 
-    <a class="nav-item" [class.active]="activeRoute() === 'profile'" routerLink="/scouts/profile">
+    <a class="nav-item" routerLink="/scouts/profile" routerLinkActive="active">
       <i class="pi pi-user"></i>
-      <span>{{"SIDEBAR.PROFILE" | translate}}</span>
+      <span>{{ "SIDEBAR.PROFILE" | translate }}</span>
     </a>
 
-    <a class="nav-item" [class.active]="activeRoute() === 'events'" routerLink="/scouts/events">
+    <a class="nav-item" routerLink="/scouts/events" routerLinkActive="active">
       <i class="pi pi-calendar"></i>
-      <span>{{"SIDEBAR.EVENT" | translate}}</span>
+      <span>{{ "SIDEBAR.EVENT" | translate }}</span>
     </a>
 
-    <a class="nav-item" [class.active]="activeRoute() === 'billing'" routerLink="/scouts/billing">
+    <a class="nav-item" routerLink="/scouts/billing" routerLinkActive="active">
       <i class="pi pi-credit-card"></i>
-      <span>{{"SIDEBAR.FACTURATION" | translate}}</span>
+      <span>{{ "SIDEBAR.FACTURATION" | translate }}</span>
     </a>
   </nav>
 

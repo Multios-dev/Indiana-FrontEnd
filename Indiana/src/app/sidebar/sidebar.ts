@@ -1,11 +1,10 @@
 import { Component, Input, inject, OnInit, signal } from '@angular/core';
-import { Router, RouterModule, NavigationEnd } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
 import { AuthService } from '../../services/auth.service';
 import { UserUtilService } from '../../services/user-util.service';
 import { UserOutput } from '../../models/user-output';
-import { filter, min } from 'rxjs/operators';
 
 @Component({
   selector: 'app-sidebar',
@@ -20,8 +19,7 @@ import { filter, min } from 'rxjs/operators';
   styleUrl: './sidebar.scss',
 })
 export class Sidebar implements OnInit {
-   @Input() isOpen = false;
-  public activeRoute = signal<string>('dashboard');
+  @Input() isOpen = false;
 
   private authService = inject(AuthService);
   private userUtilService = inject(UserUtilService);
@@ -30,22 +28,7 @@ export class Sidebar implements OnInit {
   public currentUser = signal<UserOutput | null>(null);
 
   ngOnInit(): void {
-    //TODO activated route en html pour la surbrillance du menu
     this.loadUserInfo();
-    this.updateActiveRoute();
-    
-    // Listen to route changes to update the active route
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(() => {
-        this.updateActiveRoute();
-      });
-  }
-
-  private updateActiveRoute(): void {
-    const urlSegments = this.router.url.split('/');
-    const lastSegment = urlSegments[urlSegments.length - 1];
-    this.activeRoute.set(lastSegment || 'dashboard');
   }
 
   private loadUserInfo(): void {
