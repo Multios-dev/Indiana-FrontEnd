@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   deploy:
-    runs-on: [self-hosted, harbor]
+    runs-on: [arc-runner-set]
     
     steps:
       - name: Checkout code
