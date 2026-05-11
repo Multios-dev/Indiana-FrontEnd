@@ -15,7 +15,7 @@ export interface UserCreateInput {
   // Liste de prénoms (au moins 1 prénom)
   first_names: string[];
   last_name: string;
-  birth_date: string;  // Format: YYYY-MM-DD
+  birth_date: string | null;  // Format: YYYY-MM-DD
   gender: string;
   nationality: string[];
   totem: string;

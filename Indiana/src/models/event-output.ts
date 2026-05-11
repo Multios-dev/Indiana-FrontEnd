@@ -40,3 +40,17 @@ export interface EventsResponse {
   skip: number;
   limit: number;
 }
+
+export interface ScoutEvent {
+  name: string;
+  type: string;
+  typeClass: string;
+  dateStart: string;
+  dateEnd?: string;
+  location: string;
+  registered: number;
+  capacity: number;
+  statusLabel: string;
+  statusClass: string;
+  description: string;
+}

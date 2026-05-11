@@ -1,28 +1,13 @@
-import { Component, inject, OnInit, ChangeDetectorRef, signal } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { EventService } from '../../services/event.service';
 import { ParticipationService } from '../../services/participation.service';
 import { AuthService } from '../../services/auth.service';
 import { ToastService } from '../../services/toast.service';
-import { EventOutput } from '../../models/event-output';
+import { EventOutput, ScoutEvent } from '../../models/event-output';
 import { EventMapComponent } from '../../shared/event-map/event-map.component';
 import { forkJoin } from 'rxjs';
-
-//TODO rajouter un séparateur dans event-output et rajouter les éléments de ScoutEvent
-export interface ScoutEvent {
-  name: string;
-  type: string;
-  typeClass: string;
-  dateStart: string;
-  dateEnd?: string;
-  location: string;
-  registered: number;
-  capacity: number;
-  statusLabel: string;
-  statusClass: string;
-  description: string;
-}
 
 @Component({
   selector: 'app-events',
@@ -41,13 +26,10 @@ export class EventsComponent implements OnInit {
   isUserParticipating = false;  // Indique si l'utilisateur est déjà inscrit
   isLoadingParticipation = false;  // État de chargement de la vérification de participation
 
-  //TODO aucun intérêts d'avoir des signals pour les événements, on peut se contenter
-  // d'une simple liste et d'un booléen pour le chargement, à retirer
-
-  // Pagination signals
-  pageSize = signal<number>(10);
-  currentPage = signal<number>(1);
-  totalEvents = signal<number>(0);
+  // Pagination
+  pageSize: number = 10;
+  currentPage: number = 1;
+  totalEvents: number = 0;
 
   private eventService = inject(EventService);
   private participationService = inject(ParticipationService);
@@ -64,7 +46,7 @@ export class EventsComponent implements OnInit {
     // Récupérer le nombre total d'événements
     this.eventService.getEventsCount().subscribe({
       next: (total: number) => {
-        this.totalEvents.set(total);
+        this.totalEvents = total;
         // Ensuite charger les événements paginés
         this.loadEvents();
       }
@@ -73,8 +55,8 @@ export class EventsComponent implements OnInit {
 
   private loadEvents(): void {
     this.isLoading = true;
-    const offset = (this.currentPage() - 1) * this.pageSize();
-    const limit = this.pageSize();
+    const offset = (this.currentPage - 1) * this.pageSize;
+    const limit = this.pageSize;
 
     this.eventService.getEvents(offset, limit).subscribe({
       //TODO: pourquoi ":any" ? on devrait pouvoir typer la réponse du backend en EventsResponse, à corriger
@@ -291,8 +273,8 @@ private loadParticipantsCounts(events: EventOutput[]): void {
   }
 
   public changePageSize(size: number): void {
-    this.pageSize.set(size);
-    this.currentPage.set(1);
+    this.pageSize = size;
+    this.currentPage = 1;
     this.loadEvents();
   }
 
@@ -301,18 +283,18 @@ private loadParticipantsCounts(events: EventOutput[]): void {
   }
 
   public nextPage(): void {
-    this.currentPage.update(page => page + 1);
+    this.currentPage++;
     this.loadEvents();
   }
 
   public previousPage(): void {
-    if (this.currentPage() > 1) {
-      this.currentPage.update(page => page - 1);
+    if (this.currentPage > 1) {
+      this.currentPage--;
       this.loadEvents();
     }
   }
 
   public get totalPages(): number {
-    return Math.ceil(this.totalEvents() / this.pageSize());
+    return Math.ceil(this.totalEvents / this.pageSize);
   }
 }

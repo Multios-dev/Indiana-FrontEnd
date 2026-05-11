@@ -235,8 +235,8 @@ export class RegisterManualComponent implements OnDestroy {
 
     this._loading.show();
 
-    const val = this.form.value;
-    const birthDate = val.birthDate
+    const val: any = this.form.value;
+    const birthDate: string | null = val.birthDate
       ? new Date(val.birthDate).toISOString().split('T')[0]
       : null;
 
