@@ -9,3 +9,12 @@ export enum ShortLanguages {
     EN = 'en',
     NL = 'nl',
 }
+
+/**
+ * Record mappe les langues courtes à leurs drapeaux
+ */
+export const LanguageFlags: Record<ShortLanguages, string> = {
+    [ShortLanguages.FR]: '🇫🇷',
+    [ShortLanguages.EN]: '🇬🇧',
+    [ShortLanguages.NL]: '🇳🇱',
+};

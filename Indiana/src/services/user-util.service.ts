@@ -6,21 +6,19 @@ import { UserOutput } from '../models/user-output';
 })
 export class UserUtilService {
   /**
-   * Génère les initiales d'un utilisateur
    * Surcharge 1: À partir d'un objet UserOutput
    */
   public getInitials(user: UserOutput): string;
   /**
-   * Génère les initiales d'un utilisateur
-   * Surcharge 2: À partir de prénoms et nom de famille (chaînes)
+   * Surcharge 2: from first names and last name 
    */
   public getInitials(firstNames: string, lastName: string): string;
   /**
-   * Implémentation de getInitials
+   * Implementation of getInitials
    */
   public getInitials(userOrFirstNames: UserOutput | string, lastName?: string): string {
     if (typeof userOrFirstNames === 'string') {
-      // Surcharge 2: firstNames et lastName comme chaînes
+      // Surcharge 2: firstNames and lastName as chains
       const names = userOrFirstNames?.split(',')?.[0]?.trim() || '';
       const firstChar = names?.[0]?.toUpperCase() || '';
       const lastChar = lastName?.[0]?.toUpperCase() || '';

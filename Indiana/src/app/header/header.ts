@@ -1,7 +1,8 @@
 import { Component, signal, inject, EventEmitter, Output, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core';
-import { ShortLanguages } from '../../enum/languages.enum';
+import { ShortLanguages, LanguageFlags } from '../../enum/languages.enum';
+import { LanguageFlagPipe } from '../../shared/language-flag.pipe';
 import { Button } from "primeng/button";
 import { AuthService } from '../../services/auth.service';
 
@@ -19,15 +20,9 @@ export class HeaderComponent {
 
   public currentLang = signal(this._translate.getCurrentLang() ?? ShortLanguages.FR);
 
-  public langFlags: Record<string, string> = {
-    [ShortLanguages.FR]: "",
-    [ShortLanguages.EN]: '',
-    [ShortLanguages.NL]: '',
-  };
+  // Record mappe les langues à leurs drapeaux
+  public langFlags = LanguageFlags;
 
-  //TODO pipe clé valeur pour les langues pour utilisé l'enum
-  //record dans l'énumération pour les langues et les drapeaux
-  
   // List of languages
   public langList = [ShortLanguages.FR, ShortLanguages.EN, ShortLanguages.NL];
 
