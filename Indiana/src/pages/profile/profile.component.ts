@@ -9,41 +9,10 @@ import { UserUtilService } from '../../services/user-util.service';
 import { MembershipService } from '../../services/membership.service';
 import { ToastService } from '../../services/toast.service';
 import { UserOutput } from '../../models/user-output';
+import { UserProfile } from '../../models/user-profile';
+import { Mandat } from '../../models/mandat';
 import { Membership } from '../../models/membership';
 import { COUNTRIES_LIST, getCountryName, getCountryCode } from '../../utils/countries-mapper';
-
-//TODO regarder pour les interfaces, à mettre peut-être dans models
-export interface UserProfile {
-  firstNames: string;  // Prénoms séparés par des virgules
-  lastName: string;
-  totem: string;
-  birthDate?: string;
-  gender?: string;
-  nationalReg?: string;
-  email?: string;
-  phone?: string;
-  website?: string;
-  nationality?: string[];
-  street?: string;
-  boxNumber?: string;
-  city?: string;
-  zipCode?: string;
-  country?: string;
-  residentialStreet?: string;
-  residentialBoxNumber?: string;
-  residentialCity?: string;
-  residentialZipCode?: string;
-  residentialCountry?: string;
-}
-
-export interface Mandat {
-  id: string;
-  role: string;
-  unit: string;
-  from: string;
-  to: string;
-  isActive: boolean;
-}
 
 @Component({
   selector: 'app-profile',
@@ -167,32 +136,7 @@ export class ProfileComponent implements OnInit {
     // Utiliser la méthode du service pour récupérer n'importe quel utilisateur
     this.userService.getUserById(this.displayedUserId).subscribe({
       next: (userInfo: UserOutput) => {
-        this.user = {
-
-          //TODO récuperer userInfo et uniquement modifier country et residentialCountry pour les convertir en nom de pays affichable,
-          //le reste est déjà dans le bon format pour le UserProfile
-          firstNames: userInfo.first_names?.join(', ') || '',
-          lastName: userInfo.last_name || '',
-          totem: userInfo.totem || '',
-          email: userInfo.contact?.email,
-          phone: userInfo.contact?.phone,
-          website: userInfo.contact?.website,
-          birthDate: userInfo.birth_date,
-          gender: userInfo.gender,
-          nationality: userInfo.nationality,
-          // Adresse principale - convertir le code pays en nom affichable
-          street: userInfo.home_address?.thoroughfare,
-          boxNumber: userInfo.home_address?.box_number,
-          city: userInfo.home_address?.post_name,
-          zipCode: userInfo.home_address?.post_code,
-          country: getCountryName(userInfo.home_address?.country),
-          // Adresse résidentielle - convertir le code pays en nom affichable
-          residentialStreet: userInfo.residential_address?.thoroughfare,
-          residentialBoxNumber: userInfo.residential_address?.box_number,
-          residentialCity: userInfo.residential_address?.post_name,
-          residentialZipCode: userInfo.residential_address?.post_code,
-          residentialCountry: getCountryName(userInfo.residential_address?.country),
-        };
+        this.user = this.mapUserOutputToUserProfile(userInfo);
         this.editableUser = { ...this.user };
         this.isLoading.set(false);
       },
@@ -201,6 +145,35 @@ export class ProfileComponent implements OnInit {
         this.isLoading.set(false);
       }
     });
+  }
+
+  /**
+   * Convertir un UserOutput en UserProfile
+   * Récupère directement les données, ne transforme que les codes pays en noms affichables
+   */
+  private mapUserOutputToUserProfile(userInfo: UserOutput): UserProfile {
+    return {
+      firstNames: userInfo.first_names?.join(', ') || '',
+      lastName: userInfo.last_name || '',
+      totem: userInfo.totem || '',
+      email: userInfo.contact?.email,
+      phone: userInfo.contact?.phone,
+      website: userInfo.contact?.website,
+      birthDate: userInfo.birth_date,
+      gender: userInfo.gender,
+      nationality: userInfo.nationality,
+      street: userInfo.home_address?.thoroughfare,
+      boxNumber: userInfo.home_address?.box_number,
+      city: userInfo.home_address?.post_name,
+      zipCode: userInfo.home_address?.post_code,
+      residentialStreet: userInfo.residential_address?.thoroughfare,
+      residentialBoxNumber: userInfo.residential_address?.box_number,
+      residentialCity: userInfo.residential_address?.post_name,
+      residentialZipCode: userInfo.residential_address?.post_code,
+      // Transformer SEULEMENT les codes pays en noms affichables
+      country: getCountryName(userInfo.home_address?.country),
+      residentialCountry: getCountryName(userInfo.residential_address?.country),
+    };
   }
 
   private loadMandats(): void {
