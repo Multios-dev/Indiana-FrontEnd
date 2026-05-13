@@ -1,6 +1,6 @@
-import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { AsyncPipe, CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { EventService } from '../../services/event.service';
 import { ParticipationService } from '../../services/participation.service';
 import { AuthService } from '../../services/auth.service';
@@ -16,7 +16,7 @@ import { forkJoin } from 'rxjs';
   templateUrl: './events.component.html',
   styleUrl: './events.component.scss'
 })
-export class EventsComponent implements OnInit {
+export class EventsComponent implements OnInit, OnDestroy {
   selectedEvent: ScoutEvent | null = null;
   selectedEventOutput: EventOutput | null = null;  // Stocker les données brutes pour la carte
   events: ScoutEvent[] = [];
@@ -25,6 +25,7 @@ export class EventsComponent implements OnInit {
   isSubmittingParticipation = false;
   isUserParticipating = false;  // Indique si l'utilisateur est déjà inscrit
   isLoadingParticipation = false;  // État de chargement de la vérification de participation
+  private langChangeSubscription: any;  // Souscrire au changement de langue
 
   // Pagination
   pageSize: number = 10;
@@ -35,11 +36,25 @@ export class EventsComponent implements OnInit {
   private participationService = inject(ParticipationService);
   private authService = inject(AuthService);
   private toastService = inject(ToastService);
+  private translate = inject(TranslateService);
   private cdr = inject(ChangeDetectorRef);
 
   ngOnInit(): void {
+    // S'abonner au changement de langue pour mettre à jour les labels
+    this.langChangeSubscription = this.translate.onLangChange.subscribe(() => {
+      // Refaire le remapping des événements pour actualiser les traductions
+      this.refreshEventLabels();
+    });
+    
     // D'abord récupérer le nombre total d'événements
     this.loadTotalCount();
+  }
+
+  ngOnDestroy(): void {
+    // Nettoyer la souscription
+    if (this.langChangeSubscription) {
+      this.langChangeSubscription.unsubscribe();
+    }
   }
 
   private loadTotalCount(): void {
@@ -51,6 +66,25 @@ export class EventsComponent implements OnInit {
         this.loadEvents();
       }
     });
+  }
+
+  private refreshEventLabels(): void {
+    // Refaire le remapping de tous les événements pour actualiser les traductions
+    this.events = this.eventsOutput.map((event, index) => {
+      const scoutEvent = this.mapEventOutputToScoutEvent(event);
+      scoutEvent.registered = this.events[index]?.registered ?? 0;
+      return scoutEvent;
+    });
+    
+    // Si un événement est sélectionné, le re-mapper aussi
+    if (this.selectedEventOutput) {
+      this.selectedEvent = this.mapEventOutputToScoutEvent(this.selectedEventOutput);
+      if (this.selectedEvent) {
+        this.selectedEvent.registered = this.selectedEvent.registered || 0;
+      }
+    }
+    
+    this.cdr.detectChanges();
   }
 
   private loadEvents(): void {
@@ -113,18 +147,17 @@ private loadParticipantsCounts(events: EventOutput[]): void {
         typeClass = 'badge-reunion';
         break;
     }
-    //TODO pour les labels passer par i18n
-    // Déterminer le statut (simplifié - à adapter selon la logique métier)
+    // Status label with i18n (stocker la clé, pas la traduction)
     const now = new Date();
     const startDate = event.start_date ? new Date(event.start_date) : null;
-    let statusLabel = 'Planifié';
+    let statusLabelKey = 'EVENTS.STATUS.PLANNED';
     let statusClass = 'status-planned';
 
     if (startDate && startDate < now) {
-      statusLabel = 'Passé';
+      statusLabelKey = 'EVENTS.STATUS.CLOSED';
       statusClass = 'status-closed';
     } else {
-      statusLabel = 'Inscriptions ouvertes';
+      statusLabelKey = 'EVENTS.STATUS.OPEN';
       statusClass = 'status-open';
     }
 
@@ -134,9 +167,9 @@ private loadParticipantsCounts(events: EventOutput[]): void {
       location = `${event.address.thoroughfare}${event.address.box_number ? ', ' + event.address.box_number : ''}, ${event.address.post_code} ${event.address.post_name}`;
     }
 
+    // Enrichir EventOutput avec les champs UI calculés
     return {
-      //TODO: remap non nécessaire puisque déjà mapper, juste compléter les infos manquantes
-      name: event.name || 'Sans titre', //dans le html 
+      ...event,
       type: eventType,
       typeClass: typeClass,
       dateStart: event.start_date ? event.start_date.split('T')[0] : '',
@@ -144,7 +177,7 @@ private loadParticipantsCounts(events: EventOutput[]): void {
       location: location,
       registered: 0,  // Valeur par défaut, sera mise à jour après la récupération du nombre de participants
       capacity: event.max_participants,    
-      statusLabel: statusLabel,
+      statusLabelKey: statusLabelKey,  // Stocker la clé i18n
       statusClass: statusClass,
       description: event.description || 'Pas de description disponible'
     };

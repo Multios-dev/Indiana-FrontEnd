@@ -169,7 +169,13 @@
     "PAGE": "Page",
     "OF": "of",
     "PREVIOUS": "Previous",
-    "NEXT": "Next"
+    "NEXT": "Next",
+    
+    "STATUS": {
+      "PLANNED": "Planned",
+      "OPEN": "Registration open",
+      "CLOSED": "Past"
+    }
   },
   "BILLING": {
     "TITLE": "Billing",

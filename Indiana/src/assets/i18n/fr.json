@@ -179,7 +179,13 @@
     "PAGE": "Page",
     "OF": "sur",
     "PREVIOUS": "Précédent",
-    "NEXT": "Suivant"
+    "NEXT": "Suivant",
+
+    "STATUS": {
+      "PLANNED": "Planifié",
+      "OPEN": "Inscriptions ouvertes",
+      "CLOSED": "Passé"
+    }
   },
   "BILLING": {
     "TITLE": "Facturation",

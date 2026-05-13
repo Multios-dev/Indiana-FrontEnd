@@ -169,7 +169,12 @@
     "PAGE": "Pagina",
     "OF": "van",
     "PREVIOUS": "Vorige",
-    "NEXT": "Volgende"
+    "NEXT": "Volgende",
+    "STATUS": {
+      "PLANNED": "Gepland",
+      "OPEN": "Inschrijvingen geopend",
+      "CLOSED": "Voorbij"
+    }
   },
   "BILLING": {
     "TITLE": "Facturering",

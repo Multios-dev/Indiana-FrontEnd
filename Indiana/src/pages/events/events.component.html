@@ -75,7 +75,7 @@
       </div>
 
       <div class="event-status">
-        <span class="status-badge" [ngClass]="event.statusClass">{{ event.statusLabel }}</span>
+        <span class="status-badge" [ngClass]="event.statusClass">{{ event.statusLabelKey | translate }}</span>
       </div>
 
     </div>
@@ -101,7 +101,7 @@
             <h2>{{ selectedEvent.name }}</h2>
             <div class="detail-badges">
               <span class="event-badge" [ngClass]="selectedEvent.typeClass">{{ selectedEvent.type }}</span>
-              <span class="status-badge" [ngClass]="selectedEvent.statusClass">{{ selectedEvent.statusLabel }}</span>
+              <span class="status-badge" [ngClass]="selectedEvent.statusClass">{{ selectedEvent.statusLabelKey | translate }}</span>
             </div>
           </div>
 

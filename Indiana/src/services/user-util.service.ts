@@ -16,7 +16,12 @@ export class UserUtilService {
   /**
    * Implementation of getInitials
    */
-  public getInitials(userOrFirstNames: UserOutput | string, lastName?: string): string {
+  public getInitials(userOrFirstNames: UserOutput | string | null, lastName?: string): string {
+    // Vérifier si userOrFirstNames est null ou undefined
+    if (!userOrFirstNames) {
+      return '';
+    }
+    
     if (typeof userOrFirstNames === 'string') {
       // Surcharge 2: firstNames and lastName as chains
       const names = userOrFirstNames?.split(',')?.[0]?.trim() || '';
