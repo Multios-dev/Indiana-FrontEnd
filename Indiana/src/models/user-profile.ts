@@ -1,8 +1,5 @@
-/**
- * Profil utilisateur - modèle pour l'affichage et l'édition des informations utilisateur
- */
 export interface UserProfile {
-  firstNames: string;  // Prénoms séparés par des virgules
+  firstNames: string; 
   lastName: string;
   totem: string;
   birthDate?: string;

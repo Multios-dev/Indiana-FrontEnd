@@ -4,23 +4,23 @@ import { AuthService } from '../services/auth.service';
 import { environment } from '../environment/environment';
 
 /**
- * Interceptor HTTP centralisé pour gérer :
- * - Authentification Bearer pour les requêtes API normales
- * - API key pour les requêtes Keycloak
+ * Interceptor HTTP centralised to manage :
+ * - Authentification Bearer for normal API requests
+ * - API key for Keycloak requests
  */
 export const httpInterceptorInterceptor: HttpInterceptorFn = (req, next) => {
-  // Vérifier si c'est une requête Keycloak
+  // Verify if it's a Keycloak request
   const isKeycloakRequest = req.url.includes(environment.baseKeyCloakUrl) || req.url.includes('/api/keycloak');
 
   if (isKeycloakRequest) {
-    // Ajouter l'API key pour les requêtes Keycloak
+    // Add the API key for Keycloak requests
     req = req.clone({
       setHeaders: {
         'x-api-key': environment.keycloakApiKey,
       },
     });
   } else {
-    // Ajouter le Bearer token pour les autres requêtes
+    // Add the Bearer token for other requests
     const auth = inject(AuthService);
     const token = auth.getToken();
     if (token) {

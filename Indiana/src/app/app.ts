@@ -27,7 +27,7 @@ export class App {
   public sidebarService = inject(SidebarService);
 
   public constructor() {
-    // Fermer la sidebar quand l'utilisateur se déconnecte
+    // Close the sidebar when the user logs out
     effect(() => {
       if (!this.authService.loggedIn()) {
         this.sidebarService.closeSidebar();

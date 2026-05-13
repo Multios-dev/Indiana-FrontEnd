@@ -50,7 +50,7 @@ export interface ScoutEvent {
   location: string;
   registered: number;
   capacity: number;
-  statusLabelKey: string;  // Clé i18n pour la traduction
+  statusLabelKey: string;  // Clé i18n for the translation
   statusClass: string;
   description: string;
 }

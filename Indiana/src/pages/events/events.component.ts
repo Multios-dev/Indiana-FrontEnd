@@ -40,13 +40,12 @@ export class EventsComponent implements OnInit, OnDestroy {
   private cdr = inject(ChangeDetectorRef);
 
   ngOnInit(): void {
-    // S'abonner au changement de langue pour mettre à jour les labels
+    // Subscribe to the change of language to update labels
     this.langChangeSubscription = this.translate.onLangChange.subscribe(() => {
-      // Refaire le remapping des événements pour actualiser les traductions
+      // Redo the remapping of all events to update translations
       this.refreshEventLabels();
     });
-    
-    // D'abord récupérer le nombre total d'événements
+
     this.loadTotalCount();
   }
 
@@ -58,25 +57,24 @@ export class EventsComponent implements OnInit, OnDestroy {
   }
 
   private loadTotalCount(): void {
-    // Récupérer le nombre total d'événements
+    // Get the total number of events
     this.eventService.getEventsCount().subscribe({
       next: (total: number) => {
         this.totalEvents = total;
-        // Ensuite charger les événements paginés
         this.loadEvents();
       }
     });
   }
 
   private refreshEventLabels(): void {
-    // Refaire le remapping de tous les événements pour actualiser les traductions
+    // Redo the remapping of all events to update translations
     this.events = this.eventsOutput.map((event, index) => {
       const scoutEvent = this.mapEventOutputToScoutEvent(event);
       scoutEvent.registered = this.events[index]?.registered ?? 0;
       return scoutEvent;
     });
     
-    // Si un événement est sélectionné, le re-mapper aussi
+    // If an event is selected, re-mapper it as well
     if (this.selectedEventOutput) {
       this.selectedEvent = this.mapEventOutputToScoutEvent(this.selectedEventOutput);
       if (this.selectedEvent) {
@@ -96,7 +94,7 @@ export class EventsComponent implements OnInit, OnDestroy {
       //TODO: pourquoi ":any" ? on devrait pouvoir typer la réponse du backend en EventsResponse, à corriger
       next: (response: any) => {
         
-        this.eventsOutput = response;  // Stocker les données brutes
+        this.eventsOutput = response;  
         this.loadParticipantsCounts(this.eventsOutput);
       },
       error: (err) => {
@@ -127,7 +125,6 @@ private loadParticipantsCounts(events: EventOutput[]): void {
 }
 
   private mapEventOutputToScoutEvent(event: EventOutput): ScoutEvent {
-    // Déterminer le type et la classe associée
     const eventType = event.event_type || 'Événement';
     let typeClass = 'badge-default';
     //TODO: passer par une énumération pour les types d'événements et les classes associées

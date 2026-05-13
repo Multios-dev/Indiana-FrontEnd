@@ -11,7 +11,7 @@ export enum ShortLanguages {
 }
 
 /**
- * Record mappe les langues courtes à leurs drapeaux
+ * Record mappe the short languages to their flags
  */
 export const LanguageFlags: Record<ShortLanguages, string> = {
     [ShortLanguages.FR]: '🇫🇷',

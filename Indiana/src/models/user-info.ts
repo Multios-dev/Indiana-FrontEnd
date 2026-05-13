@@ -1,5 +1,3 @@
-// need to change the informations for the application
-
 export interface UserInfos {
   company_name: string;
   company_number: string;

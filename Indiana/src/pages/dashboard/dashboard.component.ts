@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslatePipe } from '@ngx-translate/core';
 import { Router, RouterModule } from '@angular/router';
@@ -23,10 +23,11 @@ export class DashboardComponent implements OnInit {
   private userService = inject(UserService);
   private userUtilService = inject(UserUtilService);
   private router = inject(Router);
+  private cdr = inject(ChangeDetectorRef);
 
   //remplacé par un booléen le signal et une simple liste pour les minors au lieu d'un signal
-  public minors = signal<UserOutput[]>([]);
-  public isLoadingMinors = signal(false);
+  public minors: UserOutput[] = [];
+  public isLoadingMinors = false;
 
   public ngOnInit(): void {
     this.loadMinors();
@@ -37,30 +38,27 @@ export class DashboardComponent implements OnInit {
     if (!userId) {
       return;
     }
-
-    this.isLoadingMinors.set(true);
+    this.isLoadingMinors = true;
     this.userService.getMinorsUsersById(userId).subscribe({
       next: (minorsData: UserOutput[]) => {
-        this.minors.set(minorsData || []);
-        this.isLoadingMinors.set(false);
+        this.minors = minorsData || [];
+        this.isLoadingMinors = false;
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error('Erreur lors du chargement des mineurs:', err);
-        this.minors.set([]);
-        this.isLoadingMinors.set(false);
+        this.minors = [];
+        this.isLoadingMinors = false;
+        this.cdr.detectChanges();
       }
     });
   }
-
-  /**
-   * Retourne les initiales d'un mineur via le service utilitaire
-   */
   public getInitials(minor: UserOutput): string {
     return this.userUtilService.getInitials(minor);
   }
 
   /**
-   * Navigue vers la page de profil du mineur
+   * Navigate to the profil page of the minor 
    */
   public viewMinorProfile(minorId: string): void {
     // Passer l'ID du mineur en paramètre de route

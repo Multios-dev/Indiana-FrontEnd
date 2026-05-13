@@ -20,7 +20,7 @@ export class HeaderComponent {
 
   public currentLang = signal(this._translate.getCurrentLang() ?? ShortLanguages.FR);
 
-  // Record mappe les langues à leurs drapeaux
+  // Record mapped the languages to their flags
   public langFlags = LanguageFlags;
 
   // List of languages

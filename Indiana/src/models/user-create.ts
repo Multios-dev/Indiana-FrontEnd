@@ -1,10 +1,10 @@
 export interface ContactInput {
-  email: string;  // Validé automatiquement par regex email
+  email: string;  // Validated automatically by email regex
   phone: string;  // Format: +?[0-9]{8,15}
 }
 
 export interface AddressInput {
-  box_number: string;  // Optionnel comme au backend
+  box_number: string;
   thoroughfare: string;
   post_name: string;
   post_code: string;
@@ -12,7 +12,7 @@ export interface AddressInput {
 }
 
 export interface UserCreateInput {
-  // Liste de prénoms (au moins 1 prénom)
+  // List of first names (at least 1 name)
   first_names: string[];
   last_name: string;
   birth_date: string | null;  // Format: YYYY-MM-DD

@@ -45,7 +45,7 @@ export class Sidebar implements OnInit {
   public get initials(): string {
     const user = this.currentUser();
     if (!user) {
-      return '--';  // Placeholder pendant le chargement
+      return '--';  // Placeholder during the loading
     }
     return this.userUtilService.getInitials(user);
   }
